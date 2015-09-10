@@ -1,0 +1,29 @@
+﻿<Window x:Class="KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs.ConnectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs"
+        mc:Ignorable="d"
+        Title="Connect to SharePoint" 
+        Height="128.097"
+        Width="312.611"
+        MinHeight="100"
+        MinWidth="200"
+        Loaded="Window_Loaded" WindowStyle="ToolWindow" ShowInTaskbar="False" SizeToContent="Height" WindowStartupLocation="CenterOwner" 
+        >
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0">SharePoint Site Url:</TextBlock>
+        <ComboBox Grid.Row="1" Name="ucSharePointUrl" IsEditable="True" />
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 0 0" >
+            <Button Content="Connect" x:Name="ucConnectButton" Margin="10 0 0 0" MinWidth="70" Padding="6 2" Click="ucConnectButton_Click"/>
+            <Button Content="Cancel" x:Name="ucCancelButton" Margin="10 0 0 0" MinWidth="70" Padding="6 2" Click="ucCancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

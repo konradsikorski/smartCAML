@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
+using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,32 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
     /// </summary>
     public partial class MainWindow : Window
     {
+        ISharePointProvider Client { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var dialog = new ConnectWindow();
+
+            if (dialog.ShowDialog() == true)
+            {
+                Connected(dialog.Client);
+            }
+        }
+
+        private void Connected(ISharePointProvider client)
+        {
+            Client = client;
+            var lists = Client.GetLists();
         }
     }
 }

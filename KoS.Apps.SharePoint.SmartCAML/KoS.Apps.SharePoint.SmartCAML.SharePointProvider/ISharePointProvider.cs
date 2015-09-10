@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
 {
-    public class Class1
+    public interface ISharePointProvider
     {
+        bool Connect(string url);
+
+        IEnumerable<SharePointList> GetLists();
     }
 }

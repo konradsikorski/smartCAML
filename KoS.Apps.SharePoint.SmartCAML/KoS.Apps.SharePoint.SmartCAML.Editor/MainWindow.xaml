@@ -6,7 +6,41 @@
         xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
+
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New"  CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
+    </Window.CommandBindings>
+    
+    <DockPanel >
+        <Menu x:Name="menu" Height="20" DockPanel.Dock="Top" IsMainMenu="True">
+            <MenuItem Header="_File" />
+            <MenuItem Header="_Edit" />
+            <MenuItem Header="_View" />
+            <MenuItem Header="_Window" />
+            <MenuItem Header="_Help" />
+        </Menu>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="ApplicationCommands.New" Content="Connect" />
+                <Button Command="Cut" Content="New Query" />
+            </ToolBar>
+            <ToolBar>
+                <Button Command="Copy" Content="Copy" />
+                <Button Command="Paste" Content="Paste" />
+            </ToolBar>
+        </ToolBarTray>
         
-    </Grid>
+        <StatusBar DockPanel.Dock="Bottom" Height="20"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="80*" />
+            </Grid.ColumnDefinitions>
+
+            <TreeView Grid.Column="0" Name="ucLists"/>
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+            <TextBlock Grid.Column="2" FontSize="55" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap">Right side</TextBlock>
+        </Grid>
+    </DockPanel>
 </Window>

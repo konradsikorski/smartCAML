@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Model
 {
-    public class Class1
+    class SharePointList
     {
     }
 }
