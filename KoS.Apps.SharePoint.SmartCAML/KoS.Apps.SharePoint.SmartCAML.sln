@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "KoS.Apps.SharePoint.SmartCAML.Editor\Editor.csproj", "{D5D6983F-F66B-4308-8D13-FEEC439869F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "KoS.Apps.SharePoint.SmartCAML.Model\Model.csproj", "{F6C6C900-924A-40A7-A7BF-31FA0CB714A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointProvider", "KoS.Apps.SharePoint.SmartCAML.SharePointProvider\SharePointProvider.csproj", "{A7CFA48E-3331-4DE5-B0E9-ED67FA4E7E34}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5D6983F-F66B-4308-8D13-FEEC439869F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5D6983F-F66B-4308-8D13-FEEC439869F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5D6983F-F66B-4308-8D13-FEEC439869F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5D6983F-F66B-4308-8D13-FEEC439869F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6C6C900-924A-40A7-A7BF-31FA0CB714A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6C6C900-924A-40A7-A7BF-31FA0CB714A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6C6C900-924A-40A7-A7BF-31FA0CB714A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C6C900-924A-40A7-A7BF-31FA0CB714A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7CFA48E-3331-4DE5-B0E9-ED67FA4E7E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7CFA48E-3331-4DE5-B0E9-ED67FA4E7E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7CFA48E-3331-4DE5-B0E9-ED67FA4E7E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7CFA48E-3331-4DE5-B0E9-ED67FA4E7E34}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
