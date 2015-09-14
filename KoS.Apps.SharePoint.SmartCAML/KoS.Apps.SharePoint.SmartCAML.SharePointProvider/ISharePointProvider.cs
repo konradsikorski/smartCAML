@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KoS.Apps.SharePoint.SmartCAML.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
 {
     public interface ISharePointProvider
     {
-        bool Connect(string url);
+        Web Web { get; }
+        Web  Connect(string url);
 
-        IEnumerable<SharePointList> GetLists();
+        //IEnumerable<SharePointList> GetLists();
+        //Web GetWeb();
     }
 }

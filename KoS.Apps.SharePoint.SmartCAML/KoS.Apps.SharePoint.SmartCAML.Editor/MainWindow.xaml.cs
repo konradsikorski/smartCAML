@@ -1,19 +1,12 @@
-﻿using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
+﻿using System;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
 using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Controls;
+using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor
 {
@@ -43,11 +36,27 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
                 Connected(dialog.Client);
             }
         }
+        private void NewQuery_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = ucWebs?.SelectedList != null;
+        }
+
+        private void NewQuery_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var selectedList = ucWebs.SelectedList;
+            var index = Queries.Items.Add(new TabItem { Content = new QueryTab(), Header = selectedList.Name });
+            Queries.SelectedIndex = index;
+        }
+
+        private void UcWebs_ListExecute(object sender, EventArgs e)
+        {
+            NewQueryCommand.Command.Execute(null);
+        }
 
         private void Connected(ISharePointProvider client)
         {
             Client = client;
-            var lists = Client.GetLists();
+            ucWebs.Add(Client.Web);
         }
     }
 }

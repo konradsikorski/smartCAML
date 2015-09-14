@@ -56,6 +56,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\FilterBuilder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\QueryTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WebsTreeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\ConnectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -69,6 +81,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Config.cs" />
+    <Compile Include="Controls\FilterBuilder.xaml.cs">
+      <DependentUpon>FilterBuilder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\QueryTab.xaml.cs">
+      <DependentUpon>QueryTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WebsTreeControl.xaml.cs">
+      <DependentUpon>WebsTreeControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ConnectWindow.xaml.cs">
       <DependentUpon>ConnectWindow.xaml</DependentUpon>
     </Compile>

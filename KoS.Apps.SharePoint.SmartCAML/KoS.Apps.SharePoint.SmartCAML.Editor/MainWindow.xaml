@@ -4,11 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor"
+        xmlns:self="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Model;assembly=KoS.Apps.SharePoint.SmartCAML.Model"
+        xmlns:controls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
 
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.New"  CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
+        <CommandBinding x:Name="ConnectCommand" Command="ApplicationCommands.New"  CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
+        <CommandBinding x:Name="NewQueryCommand" Command="ApplicationCommands.Open" CanExecute="NewQuery_CanExecute" Executed="NewQuery_Executed"/>
     </Window.CommandBindings>
     
     <DockPanel >
@@ -22,15 +25,15 @@
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
                 <Button Command="ApplicationCommands.New" Content="Connect" />
-                <Button Command="Cut" Content="New Query" />
+                <Button Command="ApplicationCommands.Open" Content="New Query" />
             </ToolBar>
             <ToolBar>
                 <Button Command="Copy" Content="Copy" />
                 <Button Command="Paste" Content="Paste" />
             </ToolBar>
         </ToolBarTray>
-        
         <StatusBar DockPanel.Dock="Bottom" Height="20"/>
+        
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20*" />
@@ -38,9 +41,11 @@
                 <ColumnDefinition Width="80*" />
             </Grid.ColumnDefinitions>
 
-            <TreeView Grid.Column="0" Name="ucLists"/>
+            <controls:WebsTreeControl Grid.Column="0" x:Name="ucWebs" ListExecute="UcWebs_ListExecute"/>
+            
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-            <TextBlock Grid.Column="2" FontSize="55" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap">Right side</TextBlock>
+            <TabControl Grid.Column="2" x:Name="Queries">
+            </TabControl>
         </Grid>
     </DockPanel>
 </Window>
