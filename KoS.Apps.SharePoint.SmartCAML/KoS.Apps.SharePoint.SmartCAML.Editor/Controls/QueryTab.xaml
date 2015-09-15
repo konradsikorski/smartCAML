@@ -15,6 +15,13 @@
 
         <local:FilterBuilder />
         <GridSplitter Grid.Row="1" Width="5" VerticalAlignment="Stretch" Cursor="SizeNS" ResizeDirection="Rows" />
-        <TextBox Grid.Row="2"></TextBox>
+        <TabControl Grid.Row="2">
+            <TabItem Header="Query" >
+                <TextBox x:Name="ucQuery" />
+            </TabItem>
+            <TabItem Header="Items" >
+                <local:ItemsGrid x:Name="ucItems"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

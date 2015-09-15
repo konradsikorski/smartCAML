@@ -12,6 +12,7 @@
     <Window.CommandBindings>
         <CommandBinding x:Name="ConnectCommand" Command="ApplicationCommands.New"  CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
         <CommandBinding x:Name="NewQueryCommand" Command="ApplicationCommands.Open" CanExecute="NewQuery_CanExecute" Executed="NewQuery_Executed"/>
+        <CommandBinding x:Name="RunQueryCommand" Command="Copy" CanExecute="RunQueryCommand_CanExecute" Executed="RunQueryCommand_Executed"/>
     </Window.CommandBindings>
     
     <DockPanel >
@@ -28,8 +29,7 @@
                 <Button Command="ApplicationCommands.Open" Content="New Query" />
             </ToolBar>
             <ToolBar>
-                <Button Command="Copy" Content="Copy" />
-                <Button Command="Paste" Content="Paste" />
+                <Button Command="Copy" Content="Run Query" />
             </ToolBar>
         </ToolBarTray>
         <StatusBar DockPanel.Dock="Bottom" Height="20"/>
@@ -44,8 +44,8 @@
             <controls:WebsTreeControl Grid.Column="0" x:Name="ucWebs" ListExecute="UcWebs_ListExecute"/>
             
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-            <TabControl Grid.Column="2" x:Name="Queries">
-            </TabControl>
+            <controls:QueryTabControl Grid.Column="2" x:Name="ucQueries">
+            </controls:QueryTabControl>
         </Grid>
     </DockPanel>
 </Window>

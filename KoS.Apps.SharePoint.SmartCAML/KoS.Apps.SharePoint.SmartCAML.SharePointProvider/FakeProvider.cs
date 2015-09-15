@@ -13,32 +13,47 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
 
         public Web Connect(string url)
         {
-            Web = GetWeb(url);
-            return Web;
-        }
+            if (!url.Contains("test")) return null;
 
-        private Web GetWeb(string url)
-        {
             return new Web
             {
                 Title = "Test",
                 Url = url,
-                Lists = GetLists().ToList()
+                Lists = new List<SharePointList>
+                {
+                    new SharePointList { Id = 1, Name = "List1" },
+                    new SharePointList { Id = 2, Name = "List2" },
+                    new SharePointList { Id = 3, Name = "List3" },
+                    new SharePointList { Id = 4, Name = "List4" },
+                    new SharePointList { Id = 5, Name = "List5" },
+                    new SharePointList { Id = 6, Name = "List6" },
+                    new SharePointList { Id = 7, Name = "List7" },
+                }
             };
         }
 
-        private IEnumerable<SharePointList> GetLists()
+        public List<ListItem> ExecuteQuery(ListQuery query)
         {
-            return new List<SharePointList>
+            return new List<ListItem>
             {
-                new SharePointList { Id = 1, Name = "List1" },
-                new SharePointList { Id = 2, Name = "List2" },
-                new SharePointList { Id = 3, Name = "List3" },
-                new SharePointList { Id = 4, Name = "List4" },
-                new SharePointList { Id = 5, Name = "List5" },
-                new SharePointList { Id = 6, Name = "List6" },
-                new SharePointList { Id = 7, Name = "List7" },
-                new SharePointList { Id = 8, Name = "List8" },
+                new ListItem { Id = 1, Columns = new Dictionary<string, string>
+                    {
+                        { "Title", "Test1" },
+                        { "Owner", "Owner1" }
+                    }
+                },
+                new ListItem { Id = 1, Columns = new Dictionary<string, string>
+                    {
+                        { "Title", "Test2" },
+                        { "Owner", "Owner2" }
+                    }
+                },
+                new ListItem { Id = 1, Columns = new Dictionary<string, string>
+                    {
+                        { "Title", "Test3" },
+                        { "Owner", "Owner3" }
+                    }
+                },
             };
         }
     }

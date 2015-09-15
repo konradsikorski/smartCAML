@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KoS.Apps.SharePoint.SmartCAML.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,27 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     /// </summary>
     public partial class QueryTab : UserControl
     {
+        public SharePointList List { get; private set; }
+
         public QueryTab()
         {
             InitializeComponent();
+        }
+
+        public QueryTab(SharePointList list)
+        {
+            InitializeComponent();
+            List = list;
+        }
+
+        public ListQuery GetQuery()
+        {
+            return new ListQuery { ListName = List.Name, Query = "" };
+        }
+
+        internal void QueryResult(List<SmartCAML.Model.ListItem> items)
+        {
+            throw new NotImplementedException();
         }
     }
 }

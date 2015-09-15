@@ -60,6 +60,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ItemsGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\QueryTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -84,9 +88,13 @@
     <Compile Include="Controls\FilterBuilder.xaml.cs">
       <DependentUpon>FilterBuilder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ItemsGrid.xaml.cs">
+      <DependentUpon>ItemsGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\QueryTab.xaml.cs">
       <DependentUpon>QueryTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\QueryTabControl.cs" />
     <Compile Include="Controls\WebsTreeControl.xaml.cs">
       <DependentUpon>WebsTreeControl.xaml</DependentUpon>
     </Compile>
@@ -99,6 +107,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ListTreeItem.cs" />
+    <Compile Include="Model\WebTreeItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -43,9 +43,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         private void NewQuery_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var selectedList = ucWebs.SelectedList;
-            var index = Queries.Items.Add(new TabItem { Content = new QueryTab(), Header = selectedList.Name });
-            Queries.SelectedIndex = index;
+            ucQueries.AddQuery(ucWebs.SelectedList);
         }
 
         private void UcWebs_ListExecute(object sender, EventArgs e)
@@ -57,6 +55,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         {
             Client = client;
             ucWebs.Add(Client.Web);
+        }
+
+        private void RunQueryCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            var query = ucQueries.SelectedQueryTab.GetQuery();
+            var items = Client.ExecuteQuery(query);
+            ucQueries.SelectedQueryTab.QueryResult(items);
+        }
+
+        private void RunQueryCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
         }
     }
 }

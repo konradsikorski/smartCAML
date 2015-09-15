@@ -12,6 +12,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
         Web Web { get; }
         Web  Connect(string url);
 
+        List<ListItem> ExecuteQuery(ListQuery query);
+
         //IEnumerable<SharePointList> GetLists();
         //Web GetWeb();
     }

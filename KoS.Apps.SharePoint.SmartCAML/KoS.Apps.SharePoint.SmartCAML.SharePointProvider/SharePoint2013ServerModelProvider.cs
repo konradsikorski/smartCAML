@@ -14,5 +14,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
         {
             throw new NotImplementedException();
         }
+
+        public List<ListItem> ExecuteQuery(ListQuery query)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
