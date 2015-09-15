@@ -29,7 +29,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void ucConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            var client = SharePointProviderFactory2.Create(SharePointProviderType.Fake);
+            var client = SharePointProviderFactory.Create(SharePointProviderType.Fake);
             if( client.Connect(ucSharePointUrl.Text) != null)
             {
                 Client = client;

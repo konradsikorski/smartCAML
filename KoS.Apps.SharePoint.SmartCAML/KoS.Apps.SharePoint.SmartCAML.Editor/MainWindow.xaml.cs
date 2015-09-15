@@ -59,14 +59,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         private void RunQueryCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            var query = ucQueries.SelectedQueryTab.GetQuery();
-            var items = Client.ExecuteQuery(query);
-            ucQueries.SelectedQueryTab.QueryResult(items);
+            e.CanExecute = true;
         }
 
         private void RunQueryCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
 
+            var query = ucQueries.SelectedQueryTab.GetQuery();
+            var items = Client.ExecuteQuery(query);
+            ucQueries.SelectedQueryTab.QueryResult(items);
         }
     }
 }

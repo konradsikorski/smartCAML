@@ -45,6 +45,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         public void Add(Web web)
         {
+            if (web == null) return;
+
             Webs.Add(web);
         }
     }

@@ -15,7 +15,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
         {
             if (!url.Contains("test")) return null;
 
-            return new Web
+            Web = new Web
             {
                 Title = "Test",
                 Url = url,
@@ -30,6 +30,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                     new SharePointList { Id = 7, Name = "List7" },
                 }
             };
+
+            return Web;
         }
 
         public List<ListItem> ExecuteQuery(ListQuery query)

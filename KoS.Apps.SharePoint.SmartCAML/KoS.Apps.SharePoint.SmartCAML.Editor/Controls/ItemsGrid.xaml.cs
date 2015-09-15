@@ -24,5 +24,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         {
             InitializeComponent();
         }
+
+        internal void QueryResult(List<SmartCAML.Model.ListItem> items)
+        {
+            ucItems.ItemsSource = items;
+        }
     }
 }

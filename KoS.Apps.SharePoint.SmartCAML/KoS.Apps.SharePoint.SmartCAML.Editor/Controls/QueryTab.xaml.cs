@@ -41,7 +41,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         internal void QueryResult(List<SmartCAML.Model.ListItem> items)
         {
-            throw new NotImplementedException();
+            ucItems.QueryResult(items);
         }
     }
 }
