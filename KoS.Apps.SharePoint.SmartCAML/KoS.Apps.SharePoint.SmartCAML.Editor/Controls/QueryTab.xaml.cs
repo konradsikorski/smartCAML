@@ -32,11 +32,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         {
             InitializeComponent();
             List = list;
+            ucItems.List = list;
         }
 
         public ListQuery GetQuery()
         {
-            return new ListQuery { ListName = List.Name, Query = "" };
+            return new ListQuery { List = List, Query = "" };
         }
 
         internal void QueryResult(List<SmartCAML.Model.ListItem> items)

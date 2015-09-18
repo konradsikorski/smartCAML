@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 {
@@ -20,9 +21,29 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     /// </summary>
     public partial class ItemsGrid : UserControl
     {
+        private SharePointList _list;
+
         public ItemsGrid()
         {
             InitializeComponent();
+        }
+
+        public SharePointList List
+        {
+            get { return _list; }
+            set
+            {
+                _list = value;
+
+                foreach (var column in List.Fields.Select( c => new { Header = c.Title, Bind = c.InternalName }).OrderBy( c => c.Header))
+                {
+                    ucItems.Columns.Add( new DataGridTextColumn
+                    {
+                        Header = column.Header,
+                        Binding = new Binding($"[{column.Bind}]") { Mode = BindingMode.OneWay}
+                    });
+                }
+            }
         }
 
         internal void QueryResult(List<SmartCAML.Model.ListItem> items)

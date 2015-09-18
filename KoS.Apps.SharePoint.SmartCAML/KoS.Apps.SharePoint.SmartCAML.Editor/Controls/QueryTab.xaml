@@ -20,7 +20,7 @@
                 <TextBox x:Name="ucQuery" />
             </TabItem>
             <TabItem Header="Items" >
-                <local:ItemsGrid x:Name="ucItems"/>
+                <local:ItemsGrid x:Name="ucItems" />
             </TabItem>
         </TabControl>
     </Grid>

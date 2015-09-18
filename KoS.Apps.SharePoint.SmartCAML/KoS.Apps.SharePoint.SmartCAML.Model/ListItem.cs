@@ -18,5 +18,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
                 return Columns[name];
             }
         }
+
     }
 }
