@@ -4,26 +4,40 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs"
+        xmlns:bindingConverters="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters"
         mc:Ignorable="d"
         Title="Connect to SharePoint" 
-        Height="128.097"
+        Height="300"
         Width="312.611"
         MinHeight="100"
         MinWidth="200"
         Loaded="Window_Loaded" WindowStyle="ToolWindow" ShowInTaskbar="False" SizeToContent="Height" WindowStartupLocation="CenterOwner" 
         >
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0">SharePoint Site Url:</TextBlock>
-        <ComboBox Grid.Row="1" Name="ucSharePointUrl" IsEditable="True" />
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 0 0" >
-            <Button Content="Connect" x:Name="_is" Margin="10 0 0 0" MinWidth="70" Padding="6 2" Click="ucConnectButton_Click" IsDefault="True"/>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <bindingConverters:BoolToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter" True="Hidden" False="Visible" />
+    </Window.Resources>
+    <StackPanel Margin="10">
+        <TextBlock  Foreground="#FF7063EE">SharePoint Site Url:</TextBlock>
+        <ComboBox Name="ucSharePointUrl" IsEditable="True" />
+        <Button Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource InvertBooleanToVisibilityConverter}}" Style="{StaticResource LinkButton}" Click="AdvanceOptionsButton_Click" HorizontalAlignment="Right">Advance options</Button>
+
+        <StackPanel  Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Foreground="#FF7063EE">API:</TextBlock>
+            <RadioButton GroupName="API" Margin="8,0,0,0">Server (SharePoint 2013)</RadioButton>
+            <RadioButton GroupName="API" IsChecked="True" Margin="8,0,0,0">Client (SharePoint 2010+)</RadioButton>
+            <TextBlock Foreground="#FF7063EE" Margin="0,8,0,0">Account:</TextBlock>
+            <RadioButton x:Name="ucAcoountCurrentUser" GroupName="Account" IsChecked="True" Margin="8,0,0,0" >Current User</RadioButton>
+            <RadioButton x:Name="ucAccountSpecificUser" GroupName="Account" Margin="8,0,0,0">Specific User</RadioButton>
+            <TextBox x:Name="ucUserName" Visibility="{Binding ElementName=ucAccountSpecificUser, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="8,0,0,0"/>
+            <PasswordBox x:Name="ucUserPassword" Visibility="{Binding ElementName=ucAccountSpecificUser, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="8,4,0,0"/>
+
+            <Button Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource LinkButton}" Click="HideAdvanceOptionsButton_Click" HorizontalAlignment="Right">Hide advance options</Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" >
+            <Button Content="Connect" x:Name="ucConnect" Margin="10 0 0 0" MinWidth="70" Padding="6 2" Click="ucConnectButton_Click" IsDefault="True"/>
             <Button Content="Cancel" x:Name="ucCancelButton" Margin="10 0 0 0" MinWidth="70" Padding="6 2" Click="ucCancelButton_Click" IsCancel="True"/>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Window>

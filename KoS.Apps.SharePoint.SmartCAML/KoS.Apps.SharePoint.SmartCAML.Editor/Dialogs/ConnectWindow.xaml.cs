@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 {
@@ -21,10 +22,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
     public partial class ConnectWindow : Window
     {
         public ISharePointProvider Client { get; private set; }
+        public ConnectWindowModel Model => (ConnectWindowModel) this.DataContext;
 
         public ConnectWindow()
         {
             InitializeComponent();
+            this.DataContext = new ConnectWindowModel();
         }
 
         private void ucConnectButton_Click(object sender, RoutedEventArgs e)
@@ -58,6 +61,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
         private void ucCancelButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        private void AdvanceOptionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Model.ShowAdvanceOptions = true;
+        }
+
+        private void HideAdvanceOptionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Model.ShowAdvanceOptions = false;
         }
     }
 }
