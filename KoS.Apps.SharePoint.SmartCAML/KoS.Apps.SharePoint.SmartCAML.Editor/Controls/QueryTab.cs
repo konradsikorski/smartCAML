@@ -33,6 +33,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             InitializeComponent();
             List = list;
             ucItems.List = list;
+            ucQueryBuilder.DataContext = List;
+            ucQueryBuilder.Changed += (sender, args) => ucQuery.Text = ucQueryBuilder.Build().ToXml().ToString();
         }
 
         public ListQuery GetQuery()

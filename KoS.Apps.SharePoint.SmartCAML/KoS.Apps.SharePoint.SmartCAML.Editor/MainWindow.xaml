@@ -16,7 +16,7 @@
     </Window.CommandBindings>
     
     <DockPanel >
-        <Menu x:Name="menu" Height="20" DockPanel.Dock="Top" IsMainMenu="True">
+        <Menu Height="20" DockPanel.Dock="Top" IsMainMenu="True" Visibility="Collapsed">
             <MenuItem Header="_File" />
             <MenuItem Header="_Edit" />
             <MenuItem Header="_View" />
@@ -27,6 +27,7 @@
             <ToolBar>
                 <Button Command="ApplicationCommands.New" Content="Connect" />
                 <Button Command="ApplicationCommands.Open" Content="New Query" />
+                <Button Command="ApplicationCommands.Stop" Content="Browse" />
             </ToolBar>
             <ToolBar>
                 <Button Command="Copy" Content="Run Query" />

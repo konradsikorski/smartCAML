@@ -64,6 +64,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\QueryBuilderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\QueryFilterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\QueryTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -84,18 +92,28 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Builder\QueryBuilder.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Controls\FilterBuilder.xaml.cs">
+    <Compile Include="Extensions\ComboBoEnumxExtension.cs" />
+    <Compile Include="Controls\FilterBuilder.cs">
       <DependentUpon>FilterBuilder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ItemsGrid.xaml.cs">
+    <Compile Include="Enums\FilterOperator.cs" />
+    <Compile Include="Controls\ItemsGrid.cs">
       <DependentUpon>ItemsGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\QueryTab.xaml.cs">
+    <Compile Include="Controls\QueryBuilderControl.cs">
+      <DependentUpon>QueryBuilderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\QueryFilterControl.cs">
+      <DependentUpon>QueryFilterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Enums\QueryOperator.cs" />
+    <Compile Include="Controls\QueryTab.cs">
       <DependentUpon>QueryTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\QueryTabControl.cs" />
-    <Compile Include="Controls\WebsTreeControl.xaml.cs">
+    <Compile Include="Controls\WebsTreeControl.cs">
       <DependentUpon>WebsTreeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ConnectWindow.xaml.cs">
@@ -145,6 +163,7 @@
       <Name>SharePointProvider</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="KoS.Apps.SharePoint.SmartCAML.Editor.Controls.ItemsGrid"
+﻿<UserControl x:Class="KoS.Apps.SharePoint.SmartCAML.Editor.Controls.QueryFilterControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,11 @@
              xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <DataGrid x:Name="ucItems" AutoGenerateColumns="False" HeadersVisibility="Column" />
-    </Grid>
+    <StackPanel x:Name="ucContainer" Orientation="Horizontal">
+        <Button Content="x" Click="RemoveFilterButton_Click" />
+        <ComboBox x:Name="ucAndOr" />
+        <ComboBox x:Name="ucField" ItemsSource="{Binding Fields}" DisplayMemberPath="InternalName" SelectionChanged="ucField_OnSelectionChanged" />
+        
+    </StackPanel>
+            
 </UserControl>

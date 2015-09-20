@@ -13,7 +13,7 @@
             <RowDefinition Height="60*"/>
         </Grid.RowDefinitions>
 
-        <local:FilterBuilder />
+        <local:QueryBuilderControl x:Name="ucQueryBuilder" />
         <GridSplitter Grid.Row="1" Width="5" VerticalAlignment="Stretch" Cursor="SizeNS" ResizeDirection="Rows" />
         <TabControl Grid.Row="2">
             <TabItem Header="Query" >
