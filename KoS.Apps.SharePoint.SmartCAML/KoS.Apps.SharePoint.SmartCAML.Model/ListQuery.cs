@@ -9,6 +9,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
     public class ListQuery
     {
         public string Query { get; set; }
-        public SharePointList List { get; set; }
+        public SList List { get; set; }
     }
 }

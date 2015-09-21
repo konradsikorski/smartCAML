@@ -45,8 +45,7 @@
             <controls:WebsTreeControl Grid.Column="0" x:Name="ucWebs" ListExecute="UcWebs_ListExecute"/>
             
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-            <controls:QueryTabControl Grid.Column="2" x:Name="ucQueries">
-            </controls:QueryTabControl>
+            <controls:QueryTabControl Grid.Column="2" x:Name="ucQueries" />
         </Grid>
     </DockPanel>
 </Window>

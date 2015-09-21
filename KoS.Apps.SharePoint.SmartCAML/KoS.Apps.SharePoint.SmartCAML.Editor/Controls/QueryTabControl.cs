@@ -10,12 +10,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 {
     public class QueryTabControl : TabControl
     {
-        public QueryTab SelectedQueryTab => (QueryTab)((TabItem)this.SelectedItem).Content;
+        public QueryTab SelectedQueryTab => (QueryTab)((TabItem)this.SelectedItem)?.Content;
          
-        public void AddQuery(SharePointList list)
+        public void AddQuery(SList list)
         {
             if (list == null) return;
-            var index = this.Items.Add(new TabItem { Content = new QueryTab(list), Header = list.Name });
+            var index = this.Items.Add(new TabItem { Content = new QueryTab(list), Header = list.Title });
             this.SelectedIndex = index;
         }
     }

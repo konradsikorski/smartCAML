@@ -1,12 +1,8 @@
 ﻿using System;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
 using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
-using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using KoS.Apps.SharePoint.SmartCAML.Editor.Controls;
-using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor
 {
@@ -15,8 +11,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
     /// </summary>
     public partial class MainWindow : Window
     {
-        ISharePointProvider Client { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();
@@ -53,20 +47,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         private void Connected(ISharePointProvider client)
         {
-            Client = client;
-            ucWebs.Add(Client.Web);
+            ucWebs.Add(client);
         }
 
         private void RunQueryCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            e.CanExecute = ucQueries?.SelectedQueryTab != null;
         }
 
         private void RunQueryCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
             var query = ucQueries.SelectedQueryTab.GetQuery();
-            var items = Client.ExecuteQuery(query);
+            var items = ucWebs.GetClient(ucQueries.SelectedQueryTab.List.Web).ExecuteQuery(query);
             ucQueries.SelectedQueryTab.QueryResult(items);
         }
     }

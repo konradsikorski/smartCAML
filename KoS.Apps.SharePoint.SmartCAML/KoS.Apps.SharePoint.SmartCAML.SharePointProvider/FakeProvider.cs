@@ -21,26 +21,22 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
         {
             if (!url.Contains("test")) return null;
 
-            var fields = new List<Field>
-            {
-                new Field { Group = "1", Title = "Title", InternalName = Internals.Title },
-                new Field { Group = "1", Title = "Owner", InternalName = Internals.Owner }
-            };
-
             Web = new Web
             {
+                Id = Guid.Empty,
                 Title = "Test",
-                Url = url,
-                Lists = new List<SharePointList>
-                {
-                    new SharePointList { Id = 1, Name = "List1", Fields =  fields},
-                    new SharePointList { Id = 2, Name = "List2", Fields =  fields },
-                    new SharePointList { Id = 3, Name = "List3", Fields =  fields },
-                    new SharePointList { Id = 4, Name = "List4", Fields =  fields },
-                    new SharePointList { Id = 5, Name = "List5", Fields =  fields },
-                    new SharePointList { Id = 6, Name = "List6", Fields =  fields },
-                    new SharePointList { Id = 7, Name = "List7", Fields =  fields },
-                }
+                Url = url
+            };
+
+            Web.Lists = new List<SList>
+            {
+                new SList {Id = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1), Title = "List1", Web = Web},
+                new SList {Id = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2), Title = "List2", Web = Web},
+                new SList {Id = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3), Title = "List3", Web = Web},
+                new SList {Id = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4), Title = "List4", Web = Web},
+                new SList {Id = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5), Title = "List5", Web = Web},
+                new SList {Id = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6), Title = "List6", Web = Web},
+                new SList {Id = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7), Title = "List7", Web = Web},
             };
 
             return Web;
@@ -69,6 +65,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                     }
                 },
             };
+        }
+
+        public void FillListFields(SList list)
+        {
+            var fields = new List<Field>
+            {
+                new Field { Group = "1", Title = "Title", InternalName = Internals.Title },
+                new Field { Group = "1", Title = "Owner", InternalName = Internals.Owner }
+            };
+
+            list.Fields = fields;
         }
     }
 }

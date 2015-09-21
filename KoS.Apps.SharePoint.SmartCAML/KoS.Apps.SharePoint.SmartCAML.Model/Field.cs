@@ -1,4 +1,6 @@
-﻿namespace KoS.Apps.SharePoint.SmartCAML.Model
+﻿using System;
+
+namespace KoS.Apps.SharePoint.SmartCAML.Model
 {
     public class Field
     {
@@ -9,5 +11,6 @@
         public bool IsHidden { get; set; }
         public string Group { get; set; }
         public FieldType Type { get; set; }
+        public Guid Id { get; set; }
     }
 }

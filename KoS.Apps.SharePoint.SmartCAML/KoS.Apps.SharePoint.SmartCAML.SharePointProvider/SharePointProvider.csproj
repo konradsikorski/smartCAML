@@ -43,7 +43,6 @@
     <Compile Include="FakeProvider.cs" />
     <Compile Include="ISharePointProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SharePoint2013ServerModelProvider.cs" />
     <Compile Include="SharePointProviderFactory.cs" />
     <Compile Include="SharePointProviderType.cs" />
   </ItemGroup>

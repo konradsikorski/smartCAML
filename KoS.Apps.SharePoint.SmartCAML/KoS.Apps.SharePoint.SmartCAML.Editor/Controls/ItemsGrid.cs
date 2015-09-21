@@ -21,14 +21,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     /// </summary>
     public partial class ItemsGrid : UserControl
     {
-        private SharePointList _list;
+        private SmartCAML.Model.SList _list;
 
         public ItemsGrid()
         {
             InitializeComponent();
         }
 
-        public SharePointList List
+        public SList List
         {
             get { return _list; }
             set
