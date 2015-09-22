@@ -4,13 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
+             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             Padding="2">
+    <UserControl.Style>
+        <Style TargetType="{x:Type UserControl}">
+            <Setter Property="Background" Value="Transparent" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFFDFDDE" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+
+    <UserControl.Resources>
+        <CollectionViewSource Source="{Binding Path=Fields}" x:Key="Fields">
+            <CollectionViewSource.SortDescriptions>
+                <componentModel:SortDescription PropertyName="InternalName" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
+
     <StackPanel x:Name="ucContainer" Orientation="Horizontal">
-        <Button Content="x" Click="RemoveFilterButton_Click" />
-        <ComboBox x:Name="ucAndOr" />
-        <ComboBox x:Name="ucField" ItemsSource="{Binding Fields}" DisplayMemberPath="InternalName" SelectionChanged="ucField_OnSelectionChanged" />
-        
+        <Button Content="x"  Margin="4,0,0,0" Click="RemoveFilterButton_Click" Background="Transparent" Padding="4, 0" BorderBrush="Transparent" />
+        <ComboBox x:Name="ucAndOr" Margin="4,0,0,0"/>
+        <ComboBox x:Name="ucField" Margin="4,0,0,0" ToolTip="Field" ItemsSource="{Binding Source={StaticResource Fields}}" DisplayMemberPath="InternalName" SelectionChanged="ucField_OnSelectionChanged" />
     </StackPanel>
             
 </UserControl>

@@ -41,7 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Field.cs" />
+    <Compile Include="FieldChoice.cs" />
+    <Compile Include="FieldDateTime.cs" />
     <Compile Include="FieldType.cs" />
+    <Compile Include="ISharePointProvider.cs" />
     <Compile Include="ListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ListQuery.cs" />

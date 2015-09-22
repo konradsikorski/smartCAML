@@ -3,11 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor"
-        xmlns:self="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Model;assembly=KoS.Apps.SharePoint.SmartCAML.Model"
         xmlns:controls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="400" Width="600">
 
     <Window.CommandBindings>
         <CommandBinding x:Name="ConnectCommand" Command="ApplicationCommands.New"  CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
@@ -37,9 +35,9 @@
         
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="30*" />
                 <ColumnDefinition Width="5" />
-                <ColumnDefinition Width="80*" />
+                <ColumnDefinition Width="70*" />
             </Grid.ColumnDefinitions>
 
             <controls:WebsTreeControl Grid.Column="0" x:Name="ucWebs" ListExecute="UcWebs_ListExecute"/>

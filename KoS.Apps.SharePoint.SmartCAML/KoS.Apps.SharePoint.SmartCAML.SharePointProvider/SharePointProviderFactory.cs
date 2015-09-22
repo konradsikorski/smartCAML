@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
 {

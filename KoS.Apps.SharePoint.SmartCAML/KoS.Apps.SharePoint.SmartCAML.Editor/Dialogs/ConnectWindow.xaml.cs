@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Model;
+using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 {

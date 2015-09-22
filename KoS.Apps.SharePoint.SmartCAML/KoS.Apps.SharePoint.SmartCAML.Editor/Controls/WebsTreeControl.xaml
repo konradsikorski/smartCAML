@@ -10,7 +10,7 @@
 
     <TreeView Name="ucLists" MouseDoubleClick="ucLists_MouseDoubleClick">
         <TreeView.Resources>
-            <HierarchicalDataTemplate DataType="{x:Type provider:ISharePointProvider}" ItemsSource="{Binding Path=Web.Lists, Mode=OneWay}" >
+            <HierarchicalDataTemplate DataType="{x:Type provider:FakeProvider}" ItemsSource="{Binding Path=Web.Lists, Mode=OneWay}" >
                 <TextBlock Text="{Binding Path=Web.Title, Mode=OneWay}" />
             </HierarchicalDataTemplate>
             <DataTemplate DataType="{x:Type self:SList}">

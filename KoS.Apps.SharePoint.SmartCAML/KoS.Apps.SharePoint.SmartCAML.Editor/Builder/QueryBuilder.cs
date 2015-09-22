@@ -20,7 +20,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             return New(QueryOperator.And, @operator, type, internalName, value);
         }
 
-        public QueryFilter New(QueryOperator queryOperator, FilterOperator @operator, FieldType type, string internalName, string value = null)
+        public QueryFilter New(QueryOperator queryOperator, FilterOperator? @operator, FieldType type, string internalName, string value = null)
         {
             var filter = Build(queryOperator, @operator, type, internalName, value);
 
@@ -28,13 +28,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             return filter;
         }
 
-        private QueryFilter Build(QueryOperator queryOperator, FilterOperator @operator, FieldType type,
+        private QueryFilter Build(QueryOperator queryOperator, FilterOperator? @operator, FieldType type,
             string internalName, string value)
         {
+            if (@operator == null) return null;
+
             return new QueryFilter
             {
                 QueryOperator = queryOperator,
-                FilterOperator = @operator,
+                FilterOperator = @operator.Value,
                 Type = type,
                 InternalName = internalName,
                 Value = value
@@ -49,14 +51,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             foreach (var filter in Filters)
             {
                 var operatorNode = new XElement(filter.FilterOperator.ToString());
-                var fieldNode = new XElement("Field");
-                fieldNode.SetAttributeValue("Name", filter.InternalName);
+                var fieldNode = new XElement("FieldRef",
+                    new XAttribute("Name", filter.InternalName)
+                    );
                 operatorNode.Add(fieldNode);
 
                 if (filter.Value != null)
                 {
-                    var valueNode = new XElement("Value");
-                    valueNode.SetAttributeValue("Result", filter.InternalName);
+                    var valueNode = new XElement("Value",
+                        new XAttribute("Type", filter.Type),
+                        filter.Value);
                     operatorNode.Add(valueNode);
                 }
 
@@ -71,7 +75,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
                 }
             }
 
-            return new XElement("Query", rootNode);
+            return new XElement("Where", rootNode);
         }
     }
 
