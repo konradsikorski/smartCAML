@@ -12,16 +12,20 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="60*"/>
         </Grid.RowDefinitions>
-
-        <local:QueryBuilderControl x:Name="ucQueryBuilder" />
-        <GridSplitter Grid.Row="1" Width="5" VerticalAlignment="Stretch" Cursor="SizeNS" ResizeDirection="Rows" />
-        <TabControl Grid.Row="2">
-            <TabItem Header="Query" >
-                <TextBox x:Name="ucQuery" />
+        
+        <TabControl Grid.Row="0">
+            <TabItem Header="Designer" >
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <local:QueryBuilderControl x:Name="ucQueryBuilder" Margin="4" />
+                </ScrollViewer>
             </TabItem>
-            <TabItem Header="Items" >
-                <local:ItemsGrid x:Name="ucItems" />
+            <TabItem Header="Source" >
+                <TextBox x:Name="ucQuery" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
             </TabItem>
         </TabControl>
+
+        <GridSplitter Grid.Row="1" Width="5" HorizontalAlignment="Stretch" Cursor="SizeNS" ResizeDirection="Rows" />
+
+        <local:ItemsGrid  Grid.Row="2" x:Name="ucItems" />
     </Grid>
 </UserControl>

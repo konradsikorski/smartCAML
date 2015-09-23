@@ -1,10 +1,7 @@
 ﻿using KoS.Apps.SharePoint.SmartCAML.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 {
@@ -15,8 +12,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         public void AddQuery(SList list)
         {
             if (list == null) return;
-            var index = this.Items.Add(new TabItem { Content = new QueryTab(list), Header = list.Title });
-            this.SelectedIndex = index;
+            if(list.Fields?.Count == 0) list.Web.Client.FillListFields(list);
+
+            this.SelectedIndex = this.Items.Add(
+                new TabItem
+                {
+                    Header = list.Title,
+                    Content = new QueryTab(list) {Margin = new Thickness(4) }
+                });
+
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }

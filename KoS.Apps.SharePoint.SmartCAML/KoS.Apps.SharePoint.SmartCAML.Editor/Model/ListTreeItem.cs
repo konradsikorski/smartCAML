@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Annotations;
-using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
+using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
 {

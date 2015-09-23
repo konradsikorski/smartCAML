@@ -3,6 +3,7 @@ using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
 using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 using System.Windows;
 using System.Windows.Input;
+using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor
 {
