@@ -5,7 +5,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
 {
     public interface ISharePointProvider
     {
-        Web Web { get; }
+        Web Web { get; set; }
         Web Connect(string url);
 
         List<ListItem> ExecuteQuery(ListQuery query);

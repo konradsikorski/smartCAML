@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Model;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 
@@ -13,7 +14,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     /// </summary>
     public partial class WebsTreeControl : UserControl
     {
-        public ObservableCollection<ISharePointProvider> Webs = new ObservableCollection<ISharePointProvider>();
+        public ObservableCollection<ListTreeItem> Webs = new ObservableCollection<ListTreeItem>();
 
         public SList SelectedList
             => ucLists.ItemsSource != null ?
@@ -38,12 +39,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         {
             if (client == null) return;
 
-            Webs.Add(client);
+            Webs.Add(new ListTreeItem { Client = client} );
         }
 
         public ISharePointProvider GetClient(Web web)
         {
-            return Webs.FirstOrDefault(client => client.Web == web);
+            return Webs.FirstOrDefault(client => client.Client.Web == web)?.Client;
         }
     }
 }

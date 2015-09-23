@@ -15,7 +15,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
             public const string Owner = "OwnerInternal";
         }
 
-        public Web Web { get; private set; }
+        public Web Web { get; set; }
 
         public Web Connect(string url)
         {
