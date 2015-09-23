@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Providers.SharePoint2013ServerProvider", "Providers.SharePoint2013ServerProvider\Providers.SharePoint2013ServerProvider.csproj", "{8F057328-B8D9-48DE-9A84-B3D0B0D0F6DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Providers.SharePoint2013ClientProvider", "Providers.SharePoint2013ClientProvider\Providers.SharePoint2013ClientProvider.csproj", "{4F5A56D6-4F74-487D-84E0-E48717DED0CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,11 +37,16 @@ Global
 		{8F057328-B8D9-48DE-9A84-B3D0B0D0F6DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F057328-B8D9-48DE-9A84-B3D0B0D0F6DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F057328-B8D9-48DE-9A84-B3D0B0D0F6DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F5A56D6-4F74-487D-84E0-E48717DED0CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F5A56D6-4F74-487D-84E0-E48717DED0CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F5A56D6-4F74-487D-84E0-E48717DED0CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F5A56D6-4F74-487D-84E0-E48717DED0CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8F057328-B8D9-48DE-9A84-B3D0B0D0F6DF} = {8DC52F21-4712-46BC-85D3-EB0038B5D9B5}
+		{4F5A56D6-4F74-487D-84E0-E48717DED0CD} = {8DC52F21-4712-46BC-85D3-EB0038B5D9B5}
 	EndGlobalSection
 EndGlobal

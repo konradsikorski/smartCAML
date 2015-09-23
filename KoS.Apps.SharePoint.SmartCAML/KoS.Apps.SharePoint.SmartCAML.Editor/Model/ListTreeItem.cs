@@ -5,9 +5,10 @@ using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
 {
-    public class ListTreeItem :INotifyPropertyChanged
+    public class ListTreeItem : INotifyPropertyChanged
     {
         private bool _isExpanded = true;
+        private bool _isSelected = true;
         public ISharePointProvider Client { get; set; }
 
         public bool IsExpanded
@@ -17,6 +18,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
             {
                 if (value == _isExpanded) return;
                 _isExpanded = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (value == _isSelected) return;
+                _isSelected = value;
                 OnPropertyChanged();
             }
         }

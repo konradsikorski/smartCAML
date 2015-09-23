@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -116,7 +117,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AttachedProperties\PasswordBoxAssistant.cs" />
     <Compile Include="BindingConverters\BooleanConverter.cs" />
+    <Compile Include="BindingConverters\EnumToBooleanConverter.cs" />
+    <Compile Include="BindingConverters\RadioButtonCheckedConverter.cs" />
     <Compile Include="Builder\QueryBuilder.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Extensions\ComboBoEnumxExtension.cs" />
@@ -203,7 +207,12 @@
       <Name>SharePointProvider</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\web.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

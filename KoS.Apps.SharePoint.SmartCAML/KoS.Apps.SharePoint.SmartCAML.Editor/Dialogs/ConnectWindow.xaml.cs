@@ -28,18 +28,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
         public ConnectWindow()
         {
             InitializeComponent();
-            this.DataContext = new ConnectWindowModel();
-        }
 
-        private void ucConnectButton_Click(object sender, RoutedEventArgs e)
-        {
-            var client = SharePointProviderFactory.Create(SharePointProviderType.Fake);
-            if( client.Connect(ucSharePointUrl.Text) != null)
-            {
-                Client = client;
-                AddNewUrl(ucSharePointUrl.Text);
-                DialogResult = true;
-            }
+#if DEBUG
+            ucApiFake.Visibility = Visibility.Visible;
+            //ucApiFake.IsChecked = true;
+#endif
+
+            this.DataContext = new ConnectWindowModel();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -48,15 +43,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
             if (ucSharePointUrl.Items.Count > 0) ucSharePointUrl.SelectedIndex = 0;
         }
 
-        private void AddNewUrl(string url)
+        private void ucConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            var list = ((List<string>)ucSharePointUrl.ItemsSource);
-
-            var index = list.IndexOf(url);
-            if (index >= 0) list.RemoveAt(index);
-            list.Insert(0, url);
-
-            Config.LastSharePointUrl = ucSharePointUrl.Items.Cast<string>();
+            var client = SharePointProviderFactory.Create(Model.ProviderType);
+            if( client.Connect(ucSharePointUrl.Text) != null)
+            {
+                Client = client;
+                AddNewUrl(ucSharePointUrl.Text);
+                DialogResult = true;
+            }
         }
 
         private void ucCancelButton_Click(object sender, RoutedEventArgs e)
@@ -72,6 +67,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
         private void HideAdvanceOptionsButton_Click(object sender, RoutedEventArgs e)
         {
             Model.ShowAdvanceOptions = false;
+        }
+
+        private void AddNewUrl(string url)
+        {
+            var list = ((List<string>)ucSharePointUrl.ItemsSource);
+
+            var index = list.IndexOf(url);
+            if (index >= 0) list.RemoveAt(index);
+            list.Insert(0, url);
+
+            Config.LastSharePointUrl = ucSharePointUrl.Items.Cast<string>();
         }
     }
 }

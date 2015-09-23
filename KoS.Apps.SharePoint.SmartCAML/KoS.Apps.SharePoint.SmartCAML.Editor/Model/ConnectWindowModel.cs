@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Annotations;
+using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
 {
@@ -10,6 +12,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         private bool _showAdvanceOptions;
 
         [NotNull]
+        [Required]
         public string SharePoinWebtUrl
         {
             get { return _sharePoinWebtUrl; }
@@ -31,6 +34,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
                 OnPropertyChanged();
             }
         }
+
+        [NotNull]
+        [Required]
+        public string UserName { get; set; }
+        [NotNull]
+        public string UserPassword { get; set; }
+        public SharePointProviderType ProviderType { get; set; }
+#if DEBUG 
+            = SharePointProviderType.Fake;
+#endif
 
         public event PropertyChangedEventHandler PropertyChanged;
 

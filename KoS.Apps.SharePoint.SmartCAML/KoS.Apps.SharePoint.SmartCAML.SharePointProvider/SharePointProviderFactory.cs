@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KoS.Apps.SharePoint.SmartCAML.Model;
+using KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider;
+using KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider;
 
 namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
 {
@@ -14,10 +12,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
             switch (type)
             {
                 case SharePointProviderType.Fake: return new FakeProvider();
+                case SharePointProviderType.SharePoint2013ServerModel: return new SharePoint2013ServerModelProvider();
+                case SharePointProviderType.SharePoint2013ClientModel: return new SharePoint2013ClientModelProvider();
                 case SharePointProviderType.SharePoint2010ServerModel:
                 case SharePointProviderType.SharePoint2010ClientModel:
-                case SharePointProviderType.SharePoint2013ServerModel:
-                case SharePointProviderType.SharePoint2013ClientModel:
                 default:
                     throw new NotSupportedException();
             }

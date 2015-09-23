@@ -50,6 +50,14 @@
       <Project>{f6c6c900-924a-40a7-a7bf-31fa0cb714a8}</Project>
       <Name>Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Providers.SharePoint2013ClientProvider\Providers.SharePoint2013ClientProvider.csproj">
+      <Project>{4F5A56D6-4F74-487D-84E0-E48717DED0CD}</Project>
+      <Name>Providers.SharePoint2013ClientProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Providers.SharePoint2013ServerProvider\Providers.SharePoint2013ServerProvider.csproj">
+      <Project>{8F057328-B8D9-48DE-9A84-B3D0B0D0F6DF}</Project>
+      <Name>Providers.SharePoint2013ServerProvider</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
