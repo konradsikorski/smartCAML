@@ -63,7 +63,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
 
         public void FillListFields(SList list)
         {
-            using (var site = new SPSite(list.Web.Id))
+            using (var site = new SPSite(list.Web.Url))
             {
                 using (var web = site.OpenWeb())
                 {
