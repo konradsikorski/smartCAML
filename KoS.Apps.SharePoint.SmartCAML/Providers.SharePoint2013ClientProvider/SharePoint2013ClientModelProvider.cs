@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using Microsoft.SharePoint.Client;
@@ -77,9 +78,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 var listQuery = new CamlQuery{ ViewXml = $"<View><Query>{query.Query}</Query></View>" };
 
                 var items = serverList.GetItems(listQuery);
-                context.Load(items, i => i.Include(
-                    item => item.Id,
-                    item => item.FieldValues));
+                context.Load(items
+                    //,i => i.Include(item => item.Id)
+                    );
 
                 context.ExecuteQuery();
 
@@ -92,11 +93,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                                 .Fields
                                 .ToDictionary(
                                     f => f.InternalName,
-                                    f => i[f.InternalName].ToString())
+                                    f => ElementSelector(f, i)
+                                    )
                         })
                         .ToList();
             }
         }
+
+        private string ElementSelector(Model.Field f, ListItem i)
+        {
+            return i.FieldValues.ContainsKey(f.InternalName)
+                ? i.FieldValues[f.InternalName]?.ToString()
+                : null;
+        }
+
 
         public void FillListFields(Model.SList list)
         {

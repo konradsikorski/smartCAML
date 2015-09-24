@@ -40,6 +40,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                     ucItems.Columns.Add( new DataGridTextColumn
                     {
                         Header = column.Header,
+                        Width = 100,
                         Binding = new Binding($"[{column.Bind}]") { Mode = BindingMode.OneWay}
                     });
                 }
