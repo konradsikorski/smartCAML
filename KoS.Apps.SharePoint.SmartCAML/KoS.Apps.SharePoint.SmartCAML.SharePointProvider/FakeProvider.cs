@@ -1,9 +1,6 @@
 ﻿using KoS.Apps.SharePoint.SmartCAML.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
 {
@@ -61,6 +58,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
             };
 
             return Web;
+        }
+
+        public Web Connect(string url, string userName, string password)
+        {
+            if (String.IsNullOrEmpty(userName) != String.IsNullOrEmpty(password))
+                throw new ArgumentException("The user or password is null.");
+
+            return Connect(url);
         }
 
         public List<ListItem> ExecuteQuery(ListQuery query)

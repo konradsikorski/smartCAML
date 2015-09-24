@@ -8,11 +8,33 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
 {
     public class SharePoint2013ServerModelProvider : ISharePointProvider
     {
+        private string _userName;
+        private string _password;
+
         public Web Web { get; private set; }
+
+        private SPSite CreateSite(string url)
+        {
+            var site = new SPSite(url);
+            
+            if (!String.IsNullOrEmpty(_userName))
+            {
+                using (site)
+                {
+                    using (var web = site.OpenWeb())
+                    {
+                        var userToken = web.AllUsers[_userName].UserToken;
+                        return new SPSite(url, userToken);
+                    }
+                }
+            }
+
+            return site;
+        }
 
         public Web Connect(string url)
         {
-            using (var site = new SPSite(url))
+            using (var site = CreateSite(url))
             {
                 using (var web = site.OpenWeb())
                 {
@@ -36,9 +58,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
             }
         }
 
+        public Web Connect(string url, string userName, string password)
+        {
+            if( String.IsNullOrEmpty(userName) != String.IsNullOrEmpty(password))
+                throw new ArgumentException("The user or password is null.");
+
+            _userName = userName;
+            _password = password;
+
+            return Connect(url);
+        }
+
         public List<ListItem> ExecuteQuery(ListQuery query)
         {
-            using (var site = new SPSite(query.List.Web.Id))
+            using (var site = CreateSite(query.List.Web.Url))
             {
                 using (var web = site.OpenWeb())
                 {
@@ -63,7 +96,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
 
         public void FillListFields(SList list)
         {
-            using (var site = new SPSite(list.Web.Url))
+            using (var site = CreateSite(list.Web.Url))
             {
                 using (var web = site.OpenWeb())
                 {

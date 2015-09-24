@@ -6,6 +6,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
     {
         Web Web { get; }
         Web Connect(string url);
+        Web Connect(string url, string userName, string password);
 
         List<ListItem> ExecuteQuery(ListQuery query);
         void FillListFields(SList list);

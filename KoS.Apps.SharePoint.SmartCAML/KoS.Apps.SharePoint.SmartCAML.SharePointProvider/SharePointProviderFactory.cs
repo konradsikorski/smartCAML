@@ -14,8 +14,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                 case SharePointProviderType.Fake: return new FakeProvider();
                 case SharePointProviderType.SharePoint2013ServerModel: return new SharePoint2013ServerModelProvider();
                 case SharePointProviderType.SharePoint2013ClientModel: return new SharePoint2013ClientModelProvider();
-                case SharePointProviderType.SharePoint2010ServerModel:
-                case SharePointProviderType.SharePoint2010ClientModel:
+                case SharePointProviderType.SharePointOnline:
                 default:
                     throw new NotSupportedException();
             }

@@ -48,13 +48,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             XElement rootNode = null;
             XElement lastNode = null;
 
-            foreach (var filter in Filters)
+            for (int i = 0; i < Filters.Count; i++)
             {
-                var operatorNode = new XElement(filter.FilterOperator.ToString());
-                var fieldNode = new XElement("FieldRef",
-                    new XAttribute("Name", filter.InternalName)
+                var filter = Filters[i];
+
+                var operatorNode = 
+                    new XElement(filter.FilterOperator.ToString(),
+                        new XElement("FieldRef",
+                            new XAttribute("Name", filter.InternalName)
+                        )
                     );
-                operatorNode.Add(fieldNode);
 
                 if (filter.Value != null)
                 {
@@ -64,14 +67,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
                     operatorNode.Add(valueNode);
                 }
 
+                var parent = (i != Filters.Count - 1)
+                    ? new XElement(filter.QueryOperator.ToString(), operatorNode)
+                    : operatorNode;
+
                 if (lastNode == null)
                 {
-                    rootNode = lastNode = operatorNode;
+                    rootNode = lastNode = parent;
                 }
                 else
                 {
-                    lastNode.Add(operatorNode);
-                    lastNode = operatorNode;
+                    lastNode.Add(parent);
+                    lastNode = parent;
                 }
             }
 

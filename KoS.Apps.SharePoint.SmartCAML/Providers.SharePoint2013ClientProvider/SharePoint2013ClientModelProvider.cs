@@ -1,20 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model = KoS.Apps.SharePoint.SmartCAML.Model;
+using System.Net;
 using Microsoft.SharePoint.Client;
+using Web = KoS.Apps.SharePoint.SmartCAML.Model.Web;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 {
     public class SharePoint2013ClientModelProvider : Model.ISharePointProvider
     {
+        private string _userName;
+        private string _password;
+
         public Model.Web Web { get; private set; }
+
+        private ClientContext CreateContext(string url)
+        {
+            var context = new ClientContext(url);
+
+            if (!String.IsNullOrEmpty(_userName))
+                context.Credentials = new NetworkCredential(_userName, _password);
+
+            return context;
+        }
 
         public Model.Web Connect(string url)
         {
-            using (var context = new ClientContext(url))
+            using (var context = CreateContext(url))
             {
                 context.Load(context.Web, 
                     w => w.Id,
@@ -46,14 +58,49 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             }
         }
 
+        public Web Connect(string url, string userName, string password)
+        {
+            if (String.IsNullOrEmpty(userName) != String.IsNullOrEmpty(password))
+                throw new ArgumentException("The user or password is null.");
+
+            _userName = userName;
+            _password = password;
+
+            return Connect(url);
+        }
+
         public List<Model.ListItem> ExecuteQuery(Model.ListQuery query)
         {
-            throw new NotImplementedException();
+            using (var context = CreateContext(query.List.Web.Url))
+            {
+                var serverList = context.Web.Lists.GetById(query.List.Id);
+                var listQuery = new CamlQuery{ ViewXml = $"<View><Query>{query.Query}</Query></View>" };
+
+                var items = serverList.GetItems(listQuery);
+                context.Load(items, i => i.Include(
+                    item => item.Id,
+                    item => item.FieldValues));
+
+                context.ExecuteQuery();
+
+                return items.Cast<ListItem>()
+                        .Select(i => new Model.ListItem
+                        {
+                            Id = i.Id,
+                            Columns =
+                                query.List
+                                .Fields
+                                .ToDictionary(
+                                    f => f.InternalName,
+                                    f => i[f.InternalName].ToString())
+                        })
+                        .ToList();
+            }
         }
 
         public void FillListFields(Model.SList list)
         {
-            using (var context = new ClientContext(list.Web.Url))
+            using (var context = CreateContext(list.Web.Url))
             {
                 var serverList = context.Web.Lists.GetById(list.Id);
                 context.Load(serverList.Fields, fields => fields.Include(
