@@ -8,14 +8,15 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:provider="clr-namespace:KoS.Apps.SharePoint.SmartCAML.SharePointProvider;assembly=KoS.Apps.SharePoint.SmartCAML.SharePointProvider"
         xmlns:ap="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.AttachedProperties"
+        xmlns:model="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Model"
         mc:Ignorable="d"
         Title="Connect to SharePoint" 
         Height="300"
         Width="312.611"
         MinHeight="100"
         MinWidth="200"
-        Loaded="Window_Loaded" ShowInTaskbar="False" SizeToContent="Height" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" Background="#FFE4EEFF" 
-        >
+        ShowInTaskbar="False" SizeToContent="Height" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" Background="#FFE4EEFF" 
+        d:DataContext="{d:DesignInstance model:ConnectWindowModel}">
     <Window.Resources>
         <bindingConverters:RadioButtonCheckedConverter x:Key="EnumConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -29,7 +30,7 @@
         </Grid.RowDefinitions>
         <StackPanel Margin="14">
             <TextBlock Style="{DynamicResource Label}">SharePoint Site Url:</TextBlock>
-            <ComboBox Name="ucSharePointUrl" IsEditable="True" />
+            <ComboBox IsEditable="True" Text="{Binding SharePointWebUrl}" ItemsSource="{Binding SharePointWebUrlHistory}" />
             <Button Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource InvertBooleanToVisibilityConverter}}" Style="{StaticResource LinkButton}" Click="AdvanceOptionsButton_Click" HorizontalAlignment="Right" Margin="0,2,0,0">Advance options</Button>
 
             <StackPanel  Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -39,11 +40,11 @@
                 <RadioButton GroupName="API" IsChecked="{Binding ProviderType, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static provider:SharePointProviderType.Fake}}" Margin="8,0,0,0" Visibility="Collapsed" x:Name="ucApiFake">Fake</RadioButton>
 
                 <TextBlock Style="{DynamicResource Label}" Margin="0,8,0,0">Account:</TextBlock>
-                <RadioButton x:Name="ucAcoountCurrentUser" GroupName="Account" IsChecked="True" Margin="8,0,0,0" >Current User</RadioButton>
-                <RadioButton x:Name="ucAccountSpecificUser" GroupName="Account" Margin="8,0,0,0">Specific User</RadioButton>
+                <RadioButton GroupName="Account" IsChecked="{Binding UseCurrentUser}" Margin="8,0,0,0" >Current User</RadioButton>
+                <RadioButton GroupName="Account" IsChecked="{Binding UseSpecificUser, Mode=OneTime}" Margin="8,0,0,0">Specific User</RadioButton>
 
-                <xctk:WatermarkTextBox x:Name="ucUserName" Watermark="User Name" Text="{Binding UserName}"  Visibility="{Binding ElementName=ucAccountSpecificUser, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="24,4,0,0"/>
-                <PasswordBox x:Name="ucUserPassword" ap:PasswordBoxAssistant.BindPassword="true" ap:PasswordBoxAssistant.BoundPassword="{Binding UserPassword, UpdateSourceTrigger=PropertyChanged}"  Visibility="{Binding ElementName=ucAccountSpecificUser, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="24,4,0,0"/>
+                <ComboBox Text="{Binding UserName}" ItemsSource="{Binding UsersHistory}" IsEditable="True"  Visibility="{Binding Path=UseSpecificUser, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="24,4,0,0"/>
+                <PasswordBox ap:PasswordBoxAssistant.BindPassword="true" ap:PasswordBoxAssistant.BoundPassword="{Binding UserPassword, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Path=UseSpecificUser, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="24,4,0,0"/>
 
                 <Button Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource LinkButton}" Click="HideAdvanceOptionsButton_Click" HorizontalAlignment="Right">Hide advance options</Button>
             </StackPanel>
@@ -51,8 +52,8 @@
 
         <Border Grid.Row="1" Background="#FFBED1E0" BorderBrush="#FF6A98BD" BorderThickness="0,1,0,0" Padding="8">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0" >
-                <Button Content="Connect" x:Name="ucConnect" Margin="10 0 0 0" MinWidth="70" Padding="6 2" Click="ucConnectButton_Click" IsDefault="True"/>
-                <Button Content="Cancel" x:Name="ucCancelButton" Margin="10 0 0 0" MinWidth="70" Padding="6 2" Click="ucCancelButton_Click" IsCancel="True"/>
+                <Button Content="Connect" Margin="10 0 0 0" MinWidth="70" Padding="6 2" Click="ucConnectButton_Click" IsDefault="True"/>
+                <Button Content="Cancel"  Margin="10 0 0 0" MinWidth="70" Padding="6 2" Click="ucCancelButton_Click" IsCancel="True"/>
             </StackPanel>
         </Border>
     </Grid>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Annotations;
@@ -11,9 +12,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         private string _sharePoinWebtUrl;
         private bool _showAdvanceOptions;
 
-        [NotNull]
+        public ConnectWindowModel()
+        {
+            SharePointWebUrlHistory = new ObservableCollection<string>( Config.SharePointUrlHistory );
+            if( SharePointWebUrlHistory.Count > 0 ) SharePointWebUrl = SharePointWebUrlHistory[0];
+            ProviderType = Config.LastSelectedProvider;
+            UserName = Config.LastUser;
+            UsersHistory = new ObservableCollection<string>(Config.UsersHistory);
+            UseCurrentUser = Config.UseCurrentUser;
+        }
+
         [Required]
-        public string SharePoinWebtUrl
+        public string SharePointWebUrl
         {
             get { return _sharePoinWebtUrl; }
             set
@@ -23,6 +33,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<string> SharePointWebUrlHistory { get; set; }
 
         public bool ShowAdvanceOptions
         {
@@ -35,22 +47,44 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
             }
         }
 
-        [NotNull]
+
         [Required]
         public string UserName { get; set; }
-        [NotNull]
         public string UserPassword { get; set; }
         public SharePointProviderType ProviderType { get; set; }
-#if DEBUG 
-            = SharePointProviderType.Fake;
-#endif
+        public ObservableCollection<string> UsersHistory { get; set; }
+        public bool UseCurrentUser { get; set; }
 
+        public bool UseSpecificUser
+        {
+            get { return !UseCurrentUser; }
+            set { UseSpecificUser = !value; }
+        }
+
+        #region Property change
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        public void Save()
+        {
+            Config.UseCurrentUser = UseCurrentUser;
+            Config.LastSelectedProvider = ProviderType;
+            Config.SharePointUrlHistory = SharePointWebUrlHistory;
+            Config.UseCurrentUser = UseCurrentUser;
+            Config.UsersHistory = UsersHistory;
+        }
+
+        public void AddNewUrl(string url)
+        {
+            var index = SharePointWebUrlHistory.IndexOf(url);
+            if (index >= 0) SharePointWebUrlHistory.RemoveAt(index);
+            SharePointWebUrlHistory.Insert(0, url);
         }
     }
 }
