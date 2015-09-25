@@ -15,7 +15,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
         {
             get
             {
-                return Columns[name];
+                return Columns.ContainsKey(name)
+                    ? Columns[name]
+                    : null;
             }
         }
 
