@@ -85,7 +85,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 context.ExecuteQuery();
 
                 return items.Cast<ListItem>()
-                        .Select(i => new Model.ListItem
+                        .Select(i => new Model.ListItem(query.List)
                         {
                             Id = i.Id,
                             Columns =
@@ -135,6 +135,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     Type = (Model.FieldType) f.FieldTypeKind
                 }).ToList();
             }
+        }
+
+        public void SaveItem(Model.ListItem item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

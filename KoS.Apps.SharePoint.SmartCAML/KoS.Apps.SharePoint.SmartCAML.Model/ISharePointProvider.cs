@@ -10,5 +10,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
 
         List<ListItem> ExecuteQuery(ListQuery query);
         void FillListFields(SList list);
+        void SaveItem(ListItem item);
     }
 }

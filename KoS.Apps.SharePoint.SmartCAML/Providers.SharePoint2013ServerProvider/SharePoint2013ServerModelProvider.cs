@@ -79,7 +79,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
                     var listQuery = new SPQuery {Query = query.Query};
 
                     return serverList.GetItems(listQuery).Cast<SPListItem>()
-                        .Select(i => new ListItem
+                        .Select(i => new ListItem( query.List)
                         {
                             Id = i.ID,
                             Columns =
@@ -113,6 +113,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
                     }).ToList();
                 }
             }
+        }
+
+        public void SaveItem(ListItem item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

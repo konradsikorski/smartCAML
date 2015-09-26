@@ -72,7 +72,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
         {
             return new List<ListItem>
             {
-                new ListItem { Id = 1, Columns = new Dictionary<string, string>
+                new ListItem (query.List) { Id = 1, Columns = new Dictionary<string, string>
                     {
                         { Internals.Text        , "Test1" },
                         { Internals.User        , "Owner1" },
@@ -99,7 +99,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                         { Internals.Geolocation , "Geolocation1" },
                     }
                 },
-                new ListItem { Id = 1, Columns = new Dictionary<string, string>
+                new ListItem (query.List) { Id = 1, Columns = new Dictionary<string, string>
                     {
                         { Internals.Text, "Test2" },
                         { Internals.User, "Owner2" },
@@ -107,7 +107,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                         { Internals.Url         , null },
                     }
                 },
-                new ListItem { Id = 1, Columns = new Dictionary<string, string>
+                new ListItem (query.List) { Id = 1, Columns = new Dictionary<string, string>
                     {
                         { Internals.Text, "Test3" },
                         { Internals.User, "Owner3" }
@@ -146,6 +146,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
             };
 
             list.Fields = fields;
+        }
+
+        public void SaveItem(ListItem item)
+        {
+            throw new NotImplementedException();
         }
     }
 }
