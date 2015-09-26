@@ -41,7 +41,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                     {
                         Header = column.Header,
                         Width = 100,
-                        Binding = new Binding($"[{column.Bind}]") { Mode = BindingMode.OneWay}
+                        Binding = new Binding($"[{column.Bind}]") { Mode = BindingMode.TwoWay}
                     });
                 }
             }

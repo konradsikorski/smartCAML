@@ -24,6 +24,15 @@
                 <Setter Property="FontSize" Value="12" />
             </Style>
         </Grid.Resources>-->
-        <DataGrid x:Name="ucItems" AutoGenerateColumns="False" HeadersVisibility="All" SelectionMode="Extended" HorizontalGridLinesBrush="#FF726F6F" VerticalGridLinesBrush="#FF898989" AlternatingRowBackground="#FFD0D5F3" SelectionUnit="Cell" />
+        <DataGrid x:Name="ucItems" 
+                  AutoGenerateColumns="False" 
+                  HeadersVisibility="All" 
+                  SelectionMode="Extended" 
+                  HorizontalGridLinesBrush="#FF726F6F" 
+                  VerticalGridLinesBrush="#FF898989"
+                  AlternatingRowBackground="#FFD0D5F3" 
+                  SelectionUnit="Cell"
+                  IsReadOnly="False"
+                  />
     </Grid>
 </UserControl>
