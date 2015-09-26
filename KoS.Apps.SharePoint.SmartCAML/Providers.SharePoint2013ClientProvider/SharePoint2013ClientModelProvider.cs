@@ -139,7 +139,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
         public void SaveItem(Model.ListItem item)
         {
-            throw new NotImplementedException();
+            using (var context = CreateContext(item.List.Web.Url))
+            {
+                var serverList = context.Web.Lists.GetById(item.List.Id);
+                var serverItem = serverList.GetItemById(item.Id);
+
+                foreach (var change in item.Changes)
+                {
+                    serverItem[change.Key] = change.Value;
+                }
+
+                serverItem.Update();
+
+                context.Load(serverItem);
+                context.ExecuteQuery();
+            }
         }
     }
 }

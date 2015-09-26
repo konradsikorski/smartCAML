@@ -16,7 +16,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
         private SPSite CreateSite(string url)
         {
             var site = new SPSite(url);
-            
+
             if (!String.IsNullOrEmpty(_userName))
             {
                 using (site)
@@ -38,7 +38,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
             {
                 using (var web = site.OpenWeb())
                 {
-                    Web = new Web (this)
+                    Web = new Web(this)
                     {
                         Id = web.ID,
                         Url = url,
@@ -60,7 +60,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
 
         public Web Connect(string url, string userName, string password)
         {
-            if( String.IsNullOrEmpty(userName) != String.IsNullOrEmpty(password))
+            if (String.IsNullOrEmpty(userName) != String.IsNullOrEmpty(password))
                 throw new ArgumentException("The user or password is null.");
 
             _userName = userName;
@@ -79,15 +79,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
                     var listQuery = new SPQuery {Query = query.Query};
 
                     return serverList.GetItems(listQuery).Cast<SPListItem>()
-                        .Select(i => new ListItem( query.List)
+                        .Select(i => new ListItem(query.List)
                         {
                             Id = i.ID,
                             Columns =
                                 query.List
-                                .Fields
-                                .ToDictionary(
-                                    f => f.InternalName,
-                                    f => i.GetFormattedValue(f.InternalName))
+                                    .Fields
+                                    .ToDictionary(
+                                        f => f.InternalName,
+                                        f => i.GetFormattedValue(f.InternalName))
                         })
                         .ToList();
                 }
@@ -109,7 +109,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
                         Title = f.Title,
                         InternalName = f.InternalName,
                         Group = f.Group,
-                        Type = (FieldType)f.Type
+                        Type = (FieldType) f.Type
                     }).ToList();
                 }
             }
@@ -117,7 +117,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
 
         public void SaveItem(ListItem item)
         {
-            throw new NotImplementedException();
+            using (var site = CreateSite(item.List.Web.Url))
+            {
+                using (var web = site.OpenWeb())
+                {
+                    var serverList = web.Lists[item.List.Id];
+                    var serverItem = serverList.GetItemById(item.Id);
+
+                    foreach (var change in item.Changes)
+                    {
+                        serverItem[change.Key] = change.Value;
+                    }
+
+                    serverItem.Update();
+                }
+            }
         }
     }
 }
