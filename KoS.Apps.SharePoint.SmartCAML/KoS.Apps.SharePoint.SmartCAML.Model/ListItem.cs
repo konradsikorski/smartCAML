@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Model
 {
@@ -10,6 +6,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
     {
         public int Id { get; set; }
         public Dictionary<string, string> Columns = new Dictionary<string, string>();
+        public List<string> Changes = new List<string>();
 
         public string this[string name]
         {
@@ -18,6 +15,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
                 return Columns.ContainsKey(name)
                     ? Columns[name]
                     : null;
+            }
+            set
+            {
+                if (!Columns.ContainsKey(name)) return;
+
+                Columns[name] = value;
+                if( !Changes.Contains(name)) Changes.Add(name);
             }
         }
 
