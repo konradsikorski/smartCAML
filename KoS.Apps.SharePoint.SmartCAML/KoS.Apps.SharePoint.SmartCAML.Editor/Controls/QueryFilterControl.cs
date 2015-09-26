@@ -27,6 +27,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         public event EventHandler RemoveClick;
         public event EventHandler Changed;
+        public event EventHandler Up;
+        public event EventHandler Down;
 
 
         public QueryFilterControl()
@@ -105,6 +107,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
                 return control;
             }
+        }
+
+        private void UpButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Up?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void DownButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Down?.Invoke(this, EventArgs.Empty);
         }
     }
 }

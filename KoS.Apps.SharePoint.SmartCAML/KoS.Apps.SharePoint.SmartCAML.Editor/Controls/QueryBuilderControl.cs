@@ -29,15 +29,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             AddFilter();
         }
 
-        private void AddFilter()
-        {
-            var filterControl = new QueryFilterControl();
-            filterControl.RemoveClick += QueryFilterControl_OnRemoveClick;
-            filterControl.Changed += (sender, args) => Changed?.Invoke(this, EventArgs.Empty);
-
-            ucFilters.Children.Add(filterControl);
-        }
-
         private void AddFilterButton_Click(object sender, RoutedEventArgs e)
         {
             AddFilter();
@@ -46,6 +37,43 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         private void QueryFilterControl_OnRemoveClick(object sender, EventArgs e)
         {
             ucFilters.Children.Remove((UIElement)sender);
+            Changed?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void AddFilter()
+        {
+            var filterControl = new QueryFilterControl();
+            filterControl.RemoveClick += QueryFilterControl_OnRemoveClick;
+            filterControl.Changed += (sender, args) => Changed?.Invoke(this, EventArgs.Empty);
+            filterControl.Up += MoveFilterUp;
+            filterControl.Down += MoveFilterDown;
+
+            ucFilters.Children.Add(filterControl);
+        }
+
+        private void MoveFilterDown(object control, EventArgs eventArgs)
+        {
+            var filterControl = (UIElement)control;
+            var index = ucFilters.Children.IndexOf(filterControl);
+
+            if (index > 0)
+                MoveFilter(filterControl, index + 1);
+        }
+
+        private void MoveFilterUp(object control, EventArgs eventArgs)
+        {
+            var filterControl = (UIElement)control;
+            var index = ucFilters.Children.IndexOf(filterControl);
+
+            if (index > 0)
+                MoveFilter(filterControl, index - 1);
+        }
+
+        private void MoveFilter(UIElement filterControl, int newIndex)
+        {
+            ucFilters.Children.Remove(filterControl);
+            ucFilters.Children.Insert(newIndex, filterControl);
+
             Changed?.Invoke(this, EventArgs.Empty);
         }
 

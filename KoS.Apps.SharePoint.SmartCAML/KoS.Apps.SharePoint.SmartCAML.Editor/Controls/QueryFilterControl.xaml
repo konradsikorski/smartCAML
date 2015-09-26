@@ -25,12 +25,23 @@
                 <componentModel:SortDescription PropertyName="InternalName" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="#FF6F6F89"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FF5492EC"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <StackPanel x:Name="ucContainer" Orientation="Horizontal">
-        <Button Content="x"  Margin="4,0,0,0" Click="RemoveFilterButton_Click" Background="Transparent" Padding="4, 0" BorderBrush="Transparent" />
+        <Button Content="✖"  Margin="4,0,0,0" Click="RemoveFilterButton_Click" Background="Transparent" Padding="4, 0" BorderBrush="Transparent" />
+        <Button Content="▲" Click="UpButton_OnClick" Background="Transparent" BorderBrush="Transparent" Padding="4, 0" />
+        <Button Content="▼" Click="DownButton_OnClick" Background="Transparent" BorderBrush="Transparent" Padding="4, 0" />
         <ComboBox x:Name="ucAndOr" Margin="4,0,0,0"/>
         <ComboBox x:Name="ucField" Margin="4,0,0,0" ToolTip="Field" ItemsSource="{Binding Source={StaticResource Fields}}" DisplayMemberPath="InternalName" SelectionChanged="ucField_OnSelectionChanged" />
     </StackPanel>
-            
+
 </UserControl>
