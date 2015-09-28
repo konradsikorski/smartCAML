@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Model
 {
-    public class FieldChoice : Field
+    public class FieldChoice : Field, IMultiValueField
     {
         public FieldChoice() { Type = FieldType.Choice; }
         public IEnumerable<string> Choices { get; set; }
+
+        public bool AllowMultivalue => Type == FieldType.MultiChoice;
     }
 }

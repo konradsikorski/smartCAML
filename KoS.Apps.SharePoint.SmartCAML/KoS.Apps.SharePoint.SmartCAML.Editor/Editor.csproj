@@ -81,6 +81,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utils\VersionUtil.cs" />
     <Page Include="Controls\FilterBuilder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +106,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialogs\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\ConnectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,6 +129,9 @@
     <Compile Include="Builder\QueryBuilder.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Controls\WatermarkComboBox.cs" />
+    <Compile Include="Dialogs\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ComboBoEnumxExtension.cs" />
     <Compile Include="Controls\FilterBuilder.cs">
       <DependentUpon>FilterBuilder.xaml</DependentUpon>

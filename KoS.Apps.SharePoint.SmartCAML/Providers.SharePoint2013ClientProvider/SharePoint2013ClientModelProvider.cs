@@ -161,8 +161,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 switch (listField.FieldTypeKind)
                 {
                     case FieldType.Choice:
-                    case FieldType.MultiChoice:
                         context.Load((Client.FieldChoice)listField, f => f.Choices);
+                        break;
+                    case FieldType.MultiChoice:
+                        context.Load((Client.FieldMultiChoice)listField, f => f.Choices);
                         break;
                 }
             }
@@ -177,10 +179,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             switch (listField.FieldTypeKind)
             {
                 case FieldType.Choice:
-                case FieldType.MultiChoice:
                     field = new Model.FieldChoice
                     {
                         Choices = ((Client.FieldChoice)listField).Choices
+                    };
+                    break;
+                case FieldType.MultiChoice:
+                    field = new Model.FieldChoice
+                    {
+                        Choices = ((Client.FieldMultiChoice)listField).Choices
                     };
                     break;
 

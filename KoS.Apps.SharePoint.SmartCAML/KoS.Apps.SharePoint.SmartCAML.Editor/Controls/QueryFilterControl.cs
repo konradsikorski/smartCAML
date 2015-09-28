@@ -17,6 +17,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     {
         public ComboBox ucFilterOperator;
         public Control ucFieldValue;
+        public ComboBox ucLookupAs;
 
         public QueryOperator SelectedQueryOperator => ucAndOr.SelectedEnum<QueryOperator>().Value;
         public Field SelectedField => (Field)ucField.SelectedItem;
@@ -29,6 +30,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         public event EventHandler Changed;
         public event EventHandler Up;
         public event EventHandler Down;
+
+        private int _controlWidth = 100;
+        private Thickness _controlMargin = new Thickness(4, 0, 0, 0);
 
 
         public QueryFilterControl()
@@ -46,11 +50,26 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             {
                 if (ucFilterOperator == null)
                 {
-                    ucFilterOperator = new ComboBox {MinWidth = 100, Margin = new Thickness(4, 0, 0, 0)};
+                    ucFilterOperator = new ComboBox {MinWidth = _controlWidth, Margin = _controlMargin };
                     ucFilterOperator.BindToEnum<FilterOperator>();
                     ucFilterOperator.SelectionChanged += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
 
                     ucContainer.Children.Add(ucFilterOperator);
+                }
+
+                if (ucLookupAs != null) ucContainer.Children.Remove(ucLookupAs);
+                if (field.Type == FieldType.Lookup)
+                {
+                    ucLookupAs = new ComboBox
+                    {
+                        MinWidth = _controlWidth,
+                        Margin = _controlMargin,
+                        IsEditable = false,
+                        ItemsSource = new[] {"as lookup id", "as lookpu text"},
+                        SelectedIndex = 0
+                    };
+
+                    ucContainer.Children.Add(ucLookupAs);
                 }
 
                 if(ucFieldValue != null ) ucContainer.Children.Remove(ucFieldValue);
@@ -77,7 +96,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         {
             if (field.Type == FieldType.DateTime)
             {
-                var control = new DateTimePicker {MinWidth = 100, Margin = new Thickness(4, 0, 4, 0)};
+                var control = new DateTimePicker {MinWidth = _controlWidth, Margin = _controlMargin };
                 control.TimeFormat = DateTimeFormat.ShortDate;
                 ValueSelector = () => control.Text;
 
@@ -95,15 +114,25 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             }
             else
             {
-                var control = new ComboBox {MinWidth = 100, Margin = new Thickness(4, 0, 4, 0)};
+                var control = new ComboBox {MinWidth = _controlWidth, Margin = _controlMargin };
                 control.IsEditable = true;
-                ValueSelector = () => control.Text;
+                ValueSelector = () => String.IsNullOrEmpty(control.SelectedValue?.ToString()) ? control.Text : control.SelectedValue?.ToString();
 
                 control.SelectionChanged += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
                 control.LostFocus += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
 
                 if (field.Type == FieldType.Choice) control.ItemsSource = ((FieldChoice) field).Choices.OrderBy(c => c);
-                else if (field.Type == FieldType.Boolean) control.ItemsSource = new[] {"0", "1"};
+                else if (field.Type == FieldType.Boolean)
+                {
+                    control.DisplayMemberPath = "Text";
+                    control.SelectedValuePath = "Value";
+                    control.ItemsSource = new[]
+                    {
+                        new {Value = "0", Text = "False"},
+                        new {Value = "1", Text = "True"}
+                    };
+                }
+                else if (field.Type == FieldType.User) control.ItemsSource = new[] { "@Me" };
 
                 return control;
             }

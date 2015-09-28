@@ -11,6 +11,7 @@
         <CommandBinding x:Name="ConnectCommand" Command="ApplicationCommands.New"  CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
         <CommandBinding x:Name="NewQueryCommand" Command="ApplicationCommands.Open" CanExecute="NewQuery_CanExecute" Executed="NewQuery_Executed"/>
         <CommandBinding x:Name="RunQueryCommand" Command="Copy" CanExecute="RunQueryCommand_CanExecute" Executed="RunQueryCommand_Executed"/>
+        <CommandBinding x:Name="AboutCommand" Command="ApplicationCommands.Help" Executed="AboutCommand_Executed"/>
     </Window.CommandBindings>
     
     <DockPanel >
@@ -29,6 +30,9 @@
             </ToolBar>
             <ToolBar>
                 <Button Command="Copy" Content="Run Query" />
+            </ToolBar>
+            <ToolBar>
+                <Button Command="ApplicationCommands.Help" Content="?" />
             </ToolBar>
         </ToolBarTray>
         <StatusBar DockPanel.Dock="Bottom" Height="20"/>

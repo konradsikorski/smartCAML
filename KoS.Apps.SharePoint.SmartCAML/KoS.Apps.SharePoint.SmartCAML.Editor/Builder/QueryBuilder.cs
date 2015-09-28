@@ -20,7 +20,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             return New(QueryOperator.And, @operator, type, internalName, value);
         }
 
-        public QueryFilter New(QueryOperator queryOperator, FilterOperator? @operator, FieldType type, string internalName, string value = null)
+        public QueryFilter New(QueryOperator queryOperator, FilterOperator? @operator, FieldType type, string internalName, string value = null, bool asLookupId = false)
         {
             var filter = Build(queryOperator, @operator, type, internalName, value);
 

@@ -45,6 +45,7 @@
     <Compile Include="FieldDateTime.cs" />
     <Compile Include="FieldLookup.cs" />
     <Compile Include="FieldType.cs" />
+    <Compile Include="IMultiValueField.cs" />
     <Compile Include="ISharePointProvider.cs" />
     <Compile Include="ListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

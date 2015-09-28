@@ -3,6 +3,7 @@ using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
 using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 using System.Windows;
 using System.Windows.Input;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor
@@ -15,6 +16,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         public MainWindow()
         {
             InitializeComponent();
+            this.Title = "SmartCAML [v. " + VersionUtil.GetVersion() + "]";
         }
 
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -61,6 +63,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             var query = ucQueries.SelectedQueryTab.GetQuery();
             var items = ucWebs.GetClient(ucQueries.SelectedQueryTab.List.Web).ExecuteQuery(query);
             ucQueries.SelectedQueryTab.QueryResult(items);
+        }
+
+        private void AboutCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            new AboutWindow().ShowDialog();
         }
     }
 }
