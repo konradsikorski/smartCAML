@@ -123,6 +123,7 @@
     <Compile Include="BindingConverters\RadioButtonCheckedConverter.cs" />
     <Compile Include="Builder\QueryBuilder.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Controls\WatermarkComboBox.cs" />
     <Compile Include="Extensions\ComboBoEnumxExtension.cs" />
     <Compile Include="Controls\FilterBuilder.cs">
       <DependentUpon>FilterBuilder.xaml</DependentUpon>
@@ -159,6 +160,10 @@
     <Page Include="Style\LabelStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\ClosableTabStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Style\LinkButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>

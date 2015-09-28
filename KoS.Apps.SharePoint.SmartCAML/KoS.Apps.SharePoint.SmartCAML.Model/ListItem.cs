@@ -42,6 +42,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
             }
         }
 
+        public void Update()
+        {
+            List.Web.Client.SaveItem(this);
+            Saved();
+        }
+
         public void Saved()
         {
             Changes.Clear();

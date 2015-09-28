@@ -32,7 +32,9 @@
                   VerticalGridLinesBrush="#FF898989"
                   AlternatingRowBackground="#FFD0D5F3" 
                   SelectionUnit="Cell"
-                  IsReadOnly="False"
+                  IsReadOnly="False" 
+                  RowEditEnding="ucItems_RowEditEnding"
+                  
                   />
     </Grid>
 </UserControl>

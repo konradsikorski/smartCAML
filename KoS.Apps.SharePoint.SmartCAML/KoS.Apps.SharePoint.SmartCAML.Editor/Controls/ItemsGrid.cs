@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
@@ -47,9 +38,26 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             }
         }
 
-        internal void QueryResult(List<SmartCAML.Model.ListItem> items)
+        internal void QueryResult(List<ListItem> items)
         {
             ucItems.ItemsSource = items;
+        }
+
+        private void ucItems_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Cancel) return;
+
+            //var item = (ListItem)e.Row.DataContext;
+            //try
+            //{
+            //    item.Update();
+            //}
+            //catch (Exception)
+            //{
+            //    item.CancelChanges();
+            //    e.Cancel = true;
+            //    ucItems.CancelEdit();
+            //}
         }
     }
 }
