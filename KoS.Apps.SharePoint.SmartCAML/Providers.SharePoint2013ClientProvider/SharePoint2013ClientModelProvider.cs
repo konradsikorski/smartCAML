@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using KoS.Apps.SharePoint.SmartCAML.Model;
 using Microsoft.SharePoint.Client;
+using Client = Microsoft.SharePoint.Client;
+using Field = Microsoft.SharePoint.Client.Field;
+using FieldType = Microsoft.SharePoint.Client.FieldType;
+using ListItem = Microsoft.SharePoint.Client.ListItem;
 using Web = KoS.Apps.SharePoint.SmartCAML.Model.Web;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
@@ -124,16 +128,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
                 context.ExecuteQuery();
 
-                list.Fields = serverList.Fields.Cast<Field>().Select(f => new Model.Field
-                {
-                    Id = f.Id,
-                    IsHidden = f.Hidden,
-                    IsReadonly = f.ReadOnlyField,
-                    Title = f.Title,
-                    InternalName = f.InternalName,
-                    Group = f.Group,
-                    Type = (Model.FieldType) f.FieldTypeKind
-                }).ToList();
+                var listFields = serverList.Fields.Cast<Field>().ToList();
+                LoadFields(context, listFields);
+
+                list.Fields = listFields.Select(f => CreateField(f)).ToList();
             }
         }
 
@@ -154,6 +152,60 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 context.Load(serverItem);
                 context.ExecuteQuery();
             }
+        }
+
+        private void LoadFields(ClientContext context, List<Field> listFields)
+        {
+            foreach (var listField in listFields)
+            {
+                switch (listField.FieldTypeKind)
+                {
+                    case FieldType.Choice:
+                    case FieldType.MultiChoice:
+                        context.Load((Client.FieldChoice)listField, f => f.Choices);
+                        break;
+                }
+            }
+
+            if(context.HasPendingRequest) context.ExecuteQuery();
+        }
+
+        private Model.Field CreateField(Field listField)
+        {
+            Model.Field field;
+
+            switch (listField.FieldTypeKind)
+            {
+                case FieldType.Choice:
+                case FieldType.MultiChoice:
+                    field = new Model.FieldChoice
+                    {
+                        Choices = ((Client.FieldChoice)listField).Choices
+                    };
+                    break;
+
+                case FieldType.DateTime:
+                    field = new Model.FieldDateTime();
+                    break;
+
+                case FieldType.Lookup:
+                    field = new Model.FieldLookup();
+                    break;
+
+                default:
+                    field = new Model.Field();
+                    break;
+            }
+
+            field.Id = listField.Id;
+            field.IsHidden = listField.Hidden;
+            field.IsReadonly = listField.ReadOnlyField;
+            field.Title = listField.Title;
+            field.InternalName = listField.InternalName;
+            field.Group = listField.Group;
+            field.Type = (Model.FieldType) listField.FieldTypeKind;
+
+            return field;
         }
     }
 }
