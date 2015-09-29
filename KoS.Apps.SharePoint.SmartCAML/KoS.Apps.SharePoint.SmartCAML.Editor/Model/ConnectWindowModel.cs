@@ -11,6 +11,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
     {
         private string _sharePoinWebtUrl;
         private bool _showAdvanceOptions;
+        private SharePointProviderType _providerType;
 
         public ConnectWindowModel()
         {
@@ -51,7 +52,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         [Required]
         public string UserName { get; set; }
         public string UserPassword { get; set; }
-        public SharePointProviderType ProviderType { get; set; }
+
+        public SharePointProviderType ProviderType
+        {
+            get { return _providerType; }
+            set
+            {
+                if (value == _providerType) return;
+                _providerType = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<string> UsersHistory { get; set; }
         public bool UseCurrentUser { get; set; }
 

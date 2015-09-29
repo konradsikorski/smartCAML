@@ -16,11 +16,17 @@
         MinHeight="100"
         MinWidth="200"
         ShowInTaskbar="False" SizeToContent="Height" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" Background="#FFE4EEFF" 
-        d:DataContext="{d:DesignInstance model:ConnectWindowModel}">
+        d:DataContext="{d:DesignInstance model:ConnectWindowModel}"
+        >
+    <!--d:DataContext="{d:DesignInstance model:ConnectWindowModel}"-->
     <Window.Resources>
         <bindingConverters:RadioButtonCheckedConverter x:Key="EnumConverter" />
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <bindingConverters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
         <bindingConverters:BoolToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter" True="Collapsed" False="Visible" />
+        <!--<BooleanToVisibilityConverter x:Key="EnumConverter" />
+        <BooleanToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter" />-->
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
 
     <Grid>
@@ -31,7 +37,11 @@
         <StackPanel Margin="14">
             <TextBlock Style="{DynamicResource Label}">SharePoint Site Url:</TextBlock>
             <ComboBox IsEditable="True" Text="{Binding SharePointWebUrl}" ItemsSource="{Binding SharePointWebUrlHistory}" />
-            <Button Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource InvertBooleanToVisibilityConverter}}" Style="{StaticResource LinkButton}" Click="AdvanceOptionsButton_Click" HorizontalAlignment="Right" Margin="0,2,0,0">Advance options</Button>
+
+            <Grid Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource InvertBooleanToVisibilityConverter}}" Margin="0,2,0,0">
+                <TextBlock Text="{Binding Path=ProviderType, Converter={StaticResource EnumDescriptionConverter}, Mode=OneWay}" Foreground="#FF6E6E6E" />
+                <Button Style="{StaticResource LinkButton}" Click="AdvanceOptionsButton_Click" HorizontalAlignment="Right" >Advance options</Button>
+            </Grid>
 
             <StackPanel  Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <TextBlock Style="{DynamicResource Label}" Margin="0,8,0,0">API:</TextBlock>

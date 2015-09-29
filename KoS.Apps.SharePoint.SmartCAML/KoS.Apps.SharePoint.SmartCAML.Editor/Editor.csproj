@@ -81,6 +81,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindingConverters\EnumDescriptionConverter.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="Utils\RefactorUtil.cs" />
     <Compile Include="Utils\VersionUtil.cs" />
     <Page Include="Controls\FilterBuilder.xaml">
       <SubType>Designer</SubType>
@@ -132,7 +135,7 @@
     <Compile Include="Dialogs\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\ComboBoEnumxExtension.cs" />
+    <Compile Include="Extensions\ComboToEnumExtension.cs" />
     <Compile Include="Controls\FilterBuilder.cs">
       <DependentUpon>FilterBuilder.xaml</DependentUpon>
     </Compile>
