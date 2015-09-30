@@ -24,7 +24,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         public FilterOperator? SelectedFilterOperator => ucFilterOperator.SelectedEnum<FilterOperator>().GetValueOrDefault();
         public string SelectedValue => ValueSelector();
 
-        private Func<string> ValueSelector; 
+        private Func<string> ValueSelector = () => null; 
 
         public event EventHandler RemoveClick;
         public event EventHandler Changed;
@@ -52,7 +52,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                 {
                     ucFilterOperator = new ComboBox {MinWidth = _controlWidth, Margin = _controlMargin };
                     ucFilterOperator.BindToEnum<FilterOperator>();
-                    ucFilterOperator.SelectionChanged += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
+                    ucFilterOperator.SelectionChanged += (o, args) =>
+                    {
+                        if (SelectedFilterOperator == FilterOperator.IsNotNull || SelectedFilterOperator == FilterOperator.IsNull)
+                        {
+                            if (ucFieldValue != null)
+                            {
+                                ucContainer.Children.Remove(ucFieldValue);
+                                ucFieldValue = null;
+                                ValueSelector = () => null;
+                            }
+                        }
+                        else if(ucFieldValue == null) RefreshValueField(SelectedField);
+
+                        Changed?.Invoke(this, EventArgs.Empty);
+                    };
 
                     ucContainer.Children.Add(ucFilterOperator);
                 }
@@ -72,16 +86,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                     ucContainer.Children.Add(ucLookupAs);
                 }
 
-                if(ucFieldValue != null ) ucContainer.Children.Remove(ucFieldValue);
-                ucFieldValue = BuildFieldValueControl(field);
-
-                ucContainer.Children.Add(ucFieldValue);
+                RefreshValueField(field);
             }
         }
 
         private void RemoveFilterButton_Click(object sender, RoutedEventArgs e)
         {
             RemoveClick?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void RefreshValueField(Field field)
+        {
+            if (ucFieldValue != null) ucContainer.Children.Remove(ucFieldValue);
+            ucFieldValue = BuildFieldValueControl(field);
+
+            if (ucFieldValue != null) ucContainer.Children.Add(ucFieldValue);
         }
 
         public void BuildQuery(QueryBuilder builder)

@@ -37,7 +37,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
 
         public Web Connect(string url)
         {
-            if (!url.Contains("test")) return null;
+            if (!url.StartsWith("http")) return null;
 
             Web = new Web(this)
             {
