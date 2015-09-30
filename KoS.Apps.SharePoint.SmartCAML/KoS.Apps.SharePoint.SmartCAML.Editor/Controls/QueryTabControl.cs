@@ -7,7 +7,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 {
     public class QueryTabControl : TabControl
     {
-        public QueryTab SelectedQueryTab => (QueryTab)((TabItem)this.SelectedItem)?.Content;
+        public QueryTab SelectedQueryTab => ToQueryTab(this.SelectedItem);
          
         public void AddQuery(SList list)
         {
@@ -22,6 +22,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                 });
 
             CommandManager.InvalidateRequerySuggested();
+        }
+
+        public void CloseWeb(Web web)
+        {
+            for (int i = 0; i < Items.Count; i++)
+            {
+                var queryTab = ToQueryTab(this.Items[i]);
+                if(queryTab.List.Web == web) this.Items.RemoveAt(i--);
+            }
+        }
+
+        public QueryTab ToQueryTab(object tab)
+        {
+            return (QueryTab) ((TabItem) tab)?.Content;
         }
     }
 }

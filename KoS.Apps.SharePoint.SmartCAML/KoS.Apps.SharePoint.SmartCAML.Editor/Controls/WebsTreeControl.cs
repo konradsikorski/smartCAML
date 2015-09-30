@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Model;
 using KoS.Apps.SharePoint.SmartCAML.Model;
-using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 {
@@ -15,6 +15,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     public partial class WebsTreeControl : UserControl
     {
         public ObservableCollection<ListTreeItem> Webs = new ObservableCollection<ListTreeItem>();
+
+        public event EventHandler<Web> CloseWeb;
 
         public SList SelectedList
             => ucLists.ItemsSource != null ?
@@ -45,6 +47,31 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         public ISharePointProvider GetClient(Web web)
         {
             return Webs.FirstOrDefault(client => client.Client.Web == web)?.Client;
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var web = (Web)((Button)sender).Tag;
+
+            this.Webs.Remove(this.Webs.First(w => w.Client.Web == web));
+            CloseWeb?.Invoke(this, web);
+        }
+
+        private void UIElement_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            SetCloseButtonVisibility((Grid)sender, true);
+        }
+
+        private void UIElement_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            SetCloseButtonVisibility((Grid) sender, false);
+        }
+
+        private void SetCloseButtonVisibility(Grid grid, bool visible)
+        {
+            grid.Children.OfType<Button>().First().Visibility = visible 
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
     }
 }

@@ -7,20 +7,56 @@
              xmlns:model="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Model"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <Style x:Key="CloseButton" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="#FF6F6F89"/>
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="4,0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Background" Value="Transparent" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Crimson"/>
+                    <Setter Property="Background" Value="Transparent" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
 
     <TreeView Name="ucLists" MouseDoubleClick="ucLists_MouseDoubleClick">
         <TreeView.ItemContainerStyle>
             <Style TargetType="{x:Type TreeViewItem}">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
                 <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="LemonChiffon" />
+                    </Trigger>
+                </Style.Triggers>
+
+                <!-- == == BEGIN HERE == == -->
+                <Style.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Grid.ColumnSpan" Value="2" />
+                    </Style>
+                </Style.Resources>
+                <!-- == == == END == == == -->
             </Style>
         </TreeView.ItemContainerStyle>
         <TreeView.Resources>
             <HierarchicalDataTemplate DataType="{x:Type model:ListTreeItem}" ItemsSource="{Binding Path=Client.Web.Lists, Mode=OneWay}" >
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../Resources/Images/web.png" Margin="4,0" Height="16"/>
-                    <TextBlock Text="{Binding Path=Client.Web.Title, Mode=OneWay}" />
-                </StackPanel>
+                <Grid MouseEnter="UIElement_OnMouseEnter" MouseLeave="UIElement_OnMouseLeave">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="../Resources/Images/web.png" Margin="4,0" Height="16"/>
+                    <TextBlock Grid.Column="1" Text="{Binding Path=Client.Web.Title, Mode=OneWay}" />
+                    <Button Grid.Column="2" Content="✖" Style="{StaticResource CloseButton}" Click="ButtonBase_OnClick" Tag="{Binding Path=Client.Web}" Visibility="Collapsed"/>
+                </Grid>
             </HierarchicalDataTemplate>
             <DataTemplate DataType="{x:Type self:SList}">
                 <StackPanel Orientation="Horizontal">
