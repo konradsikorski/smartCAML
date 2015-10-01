@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600">
+        Title="MainWindow" Height="500" Width="700">
 
     <Window.CommandBindings>
         <CommandBinding x:Name="ConnectCommand" Command="ApplicationCommands.New"  CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
@@ -44,7 +44,7 @@
                 <ColumnDefinition Width="75*" />
             </Grid.ColumnDefinitions>
 
-            <controls:WebsTreeControl Grid.Column="0" x:Name="ucWebs" ListExecute="UcWebs_ListExecute"/>
+            <controls:WebsTreeControl Grid.Column="0" x:Name="ucWebs" ListExecute="UcWebs_ListExecute" CloseWeb="UcWebs_OnCloseWeb"/>
             
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="#FFF0F0F0" />
             <controls:QueryTabControl Grid.Column="2" x:Name="ucQueries" Background="#FFF2F6FF" Margin="0,0,2,0" />

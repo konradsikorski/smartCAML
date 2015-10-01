@@ -69,5 +69,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         {
             new AboutWindow().ShowDialog();
         }
+
+        private void UcWebs_OnCloseWeb(object sender, Web web)
+        {
+            ucQueries.CloseWeb(web);
+        }
     }
 }

@@ -19,8 +19,8 @@
                     <local:QueryBuilderControl x:Name="ucQueryBuilder" Margin="4" />
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Source" >
-                <TextBox x:Name="ucQuery" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FontFamily="Consolas" />
+            <TabItem Header="XML" >
+                <TextBox x:Name="ucQuery" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
             </TabItem>
         </TabControl>
 
