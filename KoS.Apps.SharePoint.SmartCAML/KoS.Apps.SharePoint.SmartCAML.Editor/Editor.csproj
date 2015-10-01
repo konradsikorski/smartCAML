@@ -102,30 +102,38 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingConverters\EnumDescriptionConverter.cs" />
+    <Compile Include="Contols\ClosableTabItem.cs" />
+    <Compile Include="UserControls\ClosableTabHeader.xaml.cs">
+      <DependentUpon>ClosableTabHeader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Utils\RefactorUtil.cs" />
     <Compile Include="Utils\VersionUtil.cs" />
-    <Page Include="Controls\FilterBuilder.xaml">
+    <Page Include="UserControls\ClosableTabHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ItemsGrid.xaml">
+    <Page Include="UserControls\FilterBuilder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\QueryBuilderControl.xaml">
+    <Page Include="UserControls\ItemsGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\QueryFilterControl.xaml">
+    <Page Include="UserControls\QueryBuilderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\QueryTab.xaml">
+    <Page Include="UserControls\QueryFilterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\WebsTreeControl.xaml">
+    <Page Include="UserControls\QueryTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\WebsTreeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,30 +159,30 @@
     <Compile Include="BindingConverters\RadioButtonCheckedConverter.cs" />
     <Compile Include="Builder\QueryBuilder.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Controls\WatermarkComboBox.cs" />
+    <Compile Include="Contols\WatermarkComboBox.cs" />
     <Compile Include="Dialogs\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ComboToEnumExtension.cs" />
-    <Compile Include="Controls\FilterBuilder.cs">
+    <Compile Include="UserControls\FilterBuilder.cs">
       <DependentUpon>FilterBuilder.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\FilterOperator.cs" />
-    <Compile Include="Controls\ItemsGrid.cs">
+    <Compile Include="UserControls\ItemsGrid.cs">
       <DependentUpon>ItemsGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\QueryBuilderControl.cs">
+    <Compile Include="UserControls\QueryBuilderControl.cs">
       <DependentUpon>QueryBuilderControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\QueryFilterControl.cs">
+    <Compile Include="UserControls\QueryFilterControl.cs">
       <DependentUpon>QueryFilterControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\QueryOperator.cs" />
-    <Compile Include="Controls\QueryTab.cs">
+    <Compile Include="UserControls\QueryTab.cs">
       <DependentUpon>QueryTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\QueryTabControl.cs" />
-    <Compile Include="Controls\WebsTreeControl.cs">
+    <Compile Include="Contols\QueryTabControl.cs" />
+    <Compile Include="UserControls\WebsTreeControl.cs">
       <DependentUpon>WebsTreeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ConnectWindow.xaml.cs">

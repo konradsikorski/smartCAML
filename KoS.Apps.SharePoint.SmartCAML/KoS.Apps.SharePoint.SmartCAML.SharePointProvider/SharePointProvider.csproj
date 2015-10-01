@@ -51,7 +51,7 @@
       <Name>Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Providers.SharePoint2013ClientProvider\Providers.SharePoint2013ClientProvider.csproj">
-      <Project>{4F5A56D6-4F74-487D-84E0-E48717DED0CD}</Project>
+      <Project>{4f5a56d6-4f74-487d-84e0-e48717ded0cd}</Project>
       <Name>Providers.SharePoint2013ClientProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\Providers.SharePoint2013ServerProvider\Providers.SharePoint2013ServerProvider.csproj">

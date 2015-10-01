@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="30" d:DesignWidth="300"
              Padding="2">
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">

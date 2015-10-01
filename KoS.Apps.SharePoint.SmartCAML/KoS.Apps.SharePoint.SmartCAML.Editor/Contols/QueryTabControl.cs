@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Contols;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 {
@@ -15,9 +16,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             if(list.Fields?.Count == 0) list.Web.Client.FillListFields(list);
 
             this.SelectedIndex = this.Items.Add(
-                new TabItem
+                new ClosableTabItem
                 {
-                    Header = list.Title,
+                    HeaderText = list.Title,
                     Content = new QueryTab(list) {Margin = new Thickness(4) }
                 });
 
