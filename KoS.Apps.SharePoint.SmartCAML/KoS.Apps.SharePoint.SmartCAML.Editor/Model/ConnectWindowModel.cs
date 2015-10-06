@@ -70,7 +70,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         public bool UseSpecificUser
         {
             get { return !UseCurrentUser; }
-            set { UseSpecificUser = !value; }
+            set { UseCurrentUser = !value; }
         }
 
         #region Property change
