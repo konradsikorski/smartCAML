@@ -1,6 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
-using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 using System.Windows;
 using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
@@ -17,6 +17,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         {
             InitializeComponent();
             this.Title = "SmartCAML [v. " + VersionUtil.GetVersion() + "]";
+            this.Width = Config.WindowWidth;
+            this.Height = Config.WindowHeight;
+            if(Config.WasMaximazed) this.WindowState = WindowState.Maximized;
         }
 
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -73,6 +76,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         private void UcWebs_OnCloseWeb(object sender, Web web)
         {
             ucQueries.CloseWeb(web);
+        }
+
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            Config.WasMaximazed = this.WindowState == WindowState.Maximized;
+            if (!Config.WasMaximazed)
+            {
+                Config.WindowHeight = this.Height;
+                Config.WindowWidth = this.Width;
+            }
         }
     }
 }

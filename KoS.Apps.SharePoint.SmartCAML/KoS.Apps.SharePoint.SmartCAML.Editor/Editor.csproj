@@ -103,6 +103,7 @@
     </ApplicationDefinition>
     <Compile Include="BindingConverters\EnumDescriptionConverter.cs" />
     <Compile Include="Contols\ClosableTabItem.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="UserControls\ClosableTabHeader.xaml.cs">
       <DependentUpon>ClosableTabHeader.xaml</DependentUpon>
     </Compile>

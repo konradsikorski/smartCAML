@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 
@@ -32,6 +33,24 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             set { SetConfig((int)value); }
         }
 
+        public static double WindowWidth
+        {
+            get { return GetConfig(700).ToDouble(); }
+            set { SetConfig(value); }
+        }
+
+        public static double WindowHeight
+        {
+            get { return GetConfig(500).ToDouble(); }
+            set { SetConfig(value); }
+        }
+
+        public static bool WasMaximazed
+        {
+            get { return GetConfig().ToBool(); }
+            set { SetConfig(value);}
+        }
+
         public static string LastUser
         {
             get { return GetConfig(); }
@@ -40,7 +59,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         public static bool UseCurrentUser
         {
-            get { return bool.Parse(GetConfig(true)); }
+            get { return GetConfig(true).ToBool(true); }
             set { SetConfig(value);}
         }
 
@@ -58,7 +77,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         private static void SetCollection<T>(IEnumerable<T> collection, [CallerMemberName] string name = "")
         {
-            ConfigurationManager.AppSettings[name] = String.Join(";#", collection);
+            SetConfig(String.Join(";#", collection), name);
         }
 
         private static string GetConfig(object defaultValue = null, [CallerMemberName] string name = "")
@@ -68,7 +87,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         private static void SetConfig<T>(T value, [CallerMemberName] string name = "")
         {
-            ConfigurationManager.AppSettings[name] = value?.ToString();
+            var newValue = value?.ToString();
+            ConfigurationManager.AppSettings[name] = newValue;
+
+            //---
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            //make changes
+            if (!config.AppSettings.Settings.AllKeys.Contains(name))
+                config.AppSettings.Settings.Add(name, newValue);
+            else
+                config.AppSettings.Settings[name].Value = newValue;
+
+            //save to apply changes
+            config.Save(ConfigurationSaveMode.Modified);
         }
     }
 }
