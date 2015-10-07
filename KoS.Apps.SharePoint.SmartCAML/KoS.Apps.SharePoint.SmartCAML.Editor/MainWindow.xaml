@@ -35,6 +35,12 @@
             </ToolBar>
             <ToolBar>
                 <Button Command="Copy" Content="Run Query" />
+                <Menu Background="Transparent">
+                    <MenuItem Header="Filter">
+                        <MenuItem Header="Show hidden fields" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Show readonly fields" IsCheckable="True" IsChecked="True"/>
+                    </MenuItem>
+                </Menu>
             </ToolBar>
             <ToolBar>
                 <Button Command="ApplicationCommands.Help" Content="?" />
