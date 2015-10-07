@@ -2,40 +2,33 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="26.987" d:DesignWidth="300"
-             Margin="0">
-    <Grid>
+             d:DesignHeight="20" d:DesignWidth="100"
+             Margin="0"
+             Padding="0">
+    <StackPanel Orientation="Horizontal" Margin="0">
+        <TextBlock Text="TabItem"  
+               HorizontalAlignment="Left" 
+               Margin="6,1,2,0"
+               Name="ucTabName" 
+               VerticalAlignment="Top" 
+               FontSize="12"/>
+        
         <Button Content="✖" 
-                Foreground="Gray"
-                Height="19" 
-                HorizontalAlignment="Right" 
-                Margin="0,3,4,0" 
+                Foreground="Gray" 
+                Padding="0" 
+                Margin="0" 
+                Width="20" 
                 Name="ucCloseButton" 
                 VerticalAlignment="Top" 
-                Width="20" 
-                FontFamily="Courier" 
-                FontWeight="Bold" 
-                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
-                FontStretch="Normal" 
+                HorizontalAlignment="Right"
+                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"  
                 Visibility="Visible" 
-                FontSize="14" 
-                Padding="0" 
+                FontSize="12" 
                 ToolTip="Close"
                 MouseEnter="UcCloseButton_OnMouseEnter"
                 MouseLeave="UcCloseButton_OnMouseLeave"
                 Click="UcCloseButton_OnClick"/>
-        
-        <Label Content="TabItem"  
-               Height="23" 
-               HorizontalAlignment="Left" 
-               Margin="4,1,0,0"
-               Name="ucTabName" 
-               VerticalAlignment="Top" 
-               FontFamily="Courier" 
-               FontSize="12"
-               SizeChanged="UcTabName_OnSizeChanged"/>
-    </Grid>
+    </StackPanel>
 </UserControl>

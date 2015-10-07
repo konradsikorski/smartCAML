@@ -12,8 +12,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     {
         public string HeaderText
         {
-            get { return (string) ucTabName.Content; }
-            set { ucTabName.Content = value; }
+            get { return (string) ucTabName.Text; }
+            set { ucTabName.Text = value; }
         }
 
         public bool CloseButtonVisible
@@ -41,11 +41,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         {
             var tabItem = (TabItem) this.Parent;
             ((TabControl)tabItem.Parent).Items.Remove(tabItem);
-        }
-
-        private void UcTabName_OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            ucCloseButton.Margin = new Thickness(ucTabName.ActualWidth + 5, 3, 4, 0);
         }
     }
 }
