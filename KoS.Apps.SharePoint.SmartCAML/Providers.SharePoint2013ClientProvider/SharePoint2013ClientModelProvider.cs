@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 using Microsoft.SharePoint.Client;
 using Client = Microsoft.SharePoint.Client;
@@ -18,15 +19,36 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
         private string _password;
 
         public Model.Web Web { get; private set; }
+        public bool IsSharePointOnline { get; private set; }
+
+        public SharePoint2013ClientModelProvider(bool isOnline = false)
+        {
+            IsSharePointOnline = isOnline;
+        }
 
         private ClientContext CreateContext(string url)
         {
             var context = new ClientContext(url);
 
             if (!String.IsNullOrEmpty(_userName))
-                context.Credentials = new NetworkCredential(_userName, _password);
+            {
+                context.Credentials = IsSharePointOnline
+                    ? (ICredentials)new SharePointOnlineCredentials(_userName, ConvertPassword(_password))
+                    : new NetworkCredential(_userName, _password);
+            }
 
             return context;
+        }
+
+        private SecureString ConvertPassword(string password)
+        {
+            var securePassword = new SecureString();
+            foreach (char c in password)
+            {
+                securePassword.AppendChar(c);
+            }
+
+            return securePassword;
         }
 
         public Model.Web Connect(string url)

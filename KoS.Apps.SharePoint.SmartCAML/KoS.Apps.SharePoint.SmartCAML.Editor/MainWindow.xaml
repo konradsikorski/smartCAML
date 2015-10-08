@@ -35,7 +35,7 @@
             </ToolBar>
             <ToolBar>
                 <Button Command="Copy" Content="Run Query" />
-                <Menu Background="Transparent">
+                <Menu Background="Transparent" Visibility="Collapsed">
                     <MenuItem Header="Filter">
                         <MenuItem Header="Show hidden fields" IsCheckable="True" IsChecked="True"/>
                         <MenuItem Header="Show readonly fields" IsCheckable="True" IsChecked="True"/>

@@ -15,7 +15,7 @@
         Width="312.611"
         MinHeight="100"
         MinWidth="200"
-        ShowInTaskbar="False" SizeToContent="Height" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" Background="#FFE4EEFF" 
+        ShowInTaskbar="True" SizeToContent="Height" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" Background="#FFE4EEFF" 
         d:DataContext="{d:DesignInstance model:ConnectWindowModel}"
         >
     <!--d:DataContext="{d:DesignInstance model:ConnectWindowModel}"-->
@@ -47,14 +47,15 @@
                 <TextBlock Style="{DynamicResource Label}" Margin="0,8,0,0">API:</TextBlock>
                 <RadioButton GroupName="API" IsChecked="{Binding ProviderType, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static provider:SharePointProviderType.SharePoint2013ServerModel}}" Margin="8,0,0,0">Server (SharePoint 2013)</RadioButton>
                 <RadioButton GroupName="API" IsChecked="{Binding ProviderType, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static provider:SharePointProviderType.SharePoint2013ClientModel}}" Margin="8,0,0,0">Client (SharePoint 2010+)</RadioButton>
+                <RadioButton GroupName="API" IsChecked="{Binding ProviderType, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static provider:SharePointProviderType.SharePointOnline}}" Margin="8,0,0,0">SharePoint Online</RadioButton>
                 <RadioButton GroupName="API" IsChecked="{Binding ProviderType, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static provider:SharePointProviderType.Fake}}" Margin="8,0,0,0" Visibility="Collapsed" x:Name="ucApiFake">Fake</RadioButton>
 
                 <TextBlock Style="{DynamicResource Label}" Margin="0,8,0,0">Account:</TextBlock>
-                <RadioButton GroupName="Account" IsChecked="{Binding UseCurrentUser}" Margin="8,0,0,0" >Current User</RadioButton>
+                <RadioButton GroupName="Account" IsChecked="{Binding UseCurrentUser}" Margin="8,0,0,0">Current User</RadioButton>
                 <RadioButton GroupName="Account" IsChecked="{Binding UseSpecificUser, Mode=OneTime}" Margin="8,0,0,0">Specific User</RadioButton>
 
-                <ComboBox Text="{Binding UserName}" ItemsSource="{Binding UsersHistory}" IsEditable="True"  Visibility="{Binding Path=UseSpecificUser, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="24,4,0,0"/>
-                <PasswordBox ap:PasswordBoxAssistant.BindPassword="true" ap:PasswordBoxAssistant.BoundPassword="{Binding UserPassword, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Path=UseSpecificUser, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="24,4,0,0"/>
+                <ComboBox Text="{Binding UserName}" ItemsSource="{Binding UsersHistory}" IsEditable="True" Visibility="{Binding Path=UseCurrentUser, Converter={StaticResource InvertBooleanToVisibilityConverter}}" Margin="24,4,0,0"/>
+                <PasswordBox Padding="0,2" ap:PasswordBoxAssistant.BindPassword="true" ap:PasswordBoxAssistant.BoundPassword="{Binding UserPassword, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Path=UseCurrentUser, Converter={StaticResource InvertBooleanToVisibilityConverter}}" Margin="24,4,0,0" PasswordChanged="PasswordBox_OnPasswordChanged"/>
 
                 <Button Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource LinkButton}" Click="HideAdvanceOptionsButton_Click" HorizontalAlignment="Right">Hide advance options</Button>
             </StackPanel>

@@ -1,5 +1,6 @@
 ﻿using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 using System.Windows;
+using System.Windows.Controls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Model;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
@@ -27,10 +28,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
         private void ucConnectButton_Click(object sender, RoutedEventArgs e)
         {
             var client = SharePointProviderFactory.Create(Model.ProviderType);
-            if( client.Connect(Model.SharePointWebUrl) != null)
+            if( client.Connect(Model.SharePointWebUrl, Model.UserName, Model.UserPassword) != null)
             {
                 Client = client;
                 Model.AddNewUrl(Model.SharePointWebUrl);
+                Model.AddUserToHistory();
                 Model.Save();
                 DialogResult = true;
             }
@@ -49,6 +51,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
         private void HideAdvanceOptionsButton_Click(object sender, RoutedEventArgs e)
         {
             Model.ShowAdvanceOptions = false;
+        }
+
+        private void PasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            Model.UserPassword = ((PasswordBox) sender).Password;
         }
     }
 }

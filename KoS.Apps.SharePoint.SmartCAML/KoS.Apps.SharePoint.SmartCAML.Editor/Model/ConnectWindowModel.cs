@@ -12,6 +12,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         private string _sharePoinWebtUrl;
         private bool _showAdvanceOptions;
         private SharePointProviderType _providerType;
+        private bool _useCurrentUser;
 
         public ConnectWindowModel()
         {
@@ -65,12 +66,27 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         }
 
         public ObservableCollection<string> UsersHistory { get; set; }
-        public bool UseCurrentUser { get; set; }
+
+        public bool UseCurrentUser
+        {
+            get { return _useCurrentUser; }
+            set
+            {
+                if (value == _useCurrentUser) return;
+                _useCurrentUser = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool UseSpecificUser
         {
             get { return !UseCurrentUser; }
-            set { UseCurrentUser = !value; }
+            set
+            {
+                if (UseCurrentUser != !value) return;
+                UseCurrentUser = !value;
+                OnPropertyChanged();
+            }
         }
 
         #region Property change
@@ -97,6 +113,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
             var index = SharePointWebUrlHistory.IndexOf(url);
             if (index >= 0) SharePointWebUrlHistory.RemoveAt(index);
             SharePointWebUrlHistory.Insert(0, url);
+        }
+
+        public void AddUserToHistory()
+        {
+            var index = UsersHistory.IndexOf(UserName);
+            if (index >= 0) UsersHistory.RemoveAt(index);
+            UsersHistory.Insert(0, UserName);
         }
     }
 }
