@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    
+    <Style
+        x:Key="ButtonsSection"
+        TargetType="Border">
+        <Setter Property="Background" Value="#FFBED1E0" />
+        <Setter Property="BorderBrush" Value="#FF6A98BD" />
+        <Setter Property="BorderThickness" Value="0,1,0,0" />
+        <Setter Property="Padding" Value="8" />
+
+        <Style.Resources>
+            <Style TargetType="StackPanel">
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Margin" Value="0" />
+            </Style>
+            
+            <Style TargetType="Button">
+                <Setter Property="MinWidth" Value="70" />
+                <Setter Property="Margin" Value="10 0 0 0"/>
+                <Setter Property="Padding" Value="6 2"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+</ResourceDictionary>

@@ -110,6 +110,10 @@
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Utils\RefactorUtil.cs" />
     <Compile Include="Utils\VersionUtil.cs" />
+    <Page Include="Style\DialogStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControls\ClosableTabHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -3,4 +3,5 @@
                     >
 
     <SolidColorBrush x:Key="LabelColor" Color="#FF7063EE"/>
+    <SolidColorBrush x:Key="DialogBackground" Color="#FFE4EEFF"/>
 </ResourceDictionary>

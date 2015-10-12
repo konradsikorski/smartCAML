@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs"
         xmlns:bindingConverters="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:provider="clr-namespace:KoS.Apps.SharePoint.SmartCAML.SharePointProvider;assembly=KoS.Apps.SharePoint.SmartCAML.SharePointProvider"
         xmlns:ap="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.AttachedProperties"
         xmlns:model="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Model"
@@ -15,18 +13,25 @@
         Width="312.611"
         MinHeight="100"
         MinWidth="200"
-        ShowInTaskbar="True" SizeToContent="Height" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" Background="#FFE4EEFF" 
+        ShowInTaskbar="True" SizeToContent="Height" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" 
+        Background="{StaticResource DialogBackground}" 
         d:DataContext="{d:DesignInstance model:ConnectWindowModel}"
         >
     <!--d:DataContext="{d:DesignInstance model:ConnectWindowModel}"-->
     <Window.Resources>
-        <bindingConverters:RadioButtonCheckedConverter x:Key="EnumConverter" />
-        <bindingConverters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
-        <bindingConverters:BoolToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter" True="Collapsed" False="Visible" />
-        <!--<BooleanToVisibilityConverter x:Key="EnumConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/DialogStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <bindingConverters:RadioButtonCheckedConverter x:Key="EnumConverter" />
+            <bindingConverters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+            <bindingConverters:BoolToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter" True="Collapsed" False="Visible" />
+            <!--<BooleanToVisibilityConverter x:Key="EnumConverter" />
         <BooleanToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter" />-->
 
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>
     </Window.Resources>
 
     <Grid>
@@ -61,10 +66,10 @@
             </StackPanel>
         </StackPanel>
 
-        <Border Grid.Row="1" Background="#FFBED1E0" BorderBrush="#FF6A98BD" BorderThickness="0,1,0,0" Padding="8">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0" >
-                <Button Content="Connect" Margin="10 0 0 0" MinWidth="70" Padding="6 2" Click="ucConnectButton_Click" IsDefault="True"/>
-                <Button Content="Cancel"  Margin="10 0 0 0" MinWidth="70" Padding="6 2" Click="ucCancelButton_Click" IsCancel="True"/>
+        <Border Grid.Row="1" Style="{StaticResource ButtonsSection}">
+            <StackPanel>
+                <Button Content="Connect" Click="ucConnectButton_Click" IsDefault="True"/>
+                <Button Content="Cancel"  Click="ucCancelButton_Click" IsCancel="True"/>
             </StackPanel>
         </Border>
     </Grid>

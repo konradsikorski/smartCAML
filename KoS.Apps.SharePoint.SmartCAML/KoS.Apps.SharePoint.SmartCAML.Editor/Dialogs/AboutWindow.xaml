@@ -5,7 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs"
         mc:Ignorable="d"
-        Title="About  - SmartCAML" Height="138.41" Width="287.417" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" SizeToContent="Height">
+        Title="About  - SmartCAML" Height="160" Width="287.417" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" SizeToContent="Height"
+        Background="{StaticResource DialogBackground}"
+        >
+    <Window.Resources>
+        <ResourceDictionary Source="../Style/DialogStyle.xaml"/>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -26,6 +37,12 @@
         <TextBlock Grid.Column="0" Grid.Row="2" Margin="0,2,0,0">Version:</TextBlock>
         <TextBox   Grid.Column="1" Grid.Row="2" IsReadOnly="True" Margin="4,2,0,2" x:Name="ucVersion" />
         <Button    Grid.Column="1" Grid.Row="3" Content="GitHub"  Margin="4" Style="{StaticResource LinkButton}" Click="Button_Click"/>
-        <Button    Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Content="OK" HorizontalAlignment="Right" Width="100" IsCancel="True" IsDefault="True"/>
+    </Grid>
+
+        <Border Grid.Row="1" Style="{StaticResource ButtonsSection}">
+            <StackPanel>
+                <Button Content="OK" IsCancel="True" IsDefault="True"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
