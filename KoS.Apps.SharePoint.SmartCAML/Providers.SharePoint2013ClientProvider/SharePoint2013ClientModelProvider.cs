@@ -188,6 +188,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     case FieldType.MultiChoice:
                         context.Load((Client.FieldMultiChoice)listField, f => f.Choices);
                         break;
+                    case FieldType.DateTime:
+                        context.Load((Client.FieldDateTime)listField, f => f.DisplayFormat);
+                        break;
                 }
             }
 
@@ -214,7 +217,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     break;
 
                 case FieldType.DateTime:
-                    field = new Model.FieldDateTime();
+                    field = new Model.FieldDateTime {DateOnly = ((Client.FieldDateTime)listField).DisplayFormat == DateTimeFieldFormatType.DateOnly };
                     break;
 
                 case FieldType.Lookup:

@@ -18,6 +18,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         public ComboBox ucFilterOperator;
         public Control ucFieldValue;
         public ComboBox ucLookupAs;
+        public CheckBox ucIncludeTime;
 
         public QueryOperator SelectedQueryOperator => ucAndOr.SelectedEnum<QueryOperator>().Value;
         public Field SelectedField => (Field)ucField.SelectedItem;
@@ -86,6 +87,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                     ucContainer.Children.Add(ucLookupAs);
                 }
 
+                if (ucIncludeTime != null) ucContainer.Children.Remove(ucIncludeTime);
                 RefreshValueField(field);
             }
         }
@@ -113,19 +115,38 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private Control BuildFieldValueControl(Field field)
         {
+            var oldValue = ValueSelector();
+
             if (field.Type == FieldType.DateTime)
             {
-                var control = new DateTimePicker {MinWidth = _controlWidth, Margin = _controlMargin };
-                control.TimeFormat = DateTimeFormat.ShortDate;
-                ValueSelector = () => control.Text;
+                // todo: http://www.codeproject.com/Articles/414414/SharePoint-Working-with-Dates-in-CAML
+                if (ucIncludeTime != null) ucContainer.Children.Remove(ucIncludeTime);
+                ucIncludeTime = new CheckBox
+                    {
+                        MinWidth = _controlWidth,
+                        Margin = _controlMargin,
+                        Padding = new Thickness(0,2,0,0),
+                        Content = "Include time",
+                        IsChecked = !((FieldDateTime)field).DateOnly
+                    };
 
-                if (((FieldDateTime) field).DateOnly)
+                ucContainer.Children.Add(ucIncludeTime);
+
+                //-----
+                var control = new DateTimePicker
                 {
-                    control.TimePickerAllowSpin = false;
-                    control.TimePickerShowButtonSpinner = false;
-                    control.TimePickerVisibility = Visibility.Collapsed;
-                }
+                    MinWidth = _controlWidth,
+                    Margin = _controlMargin,
 
+                    Format = DateTimeFormat.Custom,
+                    FormatString = "yyyy-MM-ddTHH:mm:ssZ",
+                    TimeFormat = DateTimeFormat.ShortTime,
+                    Watermark = "value",
+                    Text = oldValue
+                };
+
+                ValueSelector = () => control.Text;
+                
                 control.ValueChanged += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
                 control.LostFocus += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
 
@@ -133,8 +154,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             }
             else
             {
-                var control = new ComboBox {MinWidth = _controlWidth, Margin = _controlMargin };
-                control.IsEditable = true;
+                var control = new ComboBox
+                {
+                    MinWidth = _controlWidth,
+                    Margin = _controlMargin,
+                    IsEditable = true,
+                    Text = oldValue
+                };
                 ValueSelector = () => String.IsNullOrEmpty(control.SelectedValue?.ToString()) ? control.Text : control.SelectedValue?.ToString();
 
                 control.SelectionChanged += (o, args) => Changed?.Invoke(this, EventArgs.Empty);

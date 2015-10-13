@@ -101,18 +101,54 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
                 using (var web = site.OpenWeb())
                 {
                     var serverList = web.Lists.TryGetList(list.Title);
-                    list.Fields = serverList.Fields.Cast<SPField>().Select(f => new Field
-                    {
-                        Id = f.Id,
-                        IsHidden = f.Hidden,
-                        IsReadonly = f.ReadOnlyField,
-                        Title = f.Title,
-                        InternalName = f.InternalName,
-                        Group = f.Group,
-                        Type = (FieldType) f.Type
-                    }).ToList();
+                    list.Fields = serverList.Fields.Cast<SPField>()
+                        .Select(f => CreateField(f))
+                        .ToList();
                 }
             }
+        }
+
+        private Model.Field CreateField(SPField listField)
+        {
+            Model.Field field;
+
+            switch (listField.Type)
+            {
+                case SPFieldType.Choice:
+                    field = new Model.FieldChoice
+                    {
+                        Choices = ((SPFieldChoice)listField).Choices.Cast<string>().ToList()
+                    };
+                    break;
+                case SPFieldType.MultiChoice:
+                    field = new Model.FieldChoice
+                    {
+                        Choices = ((SPFieldMultiChoice)listField).Choices.Cast<string>().ToList()
+                    };
+                    break;
+
+                case SPFieldType.DateTime:
+                    field = new Model.FieldDateTime { DateOnly = ((SPFieldDateTime)listField).DisplayFormat == SPDateTimeFieldFormatType.DateOnly };
+                    break;
+
+                case SPFieldType.Lookup:
+                    field = new Model.FieldLookup();
+                    break;
+
+                default:
+                    field = new Model.Field();
+                    break;
+            }
+
+            field.Id = listField.Id;
+            field.IsHidden = listField.Hidden;
+            field.IsReadonly = listField.ReadOnlyField;
+            field.Title = listField.Title;
+            field.InternalName = listField.InternalName;
+            field.Group = listField.Group;
+            field.Type = (Model.FieldType)listField.Type;
+
+            return field;
         }
 
         public void SaveItem(ListItem item)
