@@ -81,7 +81,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                         { Internals.Lookup      , "Lookup1" },
                         { Internals.MultiLookup , "MultiLookup1" },
                         { Internals.Integer     , "Integer1" },
-                        { Internals.Note        , "Note1" },
+                        { Internals.Note        , "Note1"+Environment.NewLine+"Seccond Line" },
                         { Internals.Url         , "Url1" },
                         { Internals.Choice      , "Choice1" },
                         { Internals.Boolean     , "Boolean1" },

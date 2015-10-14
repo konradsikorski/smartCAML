@@ -1,4 +1,5 @@
-﻿using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
+﻿using System;
+using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 using System.Windows;
 using System.Windows.Controls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Model;
@@ -28,13 +29,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
         private void ucConnectButton_Click(object sender, RoutedEventArgs e)
         {
             var client = SharePointProviderFactory.Create(Model.ProviderType);
-            if( client.Connect(Model.SharePointWebUrl, Model.UserName, Model.UserPassword) != null)
+
+            try
             {
-                Client = client;
-                Model.AddNewUrl(Model.SharePointWebUrl);
-                Model.AddUserToHistory();
-                Model.Save();
-                DialogResult = true;
+                if( client.Connect(Model.SharePointWebUrl, Model.UserName, Model.UserPassword) != null)
+                {
+                    Client = client;
+                    Model.AddNewUrl(Model.SharePointWebUrl);
+                    Model.AddUserToHistory();
+                    Model.Save();
+                    DialogResult = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
