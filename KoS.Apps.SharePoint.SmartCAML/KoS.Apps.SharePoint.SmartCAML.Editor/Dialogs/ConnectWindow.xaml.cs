@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +24,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
             ucApiFake.Visibility = Visibility.Visible;
 #endif
 
+            this.Width = Config.ConnectWindowWidth;
             this.DataContext = new ConnectWindowModel();
         }
 
@@ -65,6 +67,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
         private void PasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             Model.UserPassword = ((PasswordBox) sender).Password;
+        }
+
+        private void ConnectWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            Config.ConnectWindowWidth = this.Width;
         }
     }
 }

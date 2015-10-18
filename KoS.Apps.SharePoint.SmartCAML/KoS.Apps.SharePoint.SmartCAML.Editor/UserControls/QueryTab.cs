@@ -27,7 +27,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         public ListQuery GetQuery()
         {
-            return new ListQuery { List = List, Query = "" };
+            var query = (XmlTab.IsSelected)
+                ? ucQuery.Text
+                : ucQueryBuilder.Build().ToXml().ToString();
+
+            return new ListQuery { List = List, Query = query };
         }
 
         internal void QueryResult(List<ListItem> items)

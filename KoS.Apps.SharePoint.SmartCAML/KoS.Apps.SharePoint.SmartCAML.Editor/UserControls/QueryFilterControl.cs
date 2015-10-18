@@ -145,7 +145,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                     Text = oldValue
                 };
 
-                ValueSelector = () => control.Text;
+                ValueSelector = () => control.Text ?? String.Empty;
                 
                 control.ValueChanged += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
                 control.LostFocus += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
@@ -161,7 +161,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                     IsEditable = true,
                     Text = oldValue
                 };
-                ValueSelector = () => String.IsNullOrEmpty(control.SelectedValue?.ToString()) ? control.Text : control.SelectedValue?.ToString();
+                ValueSelector = () => String.IsNullOrEmpty(control.SelectedValue?.ToString()) ? control.Text ?? String.Empty : (control.SelectedValue?.ToString());
 
                 control.SelectionChanged += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
                 control.LostFocus += (o, args) => Changed?.Invoke(this, EventArgs.Empty);

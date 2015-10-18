@@ -14,12 +14,12 @@
         </Grid.RowDefinitions>
         
         <TabControl Grid.Row="0">
-            <TabItem Header="Designer" >
+            <TabItem Header="Designer" x:Name="DesignerTab" >
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <local:QueryBuilderControl x:Name="ucQueryBuilder" Margin="4" />
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="XML" >
+            <TabItem Header="XML" x:Name="XmlTab">
                 <TextBox x:Name="ucQuery" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
             </TabItem>
         </TabControl>

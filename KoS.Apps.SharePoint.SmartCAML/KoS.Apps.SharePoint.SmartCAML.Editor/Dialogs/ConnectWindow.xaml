@@ -10,12 +10,13 @@
         mc:Ignorable="d"
         Title="Connect to SharePoint" 
         Height="300"
-        Width="312.611"
-        MinHeight="100"
+        Width="360"
+        MinHeight="140"
         MinWidth="200"
         ShowInTaskbar="True" SizeToContent="Height" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" 
         Background="{StaticResource DialogBackground}" 
         d:DataContext="{d:DesignInstance model:ConnectWindowModel}"
+        Closing="ConnectWindow_OnClosing"
         >
     <!--d:DataContext="{d:DesignInstance model:ConnectWindowModel}"-->
     <Window.Resources>

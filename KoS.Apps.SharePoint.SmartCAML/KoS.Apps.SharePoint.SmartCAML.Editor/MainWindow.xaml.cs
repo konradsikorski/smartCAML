@@ -22,12 +22,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             if(Config.WasMaximazed) this.WindowState = WindowState.Maximized;
         }
 
-        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        #region Commands
+
+        private void ConnectCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
 
-        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void ConnectCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var dialog = new ConnectWindow();
 
@@ -36,24 +38,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
                 Connected(dialog.Client);
             }
         }
-        private void NewQuery_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+
+        private void NewQueryCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ucWebs?.SelectedList != null;
         }
 
-        private void NewQuery_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void NewQueryCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             ucQueries.AddQuery(ucWebs.SelectedList);
-        }
-
-        private void UcWebs_ListExecute(object sender, EventArgs e)
-        {
-            NewQueryCommand.Command.Execute(null);
-        }
-
-        private void Connected(ISharePointProvider client)
-        {
-            ucWebs.Add(client);
         }
 
         private void RunQueryCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -64,8 +57,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         private void RunQueryCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var query = ucQueries.SelectedQueryTab.GetQuery();
-            var items = ucWebs.GetClient(ucQueries.SelectedQueryTab.List.Web).ExecuteQuery(query);
-            ucQueries.SelectedQueryTab.QueryResult(items);
+            try
+            {
+                var items = ucWebs.GetClient(ucQueries.SelectedQueryTab.List.Web).ExecuteQuery(query);
+                ucQueries.SelectedQueryTab.QueryResult(items);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("The request failed.\n\n" + ex, "SmartCAML", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void AboutCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -73,9 +73,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             new AboutWindow().ShowDialog();
         }
 
+        #endregion
+
+        private void UcWebs_ListExecute(object sender, EventArgs e)
+        {
+            NewQueryCommand.Command.Execute(null);
+        }
+
         private void UcWebs_OnCloseWeb(object sender, Web web)
         {
             ucQueries.CloseWeb(web);
+        }
+
+        private void Connected(ISharePointProvider client)
+        {
+            ucWebs.Add(client);
         }
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)

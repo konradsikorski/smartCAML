@@ -13,9 +13,9 @@
         Closing="MainWindow_OnClosing">
 
     <Window.CommandBindings>
-        <CommandBinding x:Name="ConnectCommand" Command="ApplicationCommands.New"  CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
-        <CommandBinding x:Name="NewQueryCommand" Command="ApplicationCommands.Open" CanExecute="NewQuery_CanExecute" Executed="NewQuery_Executed"/>
-        <CommandBinding x:Name="RunQueryCommand" Command="Copy" CanExecute="RunQueryCommand_CanExecute" Executed="RunQueryCommand_Executed"/>
+        <CommandBinding x:Name="ConnectCommand" Command="ApplicationCommands.New"  CanExecute="ConnectCommand_CanExecute" Executed="ConnectCommand_Executed" />
+        <CommandBinding x:Name="NewQueryCommand" Command="ApplicationCommands.Open" CanExecute="NewQueryCommand_CanExecute" Executed="NewQueryCommand_Executed"/>
+        <CommandBinding x:Name="RunQueryCommand" Command="MediaCommands.Play" CanExecute="RunQueryCommand_CanExecute" Executed="RunQueryCommand_Executed"/>
         <CommandBinding x:Name="AboutCommand" Command="ApplicationCommands.Help" Executed="AboutCommand_Executed"/>
     </Window.CommandBindings>
     
@@ -31,10 +31,10 @@
             <ToolBar>
                 <Button Command="ApplicationCommands.New" Content="Connect" />
                 <Button Command="ApplicationCommands.Open" Content="New Query" />
-                <Button Command="ApplicationCommands.Stop" Content="Browse" />
+                <Button Command="ApplicationCommands.Stop" Content="Browse" Visibility="Collapsed" />
             </ToolBar>
             <ToolBar>
-                <Button Command="Copy" Content="Run Query" />
+                <Button Command="MediaCommands.Play" Content="Run Query" />
                 <Menu Background="Transparent" Visibility="Collapsed">
                     <MenuItem Header="Filter">
                         <MenuItem Header="Show hidden fields" IsCheckable="True" IsChecked="True"/>

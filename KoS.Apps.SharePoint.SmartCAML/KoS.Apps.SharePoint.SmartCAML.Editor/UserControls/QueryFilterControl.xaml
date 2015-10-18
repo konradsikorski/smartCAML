@@ -41,7 +41,7 @@
         <Button Content="▲" Click="UpButton_OnClick" Background="Transparent" BorderBrush="Transparent" Padding="4, 0" />
         <Button Content="▼" Click="DownButton_OnClick" Background="Transparent" BorderBrush="Transparent" Padding="4, 0" />
         <ComboBox x:Name="ucAndOr" Margin="4,0,0,0"/>
-        <ComboBox x:Name="ucField" Margin="4,0,0,0" ToolTip="Field" ItemsSource="{Binding Source={StaticResource Fields}}" DisplayMemberPath="InternalName" SelectionChanged="ucField_OnSelectionChanged" />
+        <ComboBox x:Name="ucField" Margin="4,0,0,0" IsEditable="True" ToolTip="Field" ItemsSource="{Binding Source={StaticResource Fields}}" DisplayMemberPath="InternalName" SelectionChanged="ucField_OnSelectionChanged" />
     </StackPanel>
 
 </UserControl>

@@ -33,6 +33,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             set { SetConfig((int)value); }
         }
 
+        public static double ConnectWindowWidth
+        {
+            get { return GetConfig(360).ToDouble(); }
+            set { SetConfig(value); }
+        }
+
         public static double WindowWidth
         {
             get { return GetConfig(700).ToDouble(); }
