@@ -68,6 +68,34 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             }
         }
 
+        private void SaveChangesCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = ucQueries?.SelectedQueryTab?.ucItems.HasChanges ?? false;
+        }
+
+        private void SaveChangesCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var dirtyItems = ucQueries.SelectedQueryTab.ucItems.GetDirtyItems();
+            try
+            {
+                foreach (var listItem in dirtyItems)
+                {
+                    try
+                    {
+                        listItem.Update();
+                    }
+                    catch
+                    {
+                        listItem.CancelChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("The request failed.\n\n" + ex, "SmartCAML", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void AboutCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             new AboutWindow().ShowDialog();

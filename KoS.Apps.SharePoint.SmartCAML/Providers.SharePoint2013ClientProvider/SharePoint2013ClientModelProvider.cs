@@ -171,12 +171,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
                 foreach (var change in item.Changes)
                 {
-                    serverItem[change.Key] = change.Value;
+                    serverItem[change.Key] = item[change.Key];
                 }
 
                 serverItem.Update();
-
-                context.Load(serverItem);
                 context.ExecuteQuery();
             }
         }

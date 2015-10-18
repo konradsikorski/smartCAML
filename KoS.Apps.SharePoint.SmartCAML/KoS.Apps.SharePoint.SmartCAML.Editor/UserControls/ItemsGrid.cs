@@ -38,6 +38,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             }
         }
 
+        public bool HasChanges => ucItems.ItemsSource?.Cast<ListItem>().Any(item => item.IsDirty) ?? false;
+
         internal void QueryResult(List<ListItem> items)
         {
             ucItems.ItemsSource = items;
@@ -45,7 +47,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void ucItems_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            if (e.EditAction == DataGridEditAction.Cancel) return;
+            //if (e.EditAction == DataGridEditAction.Cancel) return;
 
             //var item = (ListItem)e.Row.DataContext;
             //try
@@ -59,5 +61,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             //    ucItems.CancelEdit();
             //}
         }
+
+        public List<ListItem> GetDirtyItems()
+            => ucItems.ItemsSource.Cast<ListItem>().Where(item => item.IsDirty).ToList();
     }
 }
