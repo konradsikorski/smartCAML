@@ -48,7 +48,26 @@
                 <Button Command="ApplicationCommands.Help" Content="?" />
             </ToolBar>
         </ToolBarTray>
-        <StatusBar DockPanel.Dock="Bottom" Height="20"/>
+        <StatusBar x:Name="ucStatusBar" DockPanel.Dock="Bottom" Height="20">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock Name="ucStatusMessage" />
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2">
+                <ProgressBar x:Name="ucStatusProgress" Value="0" Width="90" Height="14" />
+            </StatusBarItem>
+        </StatusBar>
 
         <Grid Background="#FFF0F0F0">
             <Grid.ColumnDefinitions>

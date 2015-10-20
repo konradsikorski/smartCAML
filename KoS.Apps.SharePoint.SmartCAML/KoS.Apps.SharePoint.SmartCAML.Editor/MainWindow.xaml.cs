@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
 using System.Windows;
 using System.Windows.Input;
@@ -59,11 +60,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             var query = ucQueries.SelectedQueryTab.GetQuery();
             try
             {
-                var items = ucWebs.GetClient(ucQueries.SelectedQueryTab.List.Web).ExecuteQuery(query);
+                var list = ucQueries.SelectedQueryTab.List;
+                StatusNotification.NotifyWithProgress("Quering list: " + list.Title);
+
+                var items = ucWebs.GetClient(list.Web).ExecuteQuery(query);
                 ucQueries.SelectedQueryTab.QueryResult(items);
+
+                StatusNotification.Notify("Retrived items: " + items.Count);
             }
             catch (Exception ex)
             {
+                StatusNotification.Notify("Quering failed");
                 MessageBox.Show("The request failed.\n\n" + ex, "SmartCAML", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -76,10 +83,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         private void SaveChangesCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var dirtyItems = ucQueries.SelectedQueryTab.ucItems.GetDirtyItems();
+            var index = 0;
+
             try
             {
                 foreach (var listItem in dirtyItems)
                 {
+                    StatusNotification.Notify("Updating item with id: " + listItem.Id, ++index, dirtyItems.Count);
+
                     try
                     {
                         listItem.Update();
@@ -87,11 +98,23 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
                     catch
                     {
                         listItem.CancelChanges();
+
+                        if (dirtyItems.Last() == listItem)
+                            MessageBox.Show("Couldn't update item with id: " + listItem.Id, "SmartCAML",
+                                MessageBoxButton.OK, MessageBoxImage.Information);
+                        else if (
+                            MessageBox.Show(
+                                "Couldn't update item with id: " + listItem.Id + "\n\n Would you like to continue?",
+                                "SmartCAML",
+                                MessageBoxButton.OKCancel, MessageBoxImage.Question) != MessageBoxResult.OK) break;
                     }
                 }
+
+                StatusNotification.Notify("Update completed");
             }
             catch (Exception ex)
             {
+                StatusNotification.Notify("Update failed");
                 MessageBox.Show("The request failed.\n\n" + ex, "SmartCAML", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

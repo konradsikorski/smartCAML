@@ -4,6 +4,7 @@ using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 using System.Windows;
 using System.Windows.Controls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Model;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
@@ -34,6 +35,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
             try
             {
+                StatusNotification.NotifyWithProgress("Connecting...");
                 if( client.Connect(Model.SharePointWebUrl, Model.UserName, Model.UserPassword) != null)
                 {
                     Client = client;
@@ -42,9 +44,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
                     Model.Save();
                     DialogResult = true;
                 }
+                StatusNotification.Notify("Connected");
             }
             catch (Exception ex)
             {
+                StatusNotification.Notify("Connection failed");
                 MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
