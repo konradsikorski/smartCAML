@@ -23,6 +23,35 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             if(Config.WasMaximazed) this.WindowState = WindowState.Maximized;
         }
 
+        #region Event Handlers
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            ConnectCommand.Command.Execute(null);
+        }
+
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            Config.WasMaximazed = this.WindowState == WindowState.Maximized;
+            if (!Config.WasMaximazed)
+            {
+                Config.WindowHeight = this.Height;
+                Config.WindowWidth = this.Width;
+            }
+        }
+
+        private void UcWebs_ListExecute(object sender, EventArgs e)
+        {
+            NewQueryCommand.Command.Execute(null);
+        }
+
+        private void UcWebs_OnCloseWeb(object sender, Web web)
+        {
+            ucQueries.CloseWeb(web);
+        }
+
+        #endregion
+
         #region Commands
 
         private void ConnectCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -126,29 +155,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         #endregion
 
-        private void UcWebs_ListExecute(object sender, EventArgs e)
-        {
-            NewQueryCommand.Command.Execute(null);
-        }
-
-        private void UcWebs_OnCloseWeb(object sender, Web web)
-        {
-            ucQueries.CloseWeb(web);
-        }
-
         private void Connected(ISharePointProvider client)
         {
             ucWebs.Add(client);
-        }
-
-        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
-        {
-            Config.WasMaximazed = this.WindowState == WindowState.Maximized;
-            if (!Config.WasMaximazed)
-            {
-                Config.WindowHeight = this.Height;
-                Config.WindowWidth = this.Width;
-            }
         }
     }
 }
