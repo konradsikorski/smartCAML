@@ -29,14 +29,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
             this.DataContext = new ConnectWindowModel();
         }
 
-        private void ucConnectButton_Click(object sender, RoutedEventArgs e)
+        private async void ucConnectButton_Click(object sender, RoutedEventArgs e)
         {
             var client = SharePointProviderFactory.Create(Model.ProviderType);
 
             try
             {
+                Model.IsConnecting = true;
                 StatusNotification.NotifyWithProgress("Connecting...");
-                if( client.Connect(Model.SharePointWebUrl, Model.UserName, Model.UserPassword) != null)
+
+                if( await client.Connect(Model.SharePointWebUrl, Model.UserName, Model.UserPassword) != null)
                 {
                     Client = client;
                     Model.AddNewUrl(Model.SharePointWebUrl);
@@ -51,6 +53,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
                 StatusNotification.Notify("Connection failed");
                 MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+
+            Model.IsConnecting = false;
         }
 
         private void ucCancelButton_Click(object sender, RoutedEventArgs e)

@@ -45,9 +45,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             e.CanExecute = ucWebs?.SelectedList != null;
         }
 
-        private void NewQueryCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        private async void NewQueryCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            ucQueries.AddQuery(ucWebs.SelectedList);
+            await ucQueries.AddQuery(ucWebs.SelectedList);
         }
 
         private void RunQueryCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -55,7 +55,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             e.CanExecute = ucQueries?.SelectedQueryTab != null;
         }
 
-        private void RunQueryCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        private async void RunQueryCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var query = ucQueries.SelectedQueryTab.GetQuery();
             try
@@ -63,7 +63,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
                 var list = ucQueries.SelectedQueryTab.List;
                 StatusNotification.NotifyWithProgress("Quering list: " + list.Title);
 
-                var items = ucWebs.GetClient(list.Web).ExecuteQuery(query);
+                var items = await ucWebs.GetClient(list.Web).ExecuteQuery(query);
                 ucQueries.SelectedQueryTab.QueryResult(items);
 
                 StatusNotification.Notify("Retrived items: " + items.Count);
@@ -80,7 +80,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             e.CanExecute = ucQueries?.SelectedQueryTab?.ucItems.HasChanges ?? false;
         }
 
-        private void SaveChangesCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        private async void SaveChangesCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var dirtyItems = ucQueries.SelectedQueryTab.ucItems.GetDirtyItems();
             var index = 0;
@@ -93,7 +93,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
                     try
                     {
-                        listItem.Update();
+                        await listItem.Update();
                     }
                     catch
                     {

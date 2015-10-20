@@ -34,4 +34,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters
             base(Visibility.Visible, Visibility.Collapsed)
         { }
     }
+
+    public sealed class InvertBoolConverter : BooleanConverter<Boolean>
+    {
+        public InvertBoolConverter() :
+            base(false, true)
+        { }
+    }
 }

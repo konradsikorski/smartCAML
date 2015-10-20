@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Model
 {
@@ -6,11 +7,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
     {
         Web Web { get; }
 
-        Web Connect(string url);
-        Web Connect(string url, string userName, string password);
+        Task<Web> Connect(string url);
+        Task<Web> Connect(string url, string userName, string password);
 
-        List<ListItem> ExecuteQuery(ListQuery query);
-        void FillListFields(SList list);
-        void SaveItem(ListItem item);
+        Task<List<ListItem>> ExecuteQuery(ListQuery query);
+        Task FillListFields(SList list);
+        Task SaveItem(ListItem item);
     }
 }

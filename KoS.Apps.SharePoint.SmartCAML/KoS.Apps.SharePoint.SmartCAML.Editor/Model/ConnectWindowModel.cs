@@ -13,6 +13,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         private bool _showAdvanceOptions;
         private SharePointProviderType _providerType;
         private bool _useCurrentUser;
+        private bool _isConnecting;
 
         public ConnectWindowModel()
         {
@@ -49,7 +50,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
             }
         }
 
-
         [Required]
         public string UserName { get; set; }
         public string UserPassword { get; set; }
@@ -85,6 +85,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
             {
                 if (UseCurrentUser != !value) return;
                 UseCurrentUser = !value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsConnecting
+        {
+            get { return _isConnecting; }
+            set
+            {
+                if (_isConnecting == value) return;
+                _isConnecting = value;
                 OnPropertyChanged();
             }
         }

@@ -48,7 +48,7 @@
                 <Button Command="ApplicationCommands.Help" Content="?" />
             </ToolBar>
         </ToolBarTray>
-        <StatusBar x:Name="ucStatusBar" DockPanel.Dock="Bottom" Height="20">
+        <StatusBar x:Name="ucStatusBar" DockPanel.Dock="Bottom" Height="22">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -65,7 +65,7 @@
             </StatusBarItem>
             <Separator Grid.Column="1" />
             <StatusBarItem Grid.Column="2">
-                <ProgressBar x:Name="ucStatusProgress" Value="0" Width="90" Height="14" />
+                <ProgressBar x:Name="ucStatusProgress" Value="0" Width="90" Height="16" />
             </StatusBarItem>
         </StatusBar>
 

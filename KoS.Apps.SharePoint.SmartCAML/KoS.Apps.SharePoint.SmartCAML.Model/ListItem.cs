@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Model
 {
@@ -42,9 +43,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
             }
         }
 
-        public void Update()
+        public async Task Update()
         {
-            List.Web.Client.SaveItem(this);
+            await List.Web.Client.SaveItem(this);
             Saved();
         }
 

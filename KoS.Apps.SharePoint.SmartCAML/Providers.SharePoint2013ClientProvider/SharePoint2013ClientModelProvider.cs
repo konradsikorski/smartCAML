@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security;
+using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
 using Client = Microsoft.SharePoint.Client;
 using Field = Microsoft.SharePoint.Client.Field;
@@ -25,38 +26,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             IsSharePointOnline = isOnline;
         }
 
-        private ClientContext CreateContext(string url)
-        {
-            var context = new ClientContext(url);
-
-            if (!String.IsNullOrEmpty(_userName))
-            {
-                context.Credentials = IsSharePointOnline
-                    ? (ICredentials) new SharePointOnlineCredentials(_userName, ConvertPassword(_password))
-                    : new NetworkCredential(_userName, _password);
-            }
-            else
-            {
-                // Ensure use of Windows Authentication
-                //Add the header that tells SharePoint to use Windows authentication.
-                context.ExecutingWebRequest += (sender, args) => args.WebRequestExecutor.RequestHeaders.Add("X-FORMS_BASED_AUTH_ACCEPTED", "f");
-            }
-
-            return context;
-        }
-
-        private SecureString ConvertPassword(string password)
-        {
-            var securePassword = new SecureString();
-            foreach (char c in password)
-            {
-                securePassword.AppendChar(c);
-            }
-
-            return securePassword;
-        }
-
-        public Model.Web Connect(string url)
+        public async Task<Model.Web> Connect(string url)
         {
             using (var context = CreateContext(url))
             {
@@ -69,7 +39,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     l => l.Hidden,
                     l => l.Title));
 
-                context.ExecuteQuery();
+                await Task.Factory.StartNew(() => context.ExecuteQuery());
 
                 Web = new Model.Web(this)
                 {
@@ -90,7 +60,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             }
         }
 
-        public Web Connect(string url, string userName, string password)
+        public async Task<Web> Connect(string url, string userName, string password)
         {
             if (String.IsNullOrEmpty(userName) != String.IsNullOrEmpty(password))
                 throw new ArgumentException("The user or password is null.");
@@ -98,10 +68,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             _userName = userName;
             _password = password;
 
-            return Connect(url);
+            return await Connect(url);
         }
 
-        public List<Model.ListItem> ExecuteQuery(Model.ListQuery query)
+        public async Task<List<Model.ListItem>> ExecuteQuery(Model.ListQuery query)
         {
             using (var context = CreateContext(query.List.Web.Url))
             {
@@ -113,7 +83,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     //,i => i.Include(item => item.Id)
                     );
 
-                context.ExecuteQuery();
+                await Task.Factory.StartNew(() => context.ExecuteQuery());
 
                 return items.Cast<ListItem>()
                         .Select(i => new Model.ListItem(query.List)
@@ -131,15 +101,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             }
         }
 
-        private string ElementSelector(Model.Field f, ListItem i)
-        {
-            return i.FieldValues.ContainsKey(f.InternalName)
-                ? i.FieldValues[f.InternalName]?.ToString()
-                : null;
-        }
-
-
-        public void FillListFields(Model.SList list)
+        public async Task FillListFields(Model.SList list)
         {
             using (var context = CreateContext(list.Web.Url))
             {
@@ -153,7 +115,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     f => f.Group,
                     f => f.FieldTypeKind));
 
-                context.ExecuteQuery();
+                await Task.Factory.StartNew(() => context.ExecuteQuery());
 
                 var listFields = serverList.Fields.Cast<Field>().ToList();
                 LoadFields(context, listFields);
@@ -162,7 +124,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             }
         }
 
-        public void SaveItem(Model.ListItem item)
+        public async Task SaveItem(Model.ListItem item)
         {
             using (var context = CreateContext(item.List.Web.Url))
             {
@@ -175,8 +137,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 }
 
                 serverItem.Update();
-                context.ExecuteQuery();
+                await Task.Factory.StartNew(() => context.ExecuteQuery());
             }
+        }
+
+        private string ElementSelector(Model.Field f, ListItem i)
+        {
+            return i.FieldValues.ContainsKey(f.InternalName)
+                ? i.FieldValues[f.InternalName]?.ToString()
+                : null;
         }
 
         private void LoadFields(ClientContext context, List<Field> listFields)
@@ -242,5 +211,40 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
             return field;
         }
+
+        #region Create Context
+
+        private ClientContext CreateContext(string url)
+        {
+            var context = new ClientContext(url);
+
+            if (!String.IsNullOrEmpty(_userName))
+            {
+                context.Credentials = IsSharePointOnline
+                    ? (ICredentials)new SharePointOnlineCredentials(_userName, ConvertPassword(_password))
+                    : new NetworkCredential(_userName, _password);
+            }
+            else
+            {
+                // Ensure use of Windows Authentication
+                //Add the header that tells SharePoint to use Windows authentication.
+                context.ExecutingWebRequest += (sender, args) => args.WebRequestExecutor.RequestHeaders.Add("X-FORMS_BASED_AUTH_ACCEPTED", "f");
+            }
+
+            return context;
+        }
+
+        private SecureString ConvertPassword(string password)
+        {
+            var securePassword = new SecureString();
+            foreach (char c in password)
+            {
+                securePassword.AppendChar(c);
+            }
+
+            return securePassword;
+        }
+
+        #endregion
     }
 }

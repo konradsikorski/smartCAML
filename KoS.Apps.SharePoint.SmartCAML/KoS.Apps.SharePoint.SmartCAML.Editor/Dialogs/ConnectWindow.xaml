@@ -28,6 +28,7 @@
             <bindingConverters:RadioButtonCheckedConverter x:Key="EnumConverter" />
             <bindingConverters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
             <bindingConverters:BoolToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter" True="Collapsed" False="Visible" />
+            <bindingConverters:InvertBoolConverter x:Key="InvertBoolConverter" />
             <!--<BooleanToVisibilityConverter x:Key="EnumConverter" />
         <BooleanToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter" />-->
 
@@ -35,7 +36,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid>
+    <Grid IsEnabled="{Binding IsConnecting, Converter={StaticResource InvertBoolConverter}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +13,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     {
         public QueryTab SelectedQueryTab => ToQueryTab(this.SelectedItem);
          
-        public void AddQuery(SList list)
+        public async Task AddQuery(SList list)
         {
             if (list == null) return;
             if (list.Fields?.Count == 0)
@@ -20,8 +21,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                 try
                 {
                     StatusNotification.NotifyWithProgress("Prepairing list: " + list.Title);
-                    list.Web.Client.FillListFields(list);
-                    StatusNotification.Notify("List ready" + list.Title);
+                    await list.Web.Client.FillListFields(list);
+                    StatusNotification.Notify("List ready");
                 }
                 catch (Exception)
                 {
