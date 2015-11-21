@@ -1,7 +1,7 @@
 # SmartCAML
 This ClickOnce app helps you build SharePoint Caml queries. You can connect to SharePoint 2010+ on premiss and to Office 365.
 
-**Install** the latest version from [here](https://sikorski-workshop.azurewebsites.net/Application/Details/smartcaml)
+**Install** the latest version from **[here](https://sikorski-workshop.azurewebsites.net/Application/Details/smartcaml)**.
 
 ### Connect
 ![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/6eb3b3d0-e649-4fdb-8ed7-fab2dc9832aa.png)
