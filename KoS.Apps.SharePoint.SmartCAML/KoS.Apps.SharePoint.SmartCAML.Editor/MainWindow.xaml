@@ -70,7 +70,8 @@
             </StatusBarItem>
         </StatusBar>
 
-        <Grid Background="#FFF0F0F0">
+        <!--Background="#FFF7F7F7"-->
+        <Grid Background="#FFE3E8F4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="25*" />
                 <ColumnDefinition Width="5" />
@@ -79,7 +80,7 @@
 
             <controls:WebsTreeControl Grid.Column="0" x:Name="ucWebs" ListExecute="UcWebs_ListExecute" CloseWeb="UcWebs_OnCloseWeb"/>
             
-            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="#FFF0F0F0" />
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="Transparent" />
             <controls:QueryTabControl Grid.Column="2" x:Name="ucQueries" Background="#FFF2F6FF" Margin="0,0,2,0" />
         </Grid>
     </DockPanel>

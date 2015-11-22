@@ -5,8 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="150" d:DesignWidth="300">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="Foreground" Value="#FF5D5D5D"/>
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="FontFamily" Value="Calibri"/>
+                <Setter Property="FontWeight" Value="500" />
+            </Style>
+        </Grid.Resources>
         <!--<Grid.Resources>
             <Style TargetType="{x:Type GridViewColumnHeader}">
                 <Setter Property="Template">
@@ -28,13 +36,15 @@
                   AutoGenerateColumns="False" 
                   HeadersVisibility="All" 
                   SelectionMode="Extended" 
-                  HorizontalGridLinesBrush="#FF726F6F" 
-                  VerticalGridLinesBrush="#FF898989"
-                  AlternatingRowBackground="#FFD0D5F3" 
+                  HorizontalGridLinesBrush="#FF86A4C1" 
+                  VerticalGridLinesBrush="#FF86A4C1"
+                  AlternatingRowBackground="#FFE0E5FF" 
                   SelectionUnit="Cell"
                   IsReadOnly="False" 
-                  RowEditEnding="ucItems_RowEditEnding"
-                  
-                  />
+                  RowEditEnding="ucItems_RowEditEnding" 
+                  Background="White" 
+                  RowHeight="20"
+                  >
+        </DataGrid>
     </Grid>
 </UserControl>
