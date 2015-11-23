@@ -193,7 +193,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                             StatusNotification.Notify("Content Types loaded");
                         }
 
-                        var contentTypes = field.List.ContentTypes.Concat(field.List.Web.ContentTypes);
+                        var contentTypes = field.List.ContentTypes
+                            .OrderBy( ct => ct.Name)
+                            .Concat(field.List.Web.ContentTypes.OrderBy( ct => ct.Name));
 
                         control.ItemsSource =
                             contentTypes.Select(ct => new
