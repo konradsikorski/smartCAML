@@ -199,7 +199,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
 
                         if (list.Web.ContentTypes == null)
                         {
-                            list.ContentTypes = Converter.ToContentTypes(web.ContentTypes);
+                            list.Web.ContentTypes = Converter.ToContentTypes(web.ContentTypes);
                         }
                     });
                 }

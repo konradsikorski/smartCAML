@@ -150,7 +150,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 {
                     var serverList = context.Web.Lists.GetById(list.Id);
                     context.Load(serverList.ContentTypes, contentTypes => contentTypes.Include(
-                        ct => ct.Id,
+                        ct => ct.StringId,
                         ct => ct.Name
                         ));
 
@@ -162,13 +162,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 if (list.Web.ContentTypes == null)
                 {
                     context.Load(context.Web.ContentTypes, contentTypes => contentTypes.Include(
-                        ct => ct.Id,
+                        ct => ct.StringId,
                         ct => ct.Name
                         ));
 
                     await Task.Factory.StartNew(() => context.ExecuteQuery());
 
-                    list.ContentTypes = Converter.ToContentTypes(context.Web.ContentTypes);
+                    list.Web.ContentTypes = Converter.ToContentTypes(context.Web.ContentTypes);
                 }
             }
         }
