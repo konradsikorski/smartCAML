@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Security;
 using System.Threading.Tasks;
+using KoS.Apps.SharePoint.SmartCAML.Model;
 using Microsoft.SharePoint.Client;
 using Client = Microsoft.SharePoint.Client;
 using Field = Microsoft.SharePoint.Client.Field;
@@ -138,6 +139,37 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
                 serverItem.Update();
                 await Task.Factory.StartNew(() => context.ExecuteQuery());
+            }
+        }
+
+        public async Task FillContentTypes(SList list, bool fillAlsoWeb = true)
+        {
+            using (var context = CreateContext(list.Web.Url))
+            {
+                if (list.ContentTypes == null)
+                {
+                    var serverList = context.Web.Lists.GetById(list.Id);
+                    context.Load(serverList.ContentTypes, contentTypes => contentTypes.Include(
+                        ct => ct.Id,
+                        ct => ct.Name
+                        ));
+
+                    await Task.Factory.StartNew(() => context.ExecuteQuery());
+
+                    list.ContentTypes = Converter.ToContentTypes(serverList.ContentTypes);
+                }
+
+                if (list.Web.ContentTypes == null)
+                {
+                    context.Load(context.Web.ContentTypes, contentTypes => contentTypes.Include(
+                        ct => ct.Id,
+                        ct => ct.Name
+                        ));
+
+                    await Task.Factory.StartNew(() => context.ExecuteQuery());
+
+                    list.ContentTypes = Converter.ToContentTypes(context.Web.ContentTypes);
+                }
             }
         }
 

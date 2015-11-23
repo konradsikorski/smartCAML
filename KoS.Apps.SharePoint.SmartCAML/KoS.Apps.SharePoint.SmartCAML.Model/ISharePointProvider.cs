@@ -13,5 +13,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
         Task<List<ListItem>> ExecuteQuery(ListQuery query);
         Task FillListFields(SList list);
         Task SaveItem(ListItem item);
+        Task FillContentTypes(SList list, bool fillAlsoWeb = true);
     }
 }

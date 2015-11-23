@@ -182,5 +182,27 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                 if (item.Id == 2) throw new Exception("Item save failed");
             });
         }
+
+        public async Task FillContentTypes(SList list, bool fillAlsoWeb = true)
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                System.Threading.Thread.Sleep(2000);
+
+                list.ContentTypes = new List<ContentType>
+                {
+                    new ContentType { Id= "0x01231", Name = "Folder"},
+                    new ContentType { Id= "0x01232", Name = "Item"},
+                };
+
+                list.Web.ContentTypes = new List<ContentType>
+                {
+                    new ContentType { Id= "0x0123", Name = "Folder"},
+                    new ContentType { Id= "0x0124", Name = "Item 1"},
+                    new ContentType { Id= "0x0125", Name = "Item 2"},
+                    new ContentType { Id= "0x0126", Name = "Item 3"},
+                };
+            });
+        }
     }
 }

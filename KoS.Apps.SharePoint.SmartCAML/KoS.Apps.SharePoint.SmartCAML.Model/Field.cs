@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Model
 {
@@ -12,5 +13,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
         public string Group { get; set; }
         public FieldType Type { get; set; }
         public Guid Id { get; set; }
+        public SList List { get; set; }
     }
 }

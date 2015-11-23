@@ -15,5 +15,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
         public string Url { get; set; }
         public IList<SList> Lists { get; set; }
         public Guid Id { get; set; }
+        public List<ContentType> ContentTypes { get; set; }
     }
 }

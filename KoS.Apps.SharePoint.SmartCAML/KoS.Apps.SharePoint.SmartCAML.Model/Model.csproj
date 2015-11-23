@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentType.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="FieldChoice.cs" />
     <Compile Include="FieldDateTime.cs" />

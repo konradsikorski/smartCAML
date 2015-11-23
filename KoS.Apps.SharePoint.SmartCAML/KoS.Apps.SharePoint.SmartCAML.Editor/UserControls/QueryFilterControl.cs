@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Extensions;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 using Xceed.Wpf.Toolkit;
 
@@ -178,6 +179,30 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                     };
                 }
                 else if (field.Type == FieldType.User) control.ItemsSource = new[] { "@Me" };
+                else if (field.Type == FieldType.ContentTypeId)
+                {
+                    control.DisplayMemberPath = "Name";
+                    control.SelectedValuePath = "Id";
+
+                    control.DropDownOpened += async (sender, args) =>
+                    {
+                        if (field.List.ContentTypes == null || field.List.Web.ContentTypes == null)
+                        {
+                            StatusNotification.NotifyWithProgress("Loading Content Types");
+                            await field.List.Web.Client.FillContentTypes(field.List);
+                            StatusNotification.Notify("Content Types loaded");
+                        }
+
+                        var contentTypes = field.List.ContentTypes.Concat(field.List.Web.ContentTypes);
+
+                        control.ItemsSource =
+                            contentTypes.Select(ct => new
+                            {
+                                ct.Id,
+                                Name = field.List.ContentTypes.Contains(ct) ? "List." + ct.Name : ct.Name
+                            });
+                    };
+                }
 
                 return control;
             }

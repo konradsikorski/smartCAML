@@ -181,5 +181,29 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
 
             return field;
         }
+
+        public async Task FillContentTypes(SList list, bool fillAlsoWeb = true)
+        {
+
+            using (var site = CreateSite(list.Web.Url))
+            {
+                using (var web = site.OpenWeb())
+                {
+                    await Task.Factory.StartNew(() =>
+                    {
+                        if (list.ContentTypes == null)
+                        {
+                            var serverList = web.Lists.TryGetList(list.Title);
+                            list.ContentTypes = Converter.ToContentTypes(serverList.ContentTypes);
+                        }
+
+                        if (list.Web.ContentTypes == null)
+                        {
+                            list.ContentTypes = Converter.ToContentTypes(web.ContentTypes);
+                        }
+                    });
+                }
+            }
+        }
     }
 }
