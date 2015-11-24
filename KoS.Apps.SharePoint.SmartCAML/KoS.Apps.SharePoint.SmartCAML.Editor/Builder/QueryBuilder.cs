@@ -20,16 +20,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             return New(QueryOperator.And, @operator, type, internalName, value);
         }
 
-        public QueryFilter New(QueryOperator queryOperator, FilterOperator? @operator, FieldType type, string internalName, string value = null, bool asLookupId = false)
+        public QueryFilter New(QueryOperator queryOperator, FilterOperator? @operator, FieldType type, string internalName, string value = null, QueryOptions options = null)
         {
-            var filter = Build(queryOperator, @operator, type, internalName, value);
+            var filter = Build(queryOperator, @operator, type, internalName, value, options);
 
             Filters.Add(filter);
             return filter;
         }
 
         private QueryFilter Build(QueryOperator queryOperator, FilterOperator? @operator, FieldType type,
-            string internalName, string value)
+            string internalName, string value, QueryOptions options)
         {
             if (@operator == null) return null;
 
@@ -39,7 +39,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
                 FilterOperator = @operator.Value,
                 Type = type,
                 InternalName = internalName,
-                Value = value
+                Value = value,
+                Options = options
             };
         }
 
@@ -55,7 +56,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
                 var operatorNode = 
                     new XElement(filter.FilterOperator.ToString(),
                         new XElement("FieldRef",
-                            new XAttribute("Name", filter.InternalName)
+                            new XAttribute("Name", filter.InternalName),
+                            filter.Options?.IsLookupId == true ? new XAttribute("LookupId", "TRUE") : null
                         )
                     );
 
@@ -93,5 +95,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
         public FieldType Type { get; set; }
         public string InternalName { get; set; }
         public string Value { get; set; }
+        public QueryOptions Options { get; set; }
+    }
+
+    public class QueryOptions
+    {
+        public bool IsLookupId { get; set; }
     }
 }

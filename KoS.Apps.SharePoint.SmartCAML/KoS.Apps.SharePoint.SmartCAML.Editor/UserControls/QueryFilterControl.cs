@@ -26,7 +26,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         public FilterOperator? SelectedFilterOperator => ucFilterOperator.SelectedEnum<FilterOperator>().GetValueOrDefault();
         public string SelectedValue => ValueSelector();
 
-        private Func<string> ValueSelector = () => null; 
+        private Func<string> ValueSelector = () => null;
+        private Func<QueryOptions> QueryOptions = () => null;  
 
         public event EventHandler RemoveClick;
         public event EventHandler Changed;
@@ -74,20 +75,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                 }
 
                 if (ucLookupAs != null) ucContainer.Children.Remove(ucLookupAs);
-                if (field.Type == FieldType.Lookup)
-                {
-                    ucLookupAs = new ComboBox
-                    {
-                        MinWidth = _controlWidth,
-                        Margin = _controlMargin,
-                        IsEditable = false,
-                        ItemsSource = new[] {"as lookup id", "as lookpu text"},
-                        SelectedIndex = 0
-                    };
-
-                    ucContainer.Children.Add(ucLookupAs);
-                }
-
                 if (ucIncludeTime != null) ucContainer.Children.Remove(ucIncludeTime);
                 RefreshValueField(field);
             }
@@ -111,103 +98,166 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             if (SelectedField == null) return;
 
             builder.New(SelectedQueryOperator, SelectedFilterOperator, SelectedField.Type , SelectedField.InternalName,
-                SelectedValue);
+                SelectedValue, QueryOptions());
         }
 
         private Control BuildFieldValueControl(Field field)
         {
             var oldValue = ValueSelector();
+            QueryOptions = () => null;
 
-            if (field.Type == FieldType.DateTime)
+            switch (field.Type)
             {
-                // todo: http://www.codeproject.com/Articles/414414/SharePoint-Working-with-Dates-in-CAML
-                if (ucIncludeTime != null) ucContainer.Children.Remove(ucIncludeTime);
-                ucIncludeTime = new CheckBox
-                    {
-                        MinWidth = _controlWidth,
-                        Margin = _controlMargin,
-                        Padding = new Thickness(0,2,0,0),
-                        Content = "Include time",
-                        IsChecked = !((FieldDateTime)field).DateOnly
-                    };
+                case FieldType.DateTime:
+                    return CreateDateTime(field, oldValue);
+                case FieldType.Choice:
+                    return CreateChoice(field, oldValue);
+                case FieldType.Boolean:
+                    return CreateBoolean(oldValue);
+                case FieldType.User:
+                    return CreateUser(oldValue);
+                case FieldType.ContentTypeId:
+                    return CreateContentTypeId(field, oldValue);
+                case FieldType.Lookup:
+                    return CreateLookup(oldValue);
 
-                ucContainer.Children.Add(ucIncludeTime);
-
-                //-----
-                var control = new DateTimePicker
-                {
-                    MinWidth = _controlWidth,
-                    Margin = _controlMargin,
-
-                    Format = DateTimeFormat.Custom,
-                    FormatString = "yyyy-MM-ddTHH:mm:ssZ",
-                    TimeFormat = DateTimeFormat.ShortTime,
-                    Watermark = "value",
-                    Text = oldValue
-                };
-
-                ValueSelector = () => control.Text ?? String.Empty;
-                
-                control.ValueChanged += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
-                control.LostFocus += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
-
-                return control;
+                default:
+                    return CreateDropDown(oldValue);
             }
-            else
+        }
+
+        private Control CreateLookup(string oldValue)
+        {
+            var control = CreateDropDown(oldValue);
+
+            ucLookupAs = new ComboBox
             {
-                var control = new ComboBox
-                {
-                    MinWidth = _controlWidth,
-                    Margin = _controlMargin,
-                    IsEditable = true,
-                    Text = oldValue
-                };
-                ValueSelector = () => String.IsNullOrEmpty(control.SelectedValue?.ToString()) ? control.Text ?? String.Empty : (control.SelectedValue?.ToString());
+                MinWidth = _controlWidth,
+                Margin = _controlMargin,
+                IsEditable = false,
+                ItemsSource = new[] { "by lookup id", "by lookpu text" },
+                SelectedIndex = 0
+            };
+            QueryOptions = () => new QueryOptions {IsLookupId = ucLookupAs.SelectedIndex == 0};
+            ucLookupAs.SelectionChanged += (sender, args) =>  Changed?.Invoke(this, EventArgs.Empty);
 
-                control.SelectionChanged += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
-                control.LostFocus += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
+            ucContainer.Children.Add(ucLookupAs);
 
-                if (field.Type == FieldType.Choice) control.ItemsSource = ((FieldChoice) field).Choices.OrderBy(c => c);
-                else if (field.Type == FieldType.Boolean)
+            return control;
+        }
+
+        private Control CreateContentTypeId(Field field, string oldValue)
+        {
+            var control = CreateDropDown(oldValue);
+
+            control.DisplayMemberPath = "Name";
+            control.SelectedValuePath = "Id";
+
+            control.DropDownOpened += async (sender, args) =>
+            {
+                if (field.List.ContentTypes == null || field.List.Web.ContentTypes == null)
                 {
-                    control.DisplayMemberPath = "Text";
-                    control.SelectedValuePath = "Value";
-                    control.ItemsSource = new[]
+                    StatusNotification.NotifyWithProgress("Loading Content Types");
+                    await field.List.Web.Client.FillContentTypes(field.List);
+                    StatusNotification.Notify("Content Types loaded");
+                }
+
+                var contentTypes = field.List.ContentTypes
+                    .OrderBy(ct => ct.Name)
+                    .Concat(field.List.Web.ContentTypes.OrderBy(ct => ct.Name));
+
+                control.ItemsSource =
+                    contentTypes.Select(ct => new
                     {
+                        ct.Id,
+                        Name = field.List.ContentTypes.Contains(ct) ? "List." + ct.Name : ct.Name
+                    });
+            };
+
+            return control;
+        }
+
+        private Control CreateUser(string oldValue)
+        {
+            var control = CreateDropDown(oldValue);
+            control.ItemsSource = new[] { "@Me", "Browse..." };
+
+            return control;
+        }
+
+        private Control CreateBoolean(string oldValue)
+        {
+            var control = CreateDropDown(oldValue);
+            control.DisplayMemberPath = "Text";
+            control.SelectedValuePath = "Value";
+            control.ItemsSource = new[]
+            {
                         new {Value = "0", Text = "False"},
                         new {Value = "1", Text = "True"}
                     };
-                }
-                else if (field.Type == FieldType.User) control.ItemsSource = new[] { "@Me" };
-                else if (field.Type == FieldType.ContentTypeId)
-                {
-                    control.DisplayMemberPath = "Name";
-                    control.SelectedValuePath = "Id";
 
-                    control.DropDownOpened += async (sender, args) =>
-                    {
-                        if (field.List.ContentTypes == null || field.List.Web.ContentTypes == null)
-                        {
-                            StatusNotification.NotifyWithProgress("Loading Content Types");
-                            await field.List.Web.Client.FillContentTypes(field.List);
-                            StatusNotification.Notify("Content Types loaded");
-                        }
+            return control;
+        }
 
-                        var contentTypes = field.List.ContentTypes
-                            .OrderBy( ct => ct.Name)
-                            .Concat(field.List.Web.ContentTypes.OrderBy( ct => ct.Name));
+        private Control CreateChoice(Field field, string oldValue)
+        {
+            var control = CreateDropDown(oldValue);
+            control.ItemsSource = ((FieldChoice) field).Choices.OrderBy(c => c);
 
-                        control.ItemsSource =
-                            contentTypes.Select(ct => new
-                            {
-                                ct.Id,
-                                Name = field.List.ContentTypes.Contains(ct) ? "List." + ct.Name : ct.Name
-                            });
-                    };
-                }
+            return control;
+        }
 
-                return control;
-            }
+        private Control CreateDateTime(Field field, string oldValue)
+        {
+            // todo: http://www.codeproject.com/Articles/414414/SharePoint-Working-with-Dates-in-CAML
+            if (ucIncludeTime != null) ucContainer.Children.Remove(ucIncludeTime);
+            ucIncludeTime = new CheckBox
+            {
+                MinWidth = _controlWidth,
+                Margin = _controlMargin,
+                Padding = new Thickness(0, 2, 0, 0),
+                Content = "Include time",
+                IsChecked = !((FieldDateTime)field).DateOnly
+            };
+
+            ucContainer.Children.Add(ucIncludeTime);
+
+            //-----
+            var control = new DateTimePicker
+            {
+                MinWidth = _controlWidth,
+                Margin = _controlMargin,
+
+                Format = DateTimeFormat.Custom,
+                FormatString = "yyyy-MM-ddTHH:mm:ssZ",
+                TimeFormat = DateTimeFormat.ShortTime,
+                Watermark = "value",
+                Text = oldValue
+            };
+
+            ValueSelector = () => control.Text ?? String.Empty;
+
+            control.ValueChanged += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
+            control.LostFocus += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
+
+            return control;
+        }
+
+        private ComboBox CreateDropDown(string oldValue)
+        {
+            var control = new ComboBox
+            {
+                MinWidth = _controlWidth,
+                Margin = _controlMargin,
+                IsEditable = true,
+                Text = oldValue
+            };
+            ValueSelector = () => String.IsNullOrEmpty(control.SelectedValue?.ToString()) ? control.Text ?? String.Empty : (control.SelectedValue?.ToString());
+
+            control.SelectionChanged += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
+            control.LostFocus += (o, args) => Changed?.Invoke(this, EventArgs.Empty);
+
+            return control;
         }
 
         private void UpButton_OnClick(object sender, RoutedEventArgs e)
