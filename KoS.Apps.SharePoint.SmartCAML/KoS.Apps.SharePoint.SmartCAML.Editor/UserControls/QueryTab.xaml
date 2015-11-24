@@ -20,7 +20,7 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="XML" x:Name="XmlTab">
-                <TextBox x:Name="ucQuery" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
+                <TextBox x:Name="ucQuery" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
             </TabItem>
         </TabControl>
 
