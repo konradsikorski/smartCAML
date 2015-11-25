@@ -8,6 +8,7 @@
              Margin="0"
              Padding="0">
     <StackPanel Orientation="Horizontal" Margin="0">
+        <Image Visibility="Collapsed"/>
         <TextBlock Text="TabItem"  
                HorizontalAlignment="Left" 
                Margin="6,1,2,0"

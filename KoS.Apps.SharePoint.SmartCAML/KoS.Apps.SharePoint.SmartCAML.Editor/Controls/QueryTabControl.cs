@@ -4,7 +4,6 @@ using KoS.Apps.SharePoint.SmartCAML.Model;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using KoS.Apps.SharePoint.SmartCAML.Editor.Contols;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls

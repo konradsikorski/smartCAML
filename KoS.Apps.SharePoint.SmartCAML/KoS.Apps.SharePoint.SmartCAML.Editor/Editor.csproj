@@ -117,7 +117,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingConverters\EnumDescriptionConverter.cs" />
-    <Compile Include="Contols\ClosableTabItem.cs" />
+    <Compile Include="Controls\ClosableTabItem.cs" />
+    <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="UserControls\ClosableTabHeader.xaml.cs">
       <DependentUpon>ClosableTabHeader.xaml</DependentUpon>
@@ -180,7 +181,7 @@
     <Compile Include="BindingConverters\RadioButtonCheckedConverter.cs" />
     <Compile Include="Builder\QueryBuilder.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Contols\WatermarkComboBox.cs" />
+    <Compile Include="Controls\WatermarkComboBox.cs" />
     <Compile Include="Dialogs\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -202,7 +203,7 @@
     <Compile Include="UserControls\QueryTab.cs">
       <DependentUpon>QueryTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Contols\QueryTabControl.cs" />
+    <Compile Include="Controls\QueryTabControl.cs" />
     <Compile Include="UserControls\WebsTreeControl.cs">
       <DependentUpon>WebsTreeControl.xaml</DependentUpon>
     </Compile>
@@ -293,6 +294,30 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\addConnection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\runQuery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\xmlTab3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\xmlTab.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\saveItems.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\newQuery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\designerTab.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

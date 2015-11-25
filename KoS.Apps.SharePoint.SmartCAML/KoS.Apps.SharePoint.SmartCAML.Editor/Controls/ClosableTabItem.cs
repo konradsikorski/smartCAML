@@ -1,9 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using KoS.Apps.SharePoint.SmartCAML.Editor.Controls;
 
-namespace KoS.Apps.SharePoint.SmartCAML.Editor.Contols
+namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 {
     public class ClosableTabItem : TabItem
     {

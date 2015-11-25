@@ -31,13 +31,33 @@
         </Menu>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button Command="ApplicationCommands.New" Content="Connect" />
-                <Button Command="ApplicationCommands.Open" Content="New Query" />
+                <Button Command="ApplicationCommands.New">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/SmartCAML;component/Resources/Images/addConnection.png"/>
+                        <TextBlock Margin="3,0,0,0">Connect</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Command="ApplicationCommands.Open">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/SmartCAML;component/Resources/Images/newQuery.png"/>
+                        <TextBlock Margin="3,0,0,0">New Query</TextBlock>
+                    </StackPanel>
+                </Button>
                 <Button Command="ApplicationCommands.Stop" Content="Browse" Visibility="Collapsed" />
             </ToolBar>
             <ToolBar>
-                <Button Command="MediaCommands.Play" Content="Run Query" />
-                <Button Command="ApplicationCommands.Save" Content="Save Items" ToolTip="Save changed items to SharePoint"/>
+                <Button Command="MediaCommands.Play">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/SmartCAML;component/Resources/Images/runQuery.png"/>
+                        <TextBlock Margin="3,0,0,0">Run Query</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Command="ApplicationCommands.Save" ToolTip="Save changed items to SharePoint">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/SmartCAML;component/Resources/Images/saveItems.png"/>
+                        <TextBlock Margin="3,0,0,0">Save Items</TextBlock>
+                    </StackPanel>
+                </Button>
                 <Menu Background="Transparent" Visibility="Collapsed">
                     <MenuItem Header="Filter">
                         <MenuItem Header="Show hidden fields" IsCheckable="True" IsChecked="True"/>
@@ -46,7 +66,9 @@
                 </Menu>
             </ToolBar>
             <ToolBar>
-                <Button Command="ApplicationCommands.Help" Content="?" />
+                <Button Command="ApplicationCommands.Help" ToolTip="About" >
+                    <Image Source="/SmartCAML;component/Resources/Images/help.png"/>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <StatusBar x:Name="ucStatusBar" DockPanel.Dock="Bottom" Height="22">
