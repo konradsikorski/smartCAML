@@ -173,11 +173,37 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             }
         }
 
-        private string ElementSelector(Model.Field f, ListItem i)
+        private string ElementSelector(Model.Field field, ListItem item)
         {
-            return i.FieldValues.ContainsKey(f.InternalName)
-                ? i.FieldValues[f.InternalName]?.ToString()
-                : null;
+            if( !item.FieldValues.ContainsKey(field.InternalName) ) return null;
+
+            var value = item.FieldValues[field.InternalName];
+            if(value == null) return null;
+
+            switch (field.Type)
+            {
+                case Model.FieldType.Lookup:
+                    if (value is FieldLookupValue) return Converter.LookupValueToString((FieldLookupValue)value);
+                    if (value is FieldLookupValue[]) return Converter.LookupCollectionValueToString((FieldLookupValue[]) value);
+                    return value.ToString();
+
+                case Model.FieldType.User:
+                    if (value is FieldUserValue) return Converter.LookupValueToString((FieldUserValue)value);
+                    if (value is FieldUserValue[]) return Converter.LookupCollectionValueToString((FieldUserValue[])value);
+                    return value.ToString();
+
+                case Model.FieldType.Url:
+                    if (value is FieldUrlValue) return Converter.UrlValueToString((FieldUrlValue) value);
+                    return value.ToString();
+
+                case Model.FieldType.MultiChoice:
+                    if (value is string[]) return Converter.ChoiceMultiValueToString((string[]) value);
+                    return value.ToString();
+
+                default:
+                    return value.ToString();
+
+            }
         }
 
         private void LoadFields(ClientContext context, List<Field> listFields)

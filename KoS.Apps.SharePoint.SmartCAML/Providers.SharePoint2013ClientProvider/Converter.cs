@@ -16,5 +16,26 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 Name = ct.Name
             }).ToList();
         }
+
+        public static string UrlValueToString(FieldUrlValue value)
+        {
+            return value.Description + "#;" + value.Url;
+        }
+
+        public static string LookupCollectionValueToString(FieldLookupValue[] value)
+        {
+            return value.Select(lv => LookupValueToString(lv))
+                            .Aggregate((all, current) => all + "&" + current);
+        }
+
+        public static string LookupValueToString(FieldLookupValue value)
+        {
+            return value.LookupId + "#;" + value.LookupValue;
+        }
+
+        public static string ChoiceMultiValueToString(string[] value)
+        {
+           return value.Aggregate((all, current) => all + "&" + current);
+        }
     }
 }
