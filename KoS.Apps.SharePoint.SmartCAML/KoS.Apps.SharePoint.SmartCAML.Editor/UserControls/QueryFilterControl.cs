@@ -135,7 +135,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                 MinWidth = _controlWidth,
                 Margin = _controlMargin,
                 IsEditable = false,
-                ItemsSource = new[] { "by lookup id", "by lookpu text" },
+                ItemsSource = new[] { "by lookup id", "by lookup text" },
                 SelectedIndex = 0
             };
             QueryOptions = () => new QueryOptions {IsLookupId = ucLookupAs.SelectedIndex == 0};
