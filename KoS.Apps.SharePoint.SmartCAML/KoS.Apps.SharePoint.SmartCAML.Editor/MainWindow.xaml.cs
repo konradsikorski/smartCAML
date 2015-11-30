@@ -14,6 +14,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static RoutedCommand MyCommand = new RoutedCommand();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -21,6 +23,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             this.Width = Config.WindowWidth;
             this.Height = Config.WindowHeight;
             if(Config.WasMaximazed) this.WindowState = WindowState.Maximized;
+
+            ((RoutedCommand)ConnectCommand.Command).InputGestures.Add(new KeyGesture(Key.O, ModifierKeys.Control));
         }
 
         #region Event Handlers

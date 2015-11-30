@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
+        xmlns:utils="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Utils"
         mc:Ignorable="d"
         Title="MainWindow" 
         MinHeight="200"
@@ -14,7 +15,7 @@
         Closing="MainWindow_OnClosing">
 
     <Window.CommandBindings>
-        <CommandBinding x:Name="ConnectCommand" Command="ApplicationCommands.New"  CanExecute="ConnectCommand_CanExecute" Executed="ConnectCommand_Executed" />
+        <CommandBinding x:Name="ConnectCommand" Command="MyCommand"  CanExecute="ConnectCommand_CanExecute" Executed="ConnectCommand_Executed" />
         <CommandBinding x:Name="NewQueryCommand" Command="ApplicationCommands.Open" CanExecute="NewQueryCommand_CanExecute" Executed="NewQueryCommand_Executed"/>
         <CommandBinding x:Name="RunQueryCommand" Command="MediaCommands.Play" CanExecute="RunQueryCommand_CanExecute" Executed="RunQueryCommand_Executed"/>
         <CommandBinding x:Name="SaveChangesCommand" Command="ApplicationCommands.Save" CanExecute="SaveChangesCommand_CanExecute" Executed="SaveChangesCommand_Executed"/>
