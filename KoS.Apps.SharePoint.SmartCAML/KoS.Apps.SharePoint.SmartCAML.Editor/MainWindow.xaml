@@ -15,30 +15,24 @@
         Closing="MainWindow_OnClosing">
 
     <Window.CommandBindings>
-        <CommandBinding x:Name="ConnectCommand" Command="MyCommand"  CanExecute="ConnectCommand_CanExecute" Executed="ConnectCommand_Executed" />
-        <CommandBinding x:Name="NewQueryCommand" Command="ApplicationCommands.Open" CanExecute="NewQueryCommand_CanExecute" Executed="NewQueryCommand_Executed"/>
-        <CommandBinding x:Name="RunQueryCommand" Command="MediaCommands.Play" CanExecute="RunQueryCommand_CanExecute" Executed="RunQueryCommand_Executed"/>
-        <CommandBinding x:Name="SaveChangesCommand" Command="ApplicationCommands.Save" CanExecute="SaveChangesCommand_CanExecute" Executed="SaveChangesCommand_Executed"/>
+        <CommandBinding x:Name="ConnectCommand" Command="utils:MyCommands.Connect"  CanExecute="ConnectCommand_CanExecute" Executed="ConnectCommand_Executed" />
+        <CommandBinding x:Name="NewQueryCommand" Command="utils:MyCommands.NewQuery" CanExecute="NewQueryCommand_CanExecute" Executed="NewQueryCommand_Executed"/>
+        <CommandBinding x:Name="RunQueryCommand" Command="utils:MyCommands.RunQuery" CanExecute="RunQueryCommand_CanExecute" Executed="RunQueryCommand_Executed"/>
+        <CommandBinding x:Name="SaveChangesCommand" Command="utils:MyCommands.SaveItems" CanExecute="SaveChangesCommand_CanExecute" Executed="SaveChangesCommand_Executed"/>
+        <CommandBinding x:Name="CloseQueryTabCommand" Command="utils:MyCommands.CloseQueryTab" CanExecute="CloseQueryTabCommand_CanExecute" Executed="CloseQueryTabCommand_Executed"/>
         <CommandBinding x:Name="AboutCommand" Command="ApplicationCommands.Help" Executed="AboutCommand_Executed"/>
     </Window.CommandBindings>
     
     <DockPanel >
-        <Menu Height="20" DockPanel.Dock="Top" IsMainMenu="True" Visibility="Collapsed">
-            <MenuItem Header="_File" />
-            <MenuItem Header="_Edit" />
-            <MenuItem Header="_View" />
-            <MenuItem Header="_Window" />
-            <MenuItem Header="_Help" />
-        </Menu>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button Command="ApplicationCommands.New">
+                <Button Command="utils:MyCommands.Connect" ToolTip="(Ctrl+O)">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/SmartCAML;component/Resources/Images/addConnection.png"/>
                         <TextBlock Margin="3,0,0,0">Connect</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Command="ApplicationCommands.Open">
+                <Button Command="utils:MyCommands.NewQuery" ToolTip="(Ctrl+N)">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/SmartCAML;component/Resources/Images/newQuery.png"/>
                         <TextBlock Margin="3,0,0,0">New Query</TextBlock>
@@ -47,13 +41,13 @@
                 <Button Command="ApplicationCommands.Stop" Content="Browse" Visibility="Collapsed" />
             </ToolBar>
             <ToolBar>
-                <Button Command="MediaCommands.Play">
+                <Button Command="utils:MyCommands.RunQuery" ToolTip="(F5)">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/SmartCAML;component/Resources/Images/runQuery.png"/>
                         <TextBlock Margin="3,0,0,0">Run Query</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Command="ApplicationCommands.Save" ToolTip="Save changed items to SharePoint">
+                <Button Command="utils:MyCommands.SaveItems" ToolTip="Save changed items to SharePoint (Ctrl+S)">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/SmartCAML;component/Resources/Images/saveItems.png"/>
                         <TextBlock Margin="3,0,0,0">Save Items</TextBlock>

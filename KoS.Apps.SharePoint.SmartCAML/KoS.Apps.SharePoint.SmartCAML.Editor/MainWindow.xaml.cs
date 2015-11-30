@@ -152,6 +152,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             }
         }
 
+        private void CloseQueryTabCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = ucQueries?.SelectedQueryTab != null;
+        }
+
+        private void CloseQueryTabCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ucQueries?.CloseQuery(ucQueries?.SelectedQueryTab);
+        }
+
         private void AboutCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             new AboutWindow().ShowDialog();

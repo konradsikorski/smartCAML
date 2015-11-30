@@ -124,7 +124,7 @@
       <DependentUpon>ClosableTabHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\EnumExtension.cs" />
-    <Compile Include="Utils\Commands.cs" />
+    <Compile Include="Utils\MyCommands.cs" />
     <Compile Include="Utils\RefactorUtil.cs" />
     <Compile Include="Utils\StatusNotification.cs" />
     <Compile Include="Utils\VersionUtil.cs" />

@@ -40,6 +40,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             CommandManager.InvalidateRequerySuggested();
         }
 
+        public void CloseQuery(QueryTab tabQuery)
+        {
+            if (tabQuery == null) return;
+            if (tabQuery.Parent == null && !(tabQuery.Parent is TabItem)) return;
+
+            this.Items.Remove(tabQuery.Parent);
+        }
+
         public void CloseWeb(Web web)
         {
             for (int i = 0; i < Items.Count; i++)
