@@ -65,6 +65,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                                 ucFieldValue = null;
                                 ValueSelector = () => null;
                             }
+
+                            if (ucLookupAs != null)
+                            {
+                                ucContainer.Children.Remove(ucLookupAs);
+                                ucLookupAs = null;
+                                QueryOptions = () => null;
+                            }
                         }
                         else if(ucFieldValue == null) RefreshValueField(SelectedField);
 
