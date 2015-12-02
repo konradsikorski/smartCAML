@@ -25,7 +25,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
         public static string LookupCollectionValueToString(FieldLookupValue[] value)
         {
             return value.Select(lv => LookupValueToString(lv))
-                            .Aggregate((all, current) => all + "&" + current);
+                            .Aggregate((all, current) => all + "|" + current);
         }
 
         public static string LookupValueToString(FieldLookupValue value)
@@ -35,7 +35,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
         public static string ChoiceMultiValueToString(string[] value)
         {
-           return value.Aggregate((all, current) => all + "&" + current);
+           return value.Aggregate((all, current) => all + "|" + current);
         }
     }
 }

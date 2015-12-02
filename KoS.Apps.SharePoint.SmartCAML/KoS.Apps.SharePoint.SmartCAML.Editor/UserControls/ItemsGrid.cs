@@ -26,10 +26,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             {
                 _list = value;
 
-                foreach (var column in List.Fields.Select( c => new { Header = c.Title, Bind = c.InternalName }).OrderBy( c => c.Header))
+                foreach (var column in List.Fields.Select( c => new { Header = c.Title, Bind = c.InternalName, c.IsReadonly }).OrderBy( c => c.Header))
                 {
                     ucItems.Columns.Add( new DataGridTextColumn
                     {
+                        IsReadOnly = column.IsReadonly,
                         Header = column.Header,
                         Width = 100,
                         Binding = new Binding($"[{column.Bind}]") { Mode = BindingMode.TwoWay}
