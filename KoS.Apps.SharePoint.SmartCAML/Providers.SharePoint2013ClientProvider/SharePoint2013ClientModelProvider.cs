@@ -212,6 +212,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             {
                 switch (listField.FieldTypeKind)
                 {
+                    case FieldType.Lookup:
+                        context.Load((Client.FieldLookup)listField, f => f.AllowMultipleValues);
+                        break;
                     case FieldType.Choice:
                         context.Load((Client.FieldChoice)listField, f => f.Choices);
                         break;
@@ -251,7 +254,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     break;
 
                 case FieldType.Lookup:
-                    field = new Model.FieldLookup();
+                    field = new Model.FieldLookup {AllowMultivalue = ((Client.FieldLookup)listField).AllowMultipleValues };
                     break;
 
                 default:

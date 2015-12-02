@@ -26,6 +26,8 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
+        <CollectionViewSource x:Key="FilterOperatorViewSource" Filter="OperatorsViewSource_Filter" />
+
         <Style TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="#FF6F6F89"/>
             <Style.Triggers>
@@ -42,6 +44,7 @@
         <Button Content="▼" Click="DownButton_OnClick" Background="Transparent" BorderBrush="Transparent" Padding="4, 0" />
         <ComboBox x:Name="ucAndOr" Margin="4,0,0,0"/>
         <ComboBox x:Name="ucField" Margin="4,0,0,0" IsEditable="True" ToolTip="Field" ItemsSource="{Binding Source={StaticResource Fields}}" DisplayMemberPath="InternalName" SelectionChanged="ucField_OnSelectionChanged" />
+        <ComboBox x:Name="ucFilterOperator" Margin="4,0,0,0" ItemsSource="{Binding Source={StaticResource FilterOperatorViewSource}}" MinWidth="100"/>
     </StackPanel>
 
 </UserControl>

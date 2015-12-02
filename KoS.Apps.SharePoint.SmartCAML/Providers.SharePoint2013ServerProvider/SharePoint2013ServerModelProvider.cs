@@ -163,7 +163,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
                     break;
 
                 case SPFieldType.Lookup:
-                    field = new Model.FieldLookup();
+                    field = new Model.FieldLookup {AllowMultivalue = ((SPFieldLookup)listField).AllowMultipleValues};
                     break;
 
                 default:
