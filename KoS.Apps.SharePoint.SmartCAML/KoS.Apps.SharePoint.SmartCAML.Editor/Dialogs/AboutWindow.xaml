@@ -33,15 +33,15 @@
             <ColumnDefinition Width="181*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="1" Grid.Row="0" FontWeight="Bold" FontSize="16" Margin="4,0,4,4" >SmartCAML</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16" Margin="4,0,4,4" >SmartCAML</TextBlock>
         <TextBlock Grid.Column="0" Grid.Row="1" Margin="0,2,0,0">Author:</TextBlock>
         <TextBox   Grid.Column="1" Grid.Row="1" IsReadOnly="True" Margin="4,2,0,2" x:Name="ucAuthor" >Konrad Sikorski</TextBox>
         <TextBlock Grid.Column="0" Grid.Row="2" Margin="0,2,0,0">Version:</TextBlock>
         <TextBox   Grid.Column="1" Grid.Row="2" IsReadOnly="True" Margin="4,2,0,2" x:Name="ucVersion" />
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
                 <TextBlock x:Name="ucUpdateMessage" Text="Checking for updates..." Margin="4,2,0,2" Foreground="Gray"/>
-                <Button x:Name="ucUpdateButton" Content="Install" Style="{StaticResource LinkButton}" Visibility="Collapsed" Click="UcUpdateButton_OnClick"/>
-        </StackPanel>
+                <Button x:Name="ucUpdateButton" Content=" Install " Style="{StaticResource BaseLinkButton}" Margin="8,2,0,0" Visibility="Collapsed" Click="UcUpdateButton_OnClick"/>
+            </StackPanel>
         <Button    Grid.Column="1" Grid.Row="4" Content="GitHub"  Margin="4" Style="{StaticResource LinkButton}" Click="Button_Click"/>
     </Grid>
 

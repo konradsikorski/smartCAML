@@ -7,11 +7,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
     {
         public static string GetVersion()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.FileVersion;
+            var productVersion = (Debugger.IsAttached || !System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
+                ? FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion
+                : System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 
-            return version;
+            return productVersion;
         }
     }
 }

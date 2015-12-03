@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Deployment.Application;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -40,15 +39,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
             throw new Exception();
         }
 
-        public static ApplicationDeployment DoUpdate()
+        public static ApplicationDeployment DoUpdateAsync(AsyncCompletedEventHandler onComplete = null, DeploymentProgressChangedEventHandler onProgress = null)
         {
             var ad = ApplicationDeployment.CurrentDeployment;
-
-                    ad.UpdateAsync();
-                    MessageBox.Show("The application has been upgraded, and will now restart.");
-
-                    //--- Restart app
-
+            if (onComplete != null) ad.UpdateCompleted += onComplete;
+            if (onProgress != null) ad.UpdateProgressChanged += onProgress;
+            ad.UpdateAsync();
             return ad;
         }
 

@@ -38,7 +38,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
                 if (updateInfo.UpdateAvailable)
                 {
-                    UpdateStatusMessage($"New version '{updateInfo.AvailableVersion.ToString(4)}' is available.");
+                    UpdateStatusMessage($"New version '{updateInfo.AvailableVersion.ToString(4)}' is available.", true);
                     ucUpdateButton.Visibility = Visibility.Visible;
                 }
                 else
@@ -48,39 +48,48 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
             }
             catch(Exception ex)
             {
-                UpdateStatusError("Could not check updates.", ex);
+                UpdateStatusError("Could not check updates, try again later.", ex);
             }
         }
 
         private void UcUpdateButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ucUpdateMessage.Text = "Updating...";
+            UpdateStatusMessage("Updating...", false);
 
-            try
-            {
-                var update = ClickOnceHelper.DoUpdate();
-                update.UpdateCompleted += (o, args) =>
+            ClickOnceHelper.DoUpdateAsync(
+                (o, args) =>
                 {
-                    _pendingRestart = true;
-                    UpdateStatusSuccess("Update completed. Restart the application.");
-                };
-                update.UpdateProgressChanged += (o, args) => ucUpdateMessage.Text = $"Updating {(args.BytesCompleted/args.BytesTotal):P}...";
+                    if (args.Error != null)
+                    {
+                        UpdateStatusError("Update failed.", args.Error);
+                    }
+                    else if (args.Cancelled)
+                    {
+                        UpdateStatusSuccess("Update canceled.");
+                    }
+                    else
+                    {
+                        _pendingRestart = true;
+                        UpdateStatusSuccess("Update completed. Restart the application.");
+                    }
+                },
+                (o, args) =>
+                {
+                    ucUpdateMessage.Text = $"Updating {args.ProgressPercentage}%...";
+                }
+            );
 
-            }
-            catch (DeploymentDownloadException ex)
-            {
-                UpdateStatusError("Update failed.", ex);
-            }
-            finally
-            {
-                ucUpdateButton.Visibility = Visibility.Collapsed;
-            }
         }
 
-        private void UpdateStatusSuccess(string message)
+        private void UpdateStatusSuccess(string message, bool? installButtonVisible = null)
         {
             ucUpdateMessage.Foreground = Brushes.ForestGreen;
             ucUpdateMessage.Text = message;
+
+            if (installButtonVisible.HasValue)
+                ucUpdateButton.Visibility = installButtonVisible == true 
+                    ? Visibility.Visible 
+                    : Visibility.Collapsed;
         }
 
         private void UpdateStatusError(string message, Exception ex)
@@ -89,10 +98,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
             ucUpdateMessage.Text = message;
         }
 
-        private void UpdateStatusMessage(string message)
+        private void UpdateStatusMessage(string message, bool? installButtonVisible = null)
         {
             ucUpdateMessage.Foreground = Brushes.Gray;
             ucUpdateMessage.Text = message;
+
+            if (installButtonVisible.HasValue)
+                ucUpdateButton.Visibility = installButtonVisible == true
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
         }
     }
 }
