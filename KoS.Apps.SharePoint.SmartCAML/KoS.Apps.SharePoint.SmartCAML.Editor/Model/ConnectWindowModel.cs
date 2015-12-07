@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Security;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Annotations;
 using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 
@@ -14,6 +17,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         private SharePointProviderType _providerType;
         private bool _useCurrentUser;
         private bool _isConnecting;
+        private static SecureString _lastPassword;
 
         public ConnectWindowModel()
         {
@@ -23,6 +27,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
             UserName = Config.LastUser;
             UsersHistory = new ObservableCollection<string>(Config.UsersHistory);
             UseCurrentUser = Config.UseCurrentUser;
+
+            if (!UseCurrentUser && UsersHistory.Count > 0)
+            {
+                UserName = UsersHistory[0];
+                UserPassword = SecureStringToString(_lastPassword);
+            }
         }
 
         [Required]
@@ -117,6 +127,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
             Config.SharePointUrlHistory = SharePointWebUrlHistory;
             Config.UseCurrentUser = UseCurrentUser;
             Config.UsersHistory = UsersHistory;
+            _lastPassword = SecureStringFromString(UserPassword);
         }
 
         public void AddNewUrl(string url)
@@ -131,6 +142,35 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
             var index = UsersHistory.IndexOf(UserName);
             if (index >= 0) UsersHistory.RemoveAt(index);
             UsersHistory.Insert(0, UserName);
+        }
+
+        private SecureString SecureStringFromString(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return null;
+
+            var secure = new SecureString();
+            foreach (var c in text)
+            {
+                secure.AppendChar(c);
+            }
+
+            return secure;
+        }
+
+        private string SecureStringToString(SecureString value)
+        {
+            if (value == null) return null;
+
+            var bstr = Marshal.SecureStringToBSTR(value);
+
+            try
+            {
+                return Marshal.PtrToStringBSTR(bstr);
+            }
+            finally
+            {
+                Marshal.FreeBSTR(bstr);
+            }
         }
     }
 }
