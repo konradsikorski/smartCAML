@@ -14,26 +14,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
             if (ApplicationDeployment.IsNetworkDeployed)
             {
                 var ad = ApplicationDeployment.CurrentDeployment;
-
-                //try
-                //{
-                    return await Task.Factory.StartNew( () => ad.CheckForDetailedUpdate());
-                //}
-                //catch (DeploymentDownloadException dde)
-                //{
-                //    MessageBox.Show("The new version of the application cannot be downloaded at this time. \n\nPlease check your network connection, or try again later. Error: " + dde.Message);
-                //    return;
-                //}
-                //catch (InvalidDeploymentException ide)
-                //{
-                //    MessageBox.Show("Cannot check for a new version of the application. The ClickOnce deployment is corrupt. Please redeploy the application and try again. Error: " + ide.Message);
-                //    return;
-                //}
-                //catch (InvalidOperationException ioe)
-                //{
-                //    MessageBox.Show("This application cannot be updated. It is likely not a ClickOnce application. Error: " + ioe.Message);
-                //    return;
-                //}
+                
+                return await Task.Factory.StartNew( () => ad.CheckForDetailedUpdate());
             }
 
             throw new Exception();

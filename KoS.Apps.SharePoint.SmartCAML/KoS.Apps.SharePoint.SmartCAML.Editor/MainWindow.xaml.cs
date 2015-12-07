@@ -104,7 +104,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             catch (Exception ex)
             {
                 StatusNotification.Notify("Quering failed");
-                MessageBox.Show("The request failed.\n\n" + ex, "SmartCAML", MessageBoxButton.OK, MessageBoxImage.Error);
+                ExceptionHandler.Handle(ex, "The request failed.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             catch (Exception ex)
             {
                 StatusNotification.Notify("Update failed");
-                MessageBox.Show("The request failed.\n\n" + ex, "SmartCAML", MessageBoxButton.OK, MessageBoxImage.Error);
+                ExceptionHandler.Handle(ex, "The request failed.");
             }
         }
 

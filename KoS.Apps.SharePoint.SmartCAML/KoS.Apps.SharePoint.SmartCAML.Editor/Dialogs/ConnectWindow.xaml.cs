@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Net;
 using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 using System.Windows;
 using System.Windows.Controls;
@@ -49,19 +50,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
                 }
                 StatusNotification.Notify("Connected");
             }
-            catch (FileNotFoundException ex)
-            {
-                StatusNotification.Notify("Connection failed");
-
-                if (ex.Message.Contains("Microsoft.SharePoint"))
-                    MessageBox.Show("Could not load file or assembly 'Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c'.\n\n" +
-                        "Make shure you are running application on SharePoint sever or change the connection type to 'Client' in 'advance settings'.", "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
-                else MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
             catch (Exception ex)
             {
-                StatusNotification.Notify("Connection failed");
-                MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                ExceptionHandler.HandleConnection(ex);
             }
 
             Model.IsConnecting = false;

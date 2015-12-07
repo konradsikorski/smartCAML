@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Threading;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor
 {
@@ -15,10 +16,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs dispatcherUnhandledExceptionEventArgs)
         {
-            var message = "Unexpected error ocured. The application will be closed.\n\n" +
-                          dispatcherUnhandledExceptionEventArgs.Exception;
-
-            MessageBox.Show(message, "Application Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            ExceptionHandler.Handle(dispatcherUnhandledExceptionEventArgs.Exception,
+                "Unexpected error ocured. The application will be closed");
             //Shutdown();
         }
     }

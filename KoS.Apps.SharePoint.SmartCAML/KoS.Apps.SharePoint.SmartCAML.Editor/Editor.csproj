@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Utils\ClickOnceHelper.cs" />
+    <Compile Include="Utils\ExceptionHandler.cs" />
     <Compile Include="Utils\MyCommands.cs" />
     <Compile Include="Utils\RefactorUtil.cs" />
     <Compile Include="Utils\StatusNotification.cs" />
