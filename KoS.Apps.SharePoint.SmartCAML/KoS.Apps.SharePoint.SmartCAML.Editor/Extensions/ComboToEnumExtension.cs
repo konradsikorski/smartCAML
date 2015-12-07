@@ -39,7 +39,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Extensions
             return viewSource;
         }
 
-        public static CollectionViewSource BindToEnumUsingSource<T>(this ComboBox @this, CollectionViewSource viewSource) where T : struct
+        public static CollectionViewSource BindToEnumUsingSource<T>(this ComboBox @this, CollectionViewSource viewSource, T? defaultValue = null) where T : struct
         {
             var source = Enum.GetValues(typeof(T))
                 .Cast<T>()
@@ -50,6 +50,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Extensions
 
             @this.DisplayMemberPath = "Value";
             @this.SelectedValuePath = "Key";
+
+            if (defaultValue.HasValue) @this.SelectedValue = defaultValue.Value;
 
             return viewSource;
         }

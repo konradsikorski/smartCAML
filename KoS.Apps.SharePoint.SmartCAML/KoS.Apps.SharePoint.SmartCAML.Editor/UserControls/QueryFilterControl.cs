@@ -95,7 +95,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void ConfigureFieldOperatorControl()
         {
-            ucFilterOperator.BindToEnumUsingSource<FilterOperator>(FilterOperatorViewSource);
+            ucFilterOperator.BindToEnumUsingSource<FilterOperator>(FilterOperatorViewSource, FilterOperator.Eq);
 
             ucFilterOperator.SelectionChanged += (o, args) =>
             {
