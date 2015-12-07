@@ -26,11 +26,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             {
                 _list = value;
 
-                foreach (var column in List.Fields.Select( c => new { Header = c.Title, Bind = c.InternalName, c.IsReadonly }).OrderBy( c => c.Header))
+                foreach (var column in List.Fields.Select( c => new { Header = c.Title, Bind = c.InternalName, c.IsReadonly, c.Type }).OrderBy( c => c.Header))
                 {
                     ucItems.Columns.Add( new DataGridTextColumn
                     {
-                        IsReadOnly = column.IsReadonly,
+                        IsReadOnly = column.IsReadonly || ColumnTypeNotSupportedForEditing(column.Type),
                         Header = column.Header,
                         Width = 100,
                         Binding = new Binding($"[{column.Bind}]") { Mode = BindingMode.TwoWay}
@@ -44,6 +44,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         internal void QueryResult(List<ListItem> items)
         {
             ucItems.ItemsSource = items;
+        }
+
+        private bool ColumnTypeNotSupportedForEditing(FieldType columnType)
+        {
+            return columnType == FieldType.Lookup
+                   || columnType == FieldType.MultiChoice
+                   || columnType == FieldType.Url
+                   || columnType == FieldType.User;
         }
 
         private void ucItems_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
