@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.SharePoint.Client;
-using Client = Microsoft.SharePoint.Client;
-using Model = KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 {
@@ -10,7 +8,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
     {
         public static List<Model.ContentType> ToContentTypes(ContentTypeCollection contentTypes)
         {
-            return contentTypes.Cast<Client.ContentType>().Select(ct => new Model.ContentType
+            return contentTypes.Cast<ContentType>().Select(ct => new Model.ContentType
             {
                 Id = ct.StringId,
                 Name = ct.Name
@@ -24,6 +22,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
         public static string LookupCollectionValueToString(FieldLookupValue[] value)
         {
+            if (value.Length == 0) return string.Empty;
+
             return value.Select(lv => LookupValueToString(lv))
                             .Aggregate((all, current) => all + "|" + current);
         }
@@ -35,6 +35,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
         public static string ChoiceMultiValueToString(string[] value)
         {
+            if(value.Length == 0) return string.Empty;
+
            return value.Aggregate((all, current) => all + "|" + current);
         }
     }
