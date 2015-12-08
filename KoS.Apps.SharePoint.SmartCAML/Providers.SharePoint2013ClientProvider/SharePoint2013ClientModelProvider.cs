@@ -134,12 +134,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
                 foreach (var change in item.Changes)
                 {
-                    serverItem[change.Key] = item[change.Key];
+                    var field = item.List.Fields.First(f => f.InternalName == change.Key);
+
+                    serverItem[change.Key] = ConvertFieldValue( field.Type, item[change.Key]);
                 }
 
                 serverItem.Update();
                 await Task.Factory.StartNew(() => context.ExecuteQuery());
             }
+        }
+
+        private object ConvertFieldValue(Model.FieldType fieldType, string value)
+        {
+            if (fieldType == Model.FieldType.Lookup) return Converter.ToLookupValue(value);
+
+            return value;
         }
 
         public async Task FillContentTypes(SList list, bool fillAlsoWeb = true)

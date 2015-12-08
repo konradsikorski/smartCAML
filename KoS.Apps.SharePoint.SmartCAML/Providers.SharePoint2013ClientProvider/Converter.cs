@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.SharePoint.Client;
 
@@ -38,6 +39,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             if(value.Length == 0) return string.Empty;
 
            return value.Aggregate((all, current) => all + "|" + current);
+        }
+
+        public static FieldLookupValue ToLookupValue(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return null;
+
+            var lookupSplit = value.Split(new[] {"#;"}, StringSplitOptions.None);
+
+            int lookupId;
+            return int.TryParse(lookupSplit[0], out lookupId)
+                ? new FieldLookupValue {LookupId = lookupId}
+                : null;
         }
     }
 }
