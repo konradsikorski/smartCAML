@@ -40,12 +40,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
             else if ( ex.Response is HttpWebResponse)
             {
                 var response = (HttpWebResponse)ex.Response;
-                if (response.StatusCode == HttpStatusCode.BadGateway)
-                    MessageBox.Show("Could not find the server. Please check the URL.", "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
-                else if (response.StatusCode == HttpStatusCode.Unauthorized)
-                    MessageBox.Show("You are not authorized to open this site", "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
-                else
-                    MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.BadGateway:
+                        MessageBox.Show("Could not find the server. Please check the URL.", "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                    case HttpStatusCode.Unauthorized:
+                    case HttpStatusCode.Forbidden:
+                        MessageBox.Show("You are not authorized to open this site", "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                    default:
+                        MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                }
             }
             else
                 MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
