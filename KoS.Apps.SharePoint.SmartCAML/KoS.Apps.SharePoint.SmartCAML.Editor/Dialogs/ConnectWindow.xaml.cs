@@ -40,7 +40,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
                 Model.IsConnecting = true;
                 StatusNotification.NotifyWithProgress("Connecting...");
 
-                if (await client.Connect(Model.SharePointWebUrl, Model.UserName, Model.UserPassword) != null)
+                var userName = !Model.UseCurrentUser ? Model.UserName : null;
+                var userPassword = !Model.UseCurrentUser ? Model.UserPassword: null;
+
+                if (await client.Connect(Model.SharePointWebUrl, userName, userPassword) != null)
                 {
                     Client = client;
                     Model.AddNewUrl(Model.SharePointWebUrl);
