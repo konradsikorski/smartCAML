@@ -18,7 +18,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     /// </summary>
     public partial class QueryFilterControl : UserControl
     {
-        //public ComboBox ucFilterOperator;
+        #region Fields
         public Control ucFieldValue;
         public ComboBox ucLookupAs;
         public CheckBox ucIncludeTime;
@@ -41,12 +41,51 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private CollectionViewSource FilterOperatorViewSource => (CollectionViewSource) this.Resources["FilterOperatorViewSource"];
 
+        #endregion
+        #region Constructors
+
         public QueryFilterControl()
         {
             InitializeComponent();
             ucAndOr.BindToEnum<QueryOperator>(0);
 
             ConfigureFieldOperatorControl();
+        }
+
+        private void ConfigureFieldOperatorControl()
+        {
+            ucFilterOperator.BindToEnumUsingSource<FilterOperator>(FilterOperatorViewSource, FilterOperator.Eq);
+
+            ucFilterOperator.SelectionChanged += (o, args) =>
+            {
+                if (SelectedFilterOperator == FilterOperator.IsNotNull || SelectedFilterOperator == FilterOperator.IsNull)
+                {
+                    if (ucFieldValue != null)
+                    {
+                        ucContainer.Children.Remove(ucFieldValue);
+                        ucFieldValue = null;
+                        ValueSelector = () => null;
+                    }
+
+                    if (ucLookupAs != null)
+                    {
+                        ucContainer.Children.Remove(ucLookupAs);
+                        ucLookupAs = null;
+                        QueryOptions = () => null;
+                    }
+                }
+                else if (ucFieldValue == null) RefreshValueField(SelectedField);
+
+                Changed?.Invoke(this, EventArgs.Empty);
+            };
+        }
+
+        #endregion
+        #region Event Handlers
+
+        private void QueryFilterControl_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Changed?.Invoke(this, EventArgs.Empty);
         }
 
         private void UpButton_OnClick(object sender, RoutedEventArgs e)
@@ -93,33 +132,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             RemoveClick?.Invoke(this, EventArgs.Empty);
         }
 
-        private void ConfigureFieldOperatorControl()
-        {
-            ucFilterOperator.BindToEnumUsingSource<FilterOperator>(FilterOperatorViewSource, FilterOperator.Eq);
-
-            ucFilterOperator.SelectionChanged += (o, args) =>
-            {
-                if (SelectedFilterOperator == FilterOperator.IsNotNull || SelectedFilterOperator == FilterOperator.IsNull)
-                {
-                    if (ucFieldValue != null)
-                    {
-                        ucContainer.Children.Remove(ucFieldValue);
-                        ucFieldValue = null;
-                        ValueSelector = () => null;
-                    }
-
-                    if (ucLookupAs != null)
-                    {
-                        ucContainer.Children.Remove(ucLookupAs);
-                        ucLookupAs = null;
-                        QueryOptions = () => null;
-                    }
-                }
-                else if (ucFieldValue == null) RefreshValueField(SelectedField);
-
-                Changed?.Invoke(this, EventArgs.Empty);
-            };
-        }
+        #endregion
 
         private void RefreshValueField(Field field)
         {
@@ -136,6 +149,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             builder.New(SelectedQueryOperator, SelectedFilterOperator, SelectedField.Type , SelectedField.InternalName,
                 SelectedValue, QueryOptions());
         }
+
+        #region Value Control Builder
 
         private Control BuildFieldValueControl(Field field)
         {
@@ -295,5 +310,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
             return control;
         }
+
+        #endregion
     }
 }

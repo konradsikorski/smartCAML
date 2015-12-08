@@ -7,7 +7,8 @@
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="300"
-             Padding="2">
+             Padding="2"
+             Loaded="QueryFilterControl_OnLoaded">
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">
             <Setter Property="Background" Value="Transparent" />
