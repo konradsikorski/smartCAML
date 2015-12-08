@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Deployment.Application;
+using System.Diagnostics;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using System.Windows;
 using System.Windows.Media;
@@ -78,7 +79,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
                     ucUpdateMessage.Text = $"Updating {args.ProgressPercentage}%...";
                 }
             );
+        }
 
+        private void DonateButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HTEBZ3Y37F2ZL");
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
         }
 
         private void UpdateStatusSuccess(string message, bool? installButtonVisible = null)

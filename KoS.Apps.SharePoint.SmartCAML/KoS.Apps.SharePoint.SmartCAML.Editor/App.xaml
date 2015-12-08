@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style/LabelStyle.xaml" />
                 <ResourceDictionary Source="Style/LinkButtonStyle.xaml" />
+                <ResourceDictionary Source="Style/ImageButtonStyle.xaml" />
                 <ResourceDictionary Source="Style/GeneralStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
