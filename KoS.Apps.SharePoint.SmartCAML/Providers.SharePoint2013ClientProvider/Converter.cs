@@ -52,5 +52,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 ? new FieldLookupValue {LookupId = lookupId}
                 : null;
         }
+
+        public static FieldLookupValue[] ToLookupCollectionValue(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return null;
+
+            return value
+                .Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(lv => ToLookupValue(lv))
+                .Where(lv => lv != null)
+                .ToArray();
+        }
     }
 }

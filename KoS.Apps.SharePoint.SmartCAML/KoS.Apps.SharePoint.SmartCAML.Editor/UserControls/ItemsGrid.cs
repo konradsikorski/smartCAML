@@ -49,8 +49,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         private bool ColumnTypeNotSupportedForEditing(Field field)
         {
             return
-                    (field.Type == FieldType.Lookup && ((FieldLookup)field).AllowMultivalue)
-                   || field.Type == FieldType.MultiChoice
+                    field.Type == FieldType.MultiChoice
                    || field.Type == FieldType.Url
                    || field.Type == FieldType.User;
         }

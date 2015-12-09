@@ -136,7 +136,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 {
                     var field = item.List.Fields.First(f => f.InternalName == change.Key);
 
-                    serverItem[change.Key] = ConvertFieldValue( field.Type, item[change.Key]);
+                    serverItem[change.Key] = ConvertFieldValue( field, item[change.Key]);
                 }
 
                 serverItem.Update();
@@ -144,9 +144,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             }
         }
 
-        private object ConvertFieldValue(Model.FieldType fieldType, string value)
+        private object ConvertFieldValue(Model.Field field, string value)
         {
-            if (fieldType == Model.FieldType.Lookup) return Converter.ToLookupValue(value);
+            if (field.Type == Model.FieldType.Lookup)
+            {
+                if (((Model.FieldLookup) field).AllowMultivalue) return Converter.ToLookupCollectionValue(value);
+                else return Converter.ToLookupValue(value);
+            }
 
             return value;
         }
