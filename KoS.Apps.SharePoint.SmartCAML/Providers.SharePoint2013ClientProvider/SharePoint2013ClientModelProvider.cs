@@ -151,6 +151,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 if (((Model.FieldLookup) field).AllowMultivalue) return Converter.ToLookupCollectionValue(value);
                 else return Converter.ToLookupValue(value);
             }
+            if (field.Type == Model.FieldType.Url) return Converter.ToUrlValue(value);
 
             return value;
         }

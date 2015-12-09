@@ -50,7 +50,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         {
             return
                     field.Type == FieldType.MultiChoice
-                   || field.Type == FieldType.Url
+                   //|| field.Type == FieldType.Url
                    || field.Type == FieldType.User;
         }
 
