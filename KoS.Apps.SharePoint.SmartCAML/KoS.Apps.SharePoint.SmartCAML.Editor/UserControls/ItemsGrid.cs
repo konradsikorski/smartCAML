@@ -30,7 +30,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                 {
                     ucItems.Columns.Add( new DataGridTextColumn
                     {
-                        IsReadOnly = column.Field.IsReadonly || ColumnTypeNotSupportedForEditing(column.Field),
+                        IsReadOnly = column.Field.IsReadonly,
                         Header = column.Header,
                         Width = 100,
                         Binding = new Binding($"[{column.Bind}]") { Mode = BindingMode.TwoWay}
@@ -44,12 +44,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         internal void QueryResult(List<ListItem> items)
         {
             ucItems.ItemsSource = items;
-        }
-
-        private bool ColumnTypeNotSupportedForEditing(Field field)
-        {
-            return
-                    field.Type == FieldType.User;
         }
 
         private void ucItems_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)

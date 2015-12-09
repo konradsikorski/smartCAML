@@ -19,6 +19,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             }).ToList();
         }
 
+        #region From Value to String
+
         public static string UrlValueToString(FieldUrlValue value)
         {
             return value.Description + LookupValueSeparator + value.Url;
@@ -43,6 +45,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
            return value.Aggregate((all, current) => all + LookupCollectionItemSeparator + current);
         }
+
+        #endregion
+        #region From String to Value
 
         public static FieldLookupValue ToLookupValue(string value)
         {
@@ -87,5 +92,30 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             return value
                 .Split(new[] {LookupCollectionItemSeparator}, StringSplitOptions.RemoveEmptyEntries);
         }
+
+        public static FieldUserValue[] ToUserCollectionValue(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return null;
+
+            return value
+                .Split(new[] { LookupCollectionItemSeparator }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(lv => ToUserValue(lv))
+                .Where(lv => lv != null)
+                .ToArray();
+        }
+
+        public static FieldUserValue ToUserValue(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return null;
+
+            var lookupSplit = value.Split(new[] { LookupValueSeparator }, StringSplitOptions.None);
+
+            int lookupId;
+            return int.TryParse(lookupSplit[0], out lookupId)
+                ? new FieldUserValue { LookupId = lookupId }
+                : null;
+        }
+
+        #endregion
     }
 }

@@ -72,91 +72,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             return await Connect(url);
         }
 
-        public async Task<List<Model.ListItem>> ExecuteQuery(Model.ListQuery query)
-        {
-            using (var context = CreateContext(query.List.Web.Url))
-            {
-                var serverList = context.Web.Lists.GetById(query.List.Id);
-                var listQuery = new CamlQuery{ ViewXml = $"<View><Query>{query.Query}</Query></View>" };
-
-                var items = serverList.GetItems(listQuery);
-                context.Load(items
-                    //,i => i.Include(item => item.Id)
-                    );
-
-                await Task.Factory.StartNew(() => context.ExecuteQuery());
-
-                return items.Cast<ListItem>()
-                        .Select(i => new Model.ListItem(query.List)
-                        {
-                            Id = i.Id,
-                            Columns =
-                                query.List
-                                .Fields
-                                .ToDictionary(
-                                    f => f.InternalName,
-                                    f => ElementSelector(f, i)
-                                    )
-                        })
-                        .ToList();
-            }
-        }
-
-        public async Task FillListFields(Model.SList list)
-        {
-            using (var context = CreateContext(list.Web.Url))
-            {
-                var serverList = context.Web.Lists.GetById(list.Id);
-                context.Load(serverList.Fields, fields => fields.Include(
-                    f => f.Id,
-                    f => f.Hidden,
-                    f => f.ReadOnlyField,
-                    f => f.Title,
-                    f => f.InternalName,
-                    f => f.Group,
-                    f => f.FieldTypeKind));
-
-                await Task.Factory.StartNew(() => context.ExecuteQuery());
-
-                var listFields = serverList.Fields.Cast<Field>().ToList();
-                LoadFields(context, listFields);
-
-                list.Fields = listFields.Select(f => CreateField(f)).ToList();
-            }
-        }
-
-        public async Task SaveItem(Model.ListItem item)
-        {
-            using (var context = CreateContext(item.List.Web.Url))
-            {
-                var serverList = context.Web.Lists.GetById(item.List.Id);
-                var serverItem = serverList.GetItemById(item.Id);
-
-                foreach (var change in item.Changes)
-                {
-                    var field = item.List.Fields.First(f => f.InternalName == change.Key);
-
-                    serverItem[change.Key] = ConvertFieldValue( field, item[change.Key]);
-                }
-
-                serverItem.Update();
-                await Task.Factory.StartNew(() => context.ExecuteQuery());
-            }
-        }
-
-        private object ConvertFieldValue(Model.Field field, string value)
-        {
-            if (field.Type == Model.FieldType.Lookup)
-            {
-                if (((Model.FieldLookup) field).AllowMultivalue) return Converter.ToLookupCollectionValue(value);
-                else return Converter.ToLookupValue(value);
-            }
-            if (field.Type == Model.FieldType.Url) return Converter.ToUrlValue(value);
-            if (field.Type == Model.FieldType.MultiChoice) return Converter.ToMultiChoiceValue(value);
-
-            return value;
-        }
-
         public async Task FillContentTypes(SList list, bool fillAlsoWeb = true)
         {
             using (var context = CreateContext(list.Web.Url))
@@ -188,18 +103,50 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             }
         }
 
+        #region Get Items
+
+        public async Task<List<Model.ListItem>> ExecuteQuery(Model.ListQuery query)
+        {
+            using (var context = CreateContext(query.List.Web.Url))
+            {
+                var serverList = context.Web.Lists.GetById(query.List.Id);
+                var listQuery = new CamlQuery{ ViewXml = $"<View><Query>{query.Query}</Query></View>" };
+
+                var items = serverList.GetItems(listQuery);
+                context.Load(items
+                    //,i => i.Include(item => item.Id)
+                    );
+
+                await Task.Factory.StartNew(() => context.ExecuteQuery());
+
+                return items.Cast<ListItem>()
+                        .Select(i => new Model.ListItem(query.List)
+                        {
+                            Id = i.Id,
+                            Columns =
+                                query.List
+                                .Fields
+                                .ToDictionary(
+                                    f => f.InternalName,
+                                    f => ElementSelector(f, i)
+                                    )
+                        })
+                        .ToList();
+            }
+        }
+
         private string ElementSelector(Model.Field field, ListItem item)
         {
-            if( !item.FieldValues.ContainsKey(field.InternalName) ) return null;
+            if (!item.FieldValues.ContainsKey(field.InternalName)) return null;
 
             var value = item.FieldValues[field.InternalName];
-            if(value == null) return null;
+            if (value == null) return null;
 
             switch (field.Type)
             {
                 case Model.FieldType.Lookup:
                     if (value is FieldLookupValue) return Converter.LookupValueToString((FieldLookupValue)value);
-                    if (value is FieldLookupValue[]) return Converter.LookupCollectionValueToString((FieldLookupValue[]) value);
+                    if (value is FieldLookupValue[]) return Converter.LookupCollectionValueToString((FieldLookupValue[])value);
                     return value.ToString();
 
                 case Model.FieldType.User:
@@ -208,16 +155,43 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     return value.ToString();
 
                 case Model.FieldType.Url:
-                    if (value is FieldUrlValue) return Converter.UrlValueToString((FieldUrlValue) value);
+                    if (value is FieldUrlValue) return Converter.UrlValueToString((FieldUrlValue)value);
                     return value.ToString();
 
                 case Model.FieldType.MultiChoice:
-                    if (value is string[]) return Converter.ChoiceMultiValueToString((string[]) value);
+                    if (value is string[]) return Converter.ChoiceMultiValueToString((string[])value);
                     return value.ToString();
 
                 default:
                     return value.ToString();
 
+            }
+        }
+
+        #endregion
+
+        #region List Fields
+
+        public async Task FillListFields(Model.SList list)
+        {
+            using (var context = CreateContext(list.Web.Url))
+            {
+                var serverList = context.Web.Lists.GetById(list.Id);
+                context.Load(serverList.Fields, fields => fields.Include(
+                    f => f.Id,
+                    f => f.Hidden,
+                    f => f.ReadOnlyField,
+                    f => f.Title,
+                    f => f.InternalName,
+                    f => f.Group,
+                    f => f.FieldTypeKind));
+
+                await Task.Factory.StartNew(() => context.ExecuteQuery());
+
+                var listFields = serverList.Fields.Cast<Field>().ToList();
+                LoadFields(context, listFields);
+
+                list.Fields = listFields.Select(f => CreateField(f)).ToList();
             }
         }
 
@@ -229,6 +203,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 {
                     case FieldType.Lookup:
                         context.Load((Client.FieldLookup)listField, f => f.AllowMultipleValues);
+                        break;
+                    case FieldType.User:
+                        context.Load((Client.FieldUser)listField, f => f.AllowMultipleValues);
                         break;
                     case FieldType.Choice:
                         context.Load((Client.FieldChoice)listField, f => f.Choices);
@@ -242,7 +219,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 }
             }
 
-            if(context.HasPendingRequest) context.ExecuteQuery();
+            if (context.HasPendingRequest) context.ExecuteQuery();
         }
 
         private Model.Field CreateField(Field listField)
@@ -265,11 +242,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     break;
 
                 case FieldType.DateTime:
-                    field = new Model.FieldDateTime {DateOnly = ((Client.FieldDateTime)listField).DisplayFormat == DateTimeFieldFormatType.DateOnly };
+                    field = new Model.FieldDateTime { DateOnly = ((Client.FieldDateTime)listField).DisplayFormat == DateTimeFieldFormatType.DateOnly };
                     break;
 
                 case FieldType.Lookup:
-                    field = new Model.FieldLookup {AllowMultivalue = ((Client.FieldLookup)listField).AllowMultipleValues };
+                    field = new Model.FieldLookup { AllowMultivalue = ((Client.FieldLookup)listField).AllowMultipleValues };
+                    break;
+
+                case FieldType.User:
+                    field = new Model.FieldLookup { AllowMultivalue = ((Client.FieldUser)listField).AllowMultipleValues };
                     break;
 
                 default:
@@ -283,10 +264,53 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             field.Title = listField.Title;
             field.InternalName = listField.InternalName;
             field.Group = listField.Group;
-            field.Type = (Model.FieldType) listField.FieldTypeKind;
+            field.Type = (Model.FieldType)listField.FieldTypeKind;
 
             return field;
         }
+
+        #endregion
+
+        #region Save Items
+
+        public async Task SaveItem(Model.ListItem item)
+        {
+            using (var context = CreateContext(item.List.Web.Url))
+            {
+                var serverList = context.Web.Lists.GetById(item.List.Id);
+                var serverItem = serverList.GetItemById(item.Id);
+
+                foreach (var change in item.Changes)
+                {
+                    var field = item.List.Fields.First(f => f.InternalName == change.Key);
+
+                    serverItem[change.Key] = ConvertFieldValue( field, item[change.Key]);
+                }
+
+                serverItem.Update();
+                await Task.Factory.StartNew(() => context.ExecuteQuery());
+            }
+        }
+
+        private object ConvertFieldValue(Model.Field field, string value)
+        {
+            if (field.Type == Model.FieldType.Lookup)
+            {
+                if (((Model.FieldLookup) field).AllowMultivalue) return Converter.ToLookupCollectionValue(value);
+                else return Converter.ToLookupValue(value);
+            }
+            if (field.Type == Model.FieldType.Url) return Converter.ToUrlValue(value);
+            if (field.Type == Model.FieldType.MultiChoice) return Converter.ToMultiChoiceValue(value);
+            if (field.Type == Model.FieldType.User)
+            {
+                if (((Model.FieldLookup)field).AllowMultivalue) return Converter.ToUserCollectionValue(value);
+                else return Converter.ToUserValue(value);
+            }
+
+            return value;
+        }
+
+        #endregion
 
         #region Create Context
 
