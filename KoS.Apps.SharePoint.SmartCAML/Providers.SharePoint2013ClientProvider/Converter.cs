@@ -67,7 +67,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 .ToArray();
         }
 
-        public static object ToUrlValue(string value)
+        public static FieldUrlValue ToUrlValue(string value)
         {
             if (string.IsNullOrEmpty(value)) return null;
 
