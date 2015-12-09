@@ -152,6 +152,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 else return Converter.ToLookupValue(value);
             }
             if (field.Type == Model.FieldType.Url) return Converter.ToUrlValue(value);
+            if (field.Type == Model.FieldType.MultiChoice) return Converter.ToMultiChoiceValue(value);
 
             return value;
         }

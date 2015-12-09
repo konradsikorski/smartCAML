@@ -49,9 +49,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         private bool ColumnTypeNotSupportedForEditing(Field field)
         {
             return
-                    field.Type == FieldType.MultiChoice
-                   //|| field.Type == FieldType.Url
-                   || field.Type == FieldType.User;
+                    field.Type == FieldType.User;
         }
 
         private void ucItems_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)

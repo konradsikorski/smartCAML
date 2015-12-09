@@ -79,5 +79,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 Url = valueSplit.Length > 0 ? valueSplit[1] : null
             };
         }
+
+        public static string[] ToMultiChoiceValue(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return null;
+
+            return value
+                .Split(new[] {LookupCollectionItemSeparator}, StringSplitOptions.RemoveEmptyEntries);
+        }
     }
 }
