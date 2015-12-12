@@ -8,6 +8,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters
 {
     public class BooleanConverter<T> : IValueConverter
     {
+        public BooleanConverter() {}
+
         public BooleanConverter(T trueValue, T falseValue)
         {
             True = trueValue;
@@ -35,10 +37,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters
         { }
     }
 
-    public sealed class InvertBoolConverter : BooleanConverter<Boolean>
+    public sealed class InvertBoolConverter : BooleanConverter<bool>
     {
         public InvertBoolConverter() :
             base(false, true)
         { }
+    }
+
+    public sealed class BoolToStringConverter : BooleanConverter<string>
+    {
     }
 }

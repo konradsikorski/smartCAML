@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
         xmlns:utils="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Utils"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:userControls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" 
         MinHeight="200"
@@ -61,6 +63,12 @@
                 </Menu>
             </ToolBar>
             <ToolBar>
+                <xctk:DropDownButton Background="Transparent" BorderThickness="0" BorderBrush="Transparent">
+                    <xctk:DropDownButton.DropDownContent>
+                        <userControls:QuickSettingsControl />
+                    </xctk:DropDownButton.DropDownContent>
+                    <Image Source="/SmartCAML;component/Resources/Images/gear.png"/>
+                </xctk:DropDownButton>
                 <Button Command="ApplicationCommands.Help" ToolTip="About" >
                     <Image Source="/SmartCAML;component/Resources/Images/help.png"/>
                 </Button>

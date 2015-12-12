@@ -75,6 +75,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             set { SetCollection(value); }
         }
 
+        public static bool DisplayColumnsByTitle
+        {
+            get { return GetConfig().ToBool(true); }
+            set { SetConfig(value); }
+        }
+
         private static IEnumerable<string> GetCollection([CallerMemberName] string name = "")
         {
             var value = ConfigurationManager.AppSettings[name]?.Split(new[] { ";#" }, StringSplitOptions.RemoveEmptyEntries);
