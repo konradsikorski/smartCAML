@@ -1,5 +1,7 @@
 ﻿using KoS.Apps.SharePoint.SmartCAML.Model;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
@@ -10,6 +12,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     public partial class QueryTab : UserControl
     {
         public SList List { get; private set; }
+        public QueryTabConfig TabConfig { get; } = new QueryTabConfig();
 
         public QueryTab()
         {
@@ -36,7 +39,35 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         internal void QueryResult(List<ListItem> items)
         {
+            ucItems.SetFields();
             ucItems.QueryResult(items);
+        }
+    }
+
+    public class QueryTabConfig : INotifyPropertyChanged
+    {
+        private bool _displayColymnsByTitle;
+
+        public bool DisplayColymnsByTitle
+        {
+            get { return _displayColymnsByTitle; }
+            set
+            {
+                _displayColymnsByTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public QueryTabConfig()
+        {
+            DisplayColymnsByTitle = Config.DisplayColumnsByTitle;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

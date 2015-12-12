@@ -17,7 +17,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
             RunQuery.InputGestures.Add(new KeyGesture(Key.F5));
             SaveItems.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
             CloseQueryTab.InputGestures.Add(new KeyGesture(Key.W, ModifierKeys.Control));
-            CloseQueryTab.InputGestures.Add(new KeyGesture(Key.F4, ModifierKeys.Control));
         }
     }
 }

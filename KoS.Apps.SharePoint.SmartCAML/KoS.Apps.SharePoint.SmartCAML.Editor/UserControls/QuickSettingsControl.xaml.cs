@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
 {
@@ -18,6 +19,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
         private void UcDisplayBy_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Config.DisplayColumnsByTitle = ucDisplayBy.SelectedIndex == 1;
+            ((MainWindow) Application.Current.MainWindow).Test();
         }
     }
 }

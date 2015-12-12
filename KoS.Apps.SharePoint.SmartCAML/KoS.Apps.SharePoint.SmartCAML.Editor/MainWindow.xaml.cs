@@ -173,5 +173,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         {
             ucWebs.Add(client);
         }
+
+        public void Test()
+        {
+            var config = ucQueries?.SelectedQueryTab?.TabConfig;
+    
+            if( config!=null) config.DisplayColymnsByTitle = Config.DisplayColumnsByTitle;
+        }
     }
 }

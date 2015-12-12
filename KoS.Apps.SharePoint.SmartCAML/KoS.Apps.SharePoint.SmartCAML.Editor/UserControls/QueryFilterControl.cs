@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,10 +37,24 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         public event EventHandler Up;
         public event EventHandler Down;
 
-        private int _controlWidth = 100;
-        private Thickness _controlMargin = new Thickness(4, 0, 0, 0);
+        private readonly int _controlWidth = 100;
+        private readonly Thickness _controlMargin = new Thickness(4, 0, 0, 0);
 
         private CollectionViewSource FilterOperatorViewSource => (CollectionViewSource) this.Resources["FilterOperatorViewSource"];
+
+        public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(nameof(DisplayColumnsByTitle), typeof(bool), typeof(QueryFilterControl), null);
+        [Bindable(true)]
+        public bool DisplayColumnsByTitle
+        {
+            get
+            {
+                return (bool)this.GetValue(DisplayColumnsByTitleProperty);
+            }
+            set
+            {
+                this.SetValue(DisplayColumnsByTitleProperty, value);
+            }
+        }
 
         #endregion
         #region Constructors

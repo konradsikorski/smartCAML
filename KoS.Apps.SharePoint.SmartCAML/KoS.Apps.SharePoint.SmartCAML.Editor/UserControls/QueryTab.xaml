@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
              mc:Ignorable="d" 
+             x:Name="UserControl"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
@@ -16,7 +17,7 @@
         <TabControl Grid.Row="0">
             <TabItem Header="Designer" x:Name="DesignerTab" >
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <local:QueryBuilderControl x:Name="ucQueryBuilder" Margin="4" />
+                    <local:QueryBuilderControl x:Name="ucQueryBuilder" Margin="4" DisplayColumnsByTitle="{Binding ElementName=UserControl, Path=TabConfig.DisplayColymnsByTitle}" />
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="XML" x:Name="XmlTab">
@@ -26,6 +27,6 @@
 
         <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" Cursor="SizeNS" ResizeDirection="Rows" Background="Transparent" />
 
-        <local:ItemsGrid  Grid.Row="2" x:Name="ucItems" />
+        <local:ItemsGrid  Grid.Row="2" x:Name="ucItems" DisplayColumnsByTitle="{Binding ElementName=UserControl, Path=TabConfig.DisplayColymnsByTitle}"/>
     </Grid>
 </UserControl>

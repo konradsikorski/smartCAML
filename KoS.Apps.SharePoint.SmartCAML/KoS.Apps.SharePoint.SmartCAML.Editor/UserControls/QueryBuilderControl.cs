@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
@@ -22,6 +14,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     public partial class QueryBuilderControl : UserControl
     {
         public event EventHandler Changed;
+
+        public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(nameof(DisplayColumnsByTitle), typeof(bool), typeof(QueryBuilderControl), null);
+        [Bindable(true)]
+        public bool DisplayColumnsByTitle
+        {
+            get
+            {
+                return (bool)this.GetValue(DisplayColumnsByTitleProperty);
+            }
+            set
+            {
+                this.SetValue(DisplayColumnsByTitleProperty, value);
+            }
+        }
 
         public QueryBuilderControl()
         {
@@ -47,6 +53,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             filterControl.Changed += (sender, args) => Changed?.Invoke(this, EventArgs.Empty);
             filterControl.Up += MoveFilterUp;
             filterControl.Down += MoveFilterDown;
+            filterControl.SetBinding(QueryFilterControl.DisplayColumnsByTitleProperty, new Binding
+            {
+                Source = this,
+                Path = new PropertyPath(nameof(DisplayColumnsByTitle)),
+                Mode = BindingMode.TwoWay
+            });
 
             ucFilters.Children.Add(filterControl);
         }

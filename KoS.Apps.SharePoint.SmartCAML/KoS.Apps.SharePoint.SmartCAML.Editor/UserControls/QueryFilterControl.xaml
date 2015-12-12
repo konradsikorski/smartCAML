@@ -5,10 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:bindingConverters="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="300"
              Padding="2"
-             Loaded="QueryFilterControl_OnLoaded">
+             Loaded="QueryFilterControl_OnLoaded"
+             x:Name="ucUserControl">
+    
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">
             <Setter Property="Background" Value="Transparent" />
@@ -29,6 +32,8 @@
 
         <CollectionViewSource x:Key="FilterOperatorViewSource" Filter="OperatorsViewSource_Filter" />
 
+        <bindingConverters:BoolToStringConverter x:Key="DisplayMemberConverter" True="Title" False="InternalName" />
+
         <Style TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="#FF6F6F89"/>
             <Style.Triggers>
@@ -44,7 +49,7 @@
         <Button Content="▲" Click="UpButton_OnClick" Background="Transparent" BorderBrush="Transparent" Padding="4, 0" />
         <Button Content="▼" Click="DownButton_OnClick" Background="Transparent" BorderBrush="Transparent" Padding="4, 0" />
         <ComboBox x:Name="ucAndOr" Margin="4,0,0,0"/>
-        <ComboBox x:Name="ucField" Margin="4,0,0,0" IsEditable="True" ToolTip="Field" ItemsSource="{Binding Source={StaticResource Fields}}" DisplayMemberPath="InternalName" SelectionChanged="ucField_OnSelectionChanged" />
+        <ComboBox x:Name="ucField" Margin="4,0,0,0" IsEditable="True" ToolTip="Field" ItemsSource="{Binding Source={StaticResource Fields}}" SelectedValuePath="InternalName" DisplayMemberPath="{Binding ElementName=ucUserControl, Path=DisplayColumnsByTitle, Converter={StaticResource DisplayMemberConverter}}" SelectionChanged="ucField_OnSelectionChanged" />
         <ComboBox x:Name="ucFilterOperator" Margin="4,0,0,0" ItemsSource="{Binding Source={StaticResource FilterOperatorViewSource}}" MinWidth="100"/>
     </StackPanel>
 
