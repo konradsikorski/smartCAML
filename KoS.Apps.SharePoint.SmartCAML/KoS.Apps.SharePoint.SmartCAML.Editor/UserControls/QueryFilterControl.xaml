@@ -24,7 +24,7 @@
     </UserControl.Style>
 
     <UserControl.Resources>
-        <CollectionViewSource Source="{Binding Path=Fields}" x:Key="Fields">
+        <CollectionViewSource  Source="{Binding Path=Fields}" x:Key="FieldsViewSource">
             <CollectionViewSource.SortDescriptions>
                 <componentModel:SortDescription PropertyName="InternalName" />
             </CollectionViewSource.SortDescriptions>
@@ -49,7 +49,7 @@
         <Button Content="▲" Click="UpButton_OnClick" Background="Transparent" BorderBrush="Transparent" Padding="4, 0" />
         <Button Content="▼" Click="DownButton_OnClick" Background="Transparent" BorderBrush="Transparent" Padding="4, 0" />
         <ComboBox x:Name="ucAndOr" Margin="4,0,0,0"/>
-        <ComboBox x:Name="ucField" Margin="4,0,0,0" IsEditable="True" ToolTip="Field" ItemsSource="{Binding Source={StaticResource Fields}}" SelectedValuePath="InternalName" DisplayMemberPath="{Binding ElementName=ucUserControl, Path=DisplayColumnsByTitle, Converter={StaticResource DisplayMemberConverter}}" SelectionChanged="ucField_OnSelectionChanged" />
+        <ComboBox x:Name="ucField" Margin="4,0,0,0" IsEditable="True" ToolTip="Field" ItemsSource="{Binding Source={StaticResource FieldsViewSource}}" SelectedValuePath="InternalName" DisplayMemberPath="{Binding ElementName=ucUserControl, Path=DisplayColumnsByTitle, Converter={StaticResource DisplayMemberConverter}}" SelectionChanged="ucField_OnSelectionChanged" />
         <ComboBox x:Name="ucFilterOperator" Margin="4,0,0,0" ItemsSource="{Binding Source={StaticResource FilterOperatorViewSource}}" MinWidth="100"/>
     </StackPanel>
 

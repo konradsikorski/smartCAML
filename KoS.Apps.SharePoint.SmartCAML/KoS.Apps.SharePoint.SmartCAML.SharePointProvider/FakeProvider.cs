@@ -32,6 +32,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
             public const string Attachments = "AttachmentsInternal";
             public const string ContentTypeId = "ContentTypeIdInternal";
             public const string Geolocation = "GeolocationInternal";
+            public const string SortTest = "ASortTest";
         }
 
         public Web Web { get; set; }
@@ -110,6 +111,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                             {Internals.Attachments, "Attachments1"},
                             {Internals.ContentTypeId, "ContentTypeId1"},
                             {Internals.Geolocation, "Geolocation1"},
+                            {Internals.SortTest, "SortTest1"},
                         }
                     },
                     new ListItem(query.List)
@@ -167,6 +169,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                     new Field { Group = "5", Title = "Attachments",     Type=FieldType.Attachments,     InternalName = Internals.Attachments },
                     new Field { Group = "5", Title = "ContentTypeId",   Type=FieldType.ContentTypeId,   InternalName = Internals.ContentTypeId },
                     new Field { Group = "5", Title = "Geolocation",     Type=FieldType.Geolocation,     InternalName = Internals.Geolocation },
+                    new Field { Group = "5", Title = "SortTest",        Type=FieldType.Geolocation,     InternalName = Internals.SortTest },
                 };
 
                 list.Fields = fields;

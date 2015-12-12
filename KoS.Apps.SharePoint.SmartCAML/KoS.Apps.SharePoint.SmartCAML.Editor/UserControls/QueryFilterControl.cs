@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Extensions;
@@ -40,9 +42,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         private readonly int _controlWidth = 100;
         private readonly Thickness _controlMargin = new Thickness(4, 0, 0, 0);
 
+        private BoolToStringConverter DisplayMemberConverter => (BoolToStringConverter)this.Resources["DisplayMemberConverter"];
+        private CollectionViewSource FieldsViewSource => (CollectionViewSource)this.Resources["FieldsViewSource"];
         private CollectionViewSource FilterOperatorViewSource => (CollectionViewSource) this.Resources["FilterOperatorViewSource"];
 
-        public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(nameof(DisplayColumnsByTitle), typeof(bool), typeof(QueryFilterControl), null);
+        public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(nameof(DisplayColumnsByTitle), typeof(bool), typeof(QueryFilterControl), new FrameworkPropertyMetadata(DisplayColumnsByTitlePropertyChanged));
         [Bindable(true)]
         public bool DisplayColumnsByTitle
         {
@@ -54,6 +58,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             {
                 this.SetValue(DisplayColumnsByTitleProperty, value);
             }
+        }
+
+
+        private static void DisplayColumnsByTitlePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (QueryFilterControl) d;
+            var source = control.FieldsViewSource;
+            var sortPropertyName = (string)control.DisplayMemberConverter.Convert(e.NewValue, typeof (string), null, CultureInfo.CurrentCulture);
+
+            source.SortDescriptions.Clear();
+            source.SortDescriptions.Add(new SortDescription(sortPropertyName, ListSortDirection.Ascending));
         }
 
         #endregion

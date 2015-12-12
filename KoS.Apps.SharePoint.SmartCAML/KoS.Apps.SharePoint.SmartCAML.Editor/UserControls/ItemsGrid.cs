@@ -57,7 +57,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             {
                 _list = value;
 
-                foreach (var column in List.Fields.Select( c => new { Header = new ColumnHeader { Title = c.Title, InternalName = c.InternalName}, Bind = c.InternalName, Field = c }).OrderBy( c => c.Header.Title))
+                foreach (var column in List.Fields.Select( c => new
+                    {
+                        Header = new ColumnHeader { Title = c.Title, InternalName = c.InternalName},
+                        Bind = c.InternalName,
+                        Field = c
+                    }).OrderBy( c => DisplayColumnsByTitle ? c.Header.Title : c.Header.InternalName))
                 {
                     var gridColumn = new DataGridTextColumn
                     {
