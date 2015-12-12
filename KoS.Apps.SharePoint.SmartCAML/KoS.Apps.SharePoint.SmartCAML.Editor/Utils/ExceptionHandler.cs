@@ -7,12 +7,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 {
     static class ExceptionHandler
     {
+        public static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
+
         public static void HandleConnection(Exception ex)
         {
             if(ex is FileNotFoundException) HandleConnection((FileNotFoundException)ex);
             else if (ex is WebException) HandleConnection((WebException)ex);
             else
             {
+                Log.Error(ex);
                 StatusNotification.Notify("Connection failed");
                 MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -20,6 +23,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 
         public static void HandleConnection(FileNotFoundException ex)
         {
+            Log.Error(ex);
             StatusNotification.Notify("Connection failed");
 
             if (ex.Message.Contains("Microsoft.SharePoint"))
@@ -31,6 +35,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 
         public static void HandleConnection(WebException ex)
         {
+            Log.Error(ex);
             StatusNotification.Notify("Connection failed");
 
             if (ex.Status == WebExceptionStatus.NameResolutionFailure)
@@ -61,6 +66,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 
         public static void Handle(Exception ex, string message = null)
         {
+            Log.Error(ex);
             MessageBox.Show($"{message}\n\n{ex}", "SmartCAML", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }

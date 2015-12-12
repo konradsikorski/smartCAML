@@ -4,6 +4,7 @@ using System.Diagnostics;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using System.Windows;
 using System.Windows.Media;
+using NLog;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 {
@@ -12,6 +13,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
     /// </summary>
     public partial class AboutWindow : Window
     {
+        private static Logger Log = LogManager.GetCurrentClassLogger();
         private static bool _pendingRestart;
 
         public AboutWindow()
@@ -106,6 +108,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void UpdateStatusError(string message, Exception ex)
         {
+            Log.Error(ex);
+
             ucUpdateMessage.Foreground = Brushes.DarkRed;
             ucUpdateMessage.Text = message;
         }
