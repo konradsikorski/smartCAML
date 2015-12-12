@@ -63,7 +63,7 @@
                 </Menu>
             </ToolBar>
             <ToolBar>
-                <xctk:DropDownButton Background="Transparent" BorderThickness="0" BorderBrush="Transparent">
+                <xctk:DropDownButton Background="Transparent" BorderThickness="0" BorderBrush="Transparent" ToolTip="Settings">
                     <xctk:DropDownButton.DropDownContent>
                         <userControls:QuickSettingsControl />
                     </xctk:DropDownButton.DropDownContent>
