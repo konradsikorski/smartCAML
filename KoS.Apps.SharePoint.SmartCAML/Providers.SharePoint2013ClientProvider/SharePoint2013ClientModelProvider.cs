@@ -110,7 +110,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             using (var context = CreateContext(query.List.Web.Url))
             {
                 var serverList = context.Web.Lists.GetById(query.List.Id);
-                var listQuery = new CamlQuery{ ViewXml = $"<View><Query>{query.Query}</Query></View>" };
+                var listQuery = new CamlQuery{ ViewXml = $"<View Scope='RecursiveAll'><Query>{query.Query}</Query></View>" };
 
                 var items = serverList.GetItems(listQuery);
                 context.Load(items

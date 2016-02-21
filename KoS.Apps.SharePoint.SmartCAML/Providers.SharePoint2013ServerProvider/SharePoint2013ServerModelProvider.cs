@@ -80,7 +80,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
                 using (var web = site.OpenWeb())
                 {
                     var serverList = web.Lists.TryGetList(query.List.Title);
-                    var listQuery = new SPQuery {Query = query.Query};
+                    var listQuery = new SPQuery
+                    {
+                        Query = query.Query,
+                        ViewAttributes = "Scope='RecursiveAll'"
+                    };
 
                     return await Task.Factory.StartNew(() =>
                         serverList.GetItems(listQuery).Cast<SPListItem>()
