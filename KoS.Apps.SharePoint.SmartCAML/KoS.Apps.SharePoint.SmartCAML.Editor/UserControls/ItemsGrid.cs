@@ -139,5 +139,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                     : Title;
             }
         }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            var mi = sender as MenuItem;
+            var cx = mi.Parent as ContextMenu;
+            var c = cx.PlacementTarget;
+            var g = c as System.Windows.Controls.Primitives.DataGridColumnHeader;
+            g.Column.Visibility = Visibility.Collapsed;
+        }
     }
 }

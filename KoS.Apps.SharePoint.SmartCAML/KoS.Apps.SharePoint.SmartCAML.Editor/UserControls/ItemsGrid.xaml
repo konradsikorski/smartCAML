@@ -45,6 +45,22 @@
                   Background="White" 
                   RowHeight="20"
                   >
+            <DataGrid.Resources>
+                <ContextMenu x:Key="DataGridColumnHeaderContextMenu" >
+                    <MenuItem Header="Hide" Click="MenuItem_OnClick" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+                    <MenuItem Header="Hide unpined" />
+                    <MenuItem Header="Unhide all" />
+                    <MenuItem Header="Pin"/>
+                    <MenuItem Header="Unpin" />
+                    <Separator />
+                    <MenuItem Header="Customize..." />
+                </ContextMenu>
+
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="ContextMenu"
+                    Value="{StaticResource DataGridColumnHeaderContextMenu}" />
+                </Style>
+            </DataGrid.Resources>
         </DataGrid>
     </Grid>
 </UserControl>
