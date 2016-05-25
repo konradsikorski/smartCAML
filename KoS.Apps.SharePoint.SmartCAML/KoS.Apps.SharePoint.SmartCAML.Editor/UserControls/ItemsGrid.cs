@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
@@ -140,13 +142,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             }
         }
 
-        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        private void HideColumnCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            var mi = sender as MenuItem;
-            var cx = mi.Parent as ContextMenu;
-            var c = cx.PlacementTarget;
-            var g = c as System.Windows.Controls.Primitives.DataGridColumnHeader;
-            g.Column.Visibility = Visibility.Collapsed;
+            e.CanExecute = true;
+        }
+
+        private void HideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var column = FromMenuItemToColumnHeader((MenuItem)sender);
+            column.Column.Visibility = Visibility.Collapsed;
+        }
+
+        private DataGridColumnHeader FromMenuItemToColumnHeader(MenuItem menuItem)
+        {
+            var contextMenu = (ContextMenu)menuItem.Parent;
+            return (DataGridColumnHeader)contextMenu.PlacementTarget;
         }
     }
 }

@@ -4,8 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
+             xmlns:utils="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Utils"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="utils:MyCommands.HideColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.HideUnPinedColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.UnhideAllColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.PinColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.HideUnPinedColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.CustomizeColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+    </UserControl.CommandBindings>
     <Grid>
         <Grid.Resources>
             <Style TargetType="DataGridColumnHeader">
@@ -15,23 +25,7 @@
                 <Setter Property="FontWeight" Value="500" />
             </Style>
         </Grid.Resources>
-        <!--<Grid.Resources>
-            <Style TargetType="{x:Type GridViewColumnHeader}">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
-                            <Border BorderThickness="0,0,0,1" BorderBrush="Black" Background="Transparent">
-                                <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5,5,5,0" Width="{TemplateBinding Width}" TextAlignment="Center" />
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="OverridesDefaultStyle" Value="True" />
-                <Setter Property="Foreground" Value="Black" />
-                <Setter Property="FontFamily" Value="Segoe UI" />
-                <Setter Property="FontSize" Value="12" />
-            </Style>
-        </Grid.Resources>-->
+        
         <DataGrid x:Name="ucItems" 
                   AutoGenerateColumns="False" 
                   HeadersVisibility="All" 
@@ -47,13 +41,13 @@
                   >
             <DataGrid.Resources>
                 <ContextMenu x:Key="DataGridColumnHeaderContextMenu" >
-                    <MenuItem Header="Hide" Click="MenuItem_OnClick" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-                    <MenuItem Header="Hide unpined" />
-                    <MenuItem Header="Unhide all" />
-                    <MenuItem Header="Pin"/>
-                    <MenuItem Header="Unpin" />
+                    <MenuItem Header="Hide" Command="utils:MyCommands.HideColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Header="Hide unpined" Command="utils:MyCommands.HideUnPinedColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Header="Unhide all" Command="utils:MyCommands.UnhideAllColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Header="Pin" Command="utils:MyCommands.PinColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Header="Unpin" Command="utils:MyCommands.UnpinColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
                     <Separator />
-                    <MenuItem Header="Customize..." />
+                    <MenuItem Header="Customize..." Command="utils:MyCommands.CustomizeColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
                 </ContextMenu>
 
                 <Style TargetType="{x:Type DataGridColumnHeader}">
