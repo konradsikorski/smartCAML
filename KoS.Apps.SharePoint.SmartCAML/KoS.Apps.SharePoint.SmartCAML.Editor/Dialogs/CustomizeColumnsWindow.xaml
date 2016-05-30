@@ -1,0 +1,47 @@
+﻿<Window x:Class="KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs.CustomizeColumnsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs"
+        xmlns:utils="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Utils"
+        mc:Ignorable="d"
+        Title="Columns" Height="300" Width="300" WindowStyle="ToolWindow">
+
+    <Window.CommandBindings>
+        <CommandBinding Command="utils:MyCommands.HideColumn" CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.HideAllColumn" CanExecute="HideAllColumnCommand_CanExecute" Executed="HideAllColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.UnhideColumn" CanExecute="UnhideColumnCommand_CanExecute" Executed="UnhideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.UnhideAllColumn" CanExecute="UnhideAllColumnCommand_CanExecute" Executed="UnhideAllColumnCommand_Executed" />
+    </Window.CommandBindings>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="50*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Visible" />
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="Hidden" />
+        <ListBox Grid.Row="1" Grid.Column="0" x:Name="ucVisibleColumns" SelectionMode="Multiple" />
+        <ListBox Grid.Row="1" Grid.Column="2" x:Name="ucHiddenColumns" SelectionMode="Multiple"/>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+            <Button Content=">>" Command="utils:MyCommands.HideAllColumn" />
+            <Button Content=">" Command="utils:MyCommands.HideColumn" />
+            <Button Content="&lt;" Command="utils:MyCommands.UnhideColumn" />
+            <Button Content="&lt;&lt;" Command="utils:MyCommands.UnhideAllColumn" />
+        </StackPanel>
+        
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="OK" />
+            <Button Content="Cancel" />
+        </StackPanel>
+    </Grid>
+</Window>

@@ -124,6 +124,9 @@
     <Compile Include="BindingConverters\EnumDescriptionConverter.cs" />
     <Compile Include="Controls\ClosableTabItem.cs" />
     <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Dialogs\CustomizeColumnsWindow.xaml.cs">
+      <DependentUpon>CustomizeColumnsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="UserControls\ClosableTabHeader.xaml.cs">
       <DependentUpon>ClosableTabHeader.xaml</DependentUpon>
@@ -138,6 +141,10 @@
     <Compile Include="Utils\RefactorUtil.cs" />
     <Compile Include="Utils\StatusNotification.cs" />
     <Compile Include="Utils\VersionUtil.cs" />
+    <Page Include="Dialogs\CustomizeColumnsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Style\DialogStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

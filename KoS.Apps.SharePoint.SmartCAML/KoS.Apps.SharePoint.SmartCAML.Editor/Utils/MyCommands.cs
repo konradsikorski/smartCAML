@@ -10,7 +10,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
         public static RoutedCommand SaveItems = new RoutedCommand();
         public static RoutedCommand CloseQueryTab = new RoutedCommand();
         public static RoutedUICommand HideColumn = new RoutedUICommand();
+        public static RoutedUICommand HideAllColumn = new RoutedUICommand();
         public static RoutedUICommand HideUnPinedColumn = new RoutedUICommand();
+        public static RoutedUICommand UnhideColumn = new RoutedUICommand();
         public static RoutedUICommand UnhideAllColumn = new RoutedUICommand();
         public static RoutedUICommand PinColumn = new RoutedUICommand();
         public static RoutedUICommand UnpinColumn = new RoutedUICommand();

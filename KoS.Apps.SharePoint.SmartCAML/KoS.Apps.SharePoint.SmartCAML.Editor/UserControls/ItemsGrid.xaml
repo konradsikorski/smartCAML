@@ -9,12 +9,12 @@
              d:DesignHeight="150" d:DesignWidth="300">
 
     <UserControl.CommandBindings>
-        <CommandBinding Command="utils:MyCommands.HideColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
-        <CommandBinding Command="utils:MyCommands.HideUnPinedColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
-        <CommandBinding Command="utils:MyCommands.UnhideAllColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
-        <CommandBinding Command="utils:MyCommands.PinColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
-        <CommandBinding Command="utils:MyCommands.HideUnPinedColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
-        <CommandBinding Command="utils:MyCommands.CustomizeColumn"  CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.HideColumn" CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.HideUnPinedColumn" CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.UnhideAllColumn" CanExecute="UnHideColumnCommand_CanExecute" Executed="UnHideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.PinColumn" CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.HideUnPinedColumn" CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.CustomizeColumn" Executed="CustomizeColumnCommand_Executed" />
     </UserControl.CommandBindings>
     <Grid>
         <Grid.Resources>
@@ -42,10 +42,7 @@
             <DataGrid.Resources>
                 <ContextMenu x:Key="DataGridColumnHeaderContextMenu" >
                     <MenuItem Header="Hide" Command="utils:MyCommands.HideColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
-                    <MenuItem Header="Hide unpined" Command="utils:MyCommands.HideUnPinedColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Header="Unhide all" Command="utils:MyCommands.UnhideAllColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
-                    <MenuItem Header="Pin" Command="utils:MyCommands.PinColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
-                    <MenuItem Header="Unpin" Command="utils:MyCommands.UnpinColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
                     <Separator />
                     <MenuItem Header="Customize..." Command="utils:MyCommands.CustomizeColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
                 </ContextMenu>

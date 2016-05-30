@@ -8,6 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
@@ -149,7 +150,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void HideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var column = FromMenuItemToColumnHeader((MenuItem)sender);
+            var column = (DataGridColumnHeader)e.OriginalSource;
             column.Column.Visibility = Visibility.Collapsed;
         }
 
@@ -157,6 +158,34 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         {
             var contextMenu = (ContextMenu)menuItem.Parent;
             return (DataGridColumnHeader)contextMenu.PlacementTarget;
+        }
+
+        private void UnHideColumnCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = 
+                ucItems.Columns.Any(c =>
+                    c.Visibility == Visibility.Collapsed
+                    );
+        }
+
+        private void UnHideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach (var column in ucItems.Columns)
+            {
+                column.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void CustomizeColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            new CustomizeColumnsWindow(
+                ucItems.Columns.Select(c => new ColumnVisibility
+                {
+                  IsVisible  = c.Visibility == Visibility.Visible,
+                  InternalName = ((ColumnHeader)c.Header).InternalName,
+                  Title = ((ColumnHeader)c.Header).Title
+                }).ToList()
+                ).ShowDialog();
         }
     }
 }
