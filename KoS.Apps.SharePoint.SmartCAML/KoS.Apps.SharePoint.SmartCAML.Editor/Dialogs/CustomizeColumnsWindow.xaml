@@ -6,7 +6,12 @@
         xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs"
         xmlns:utils="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Utils"
         mc:Ignorable="d"
-        Title="Columns" Height="300" Width="300" WindowStyle="ToolWindow">
+        Title="Columns" 
+        Height="400" 
+        Width="600" 
+        WindowStyle="ToolWindow"
+        Background="{StaticResource DialogBackground}" 
+        >
 
     <Window.CommandBindings>
         <CommandBinding Command="utils:MyCommands.HideColumn" CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
@@ -15,33 +20,50 @@
         <CommandBinding Command="utils:MyCommands.UnhideAllColumn" CanExecute="UnhideAllColumnCommand_CanExecute" Executed="UnhideAllColumnCommand_Executed" />
     </Window.CommandBindings>
     
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/DialogStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <CollectionViewSource x:Key="VisibleVIewSource" Source="{Binding Columns}" Filter="VisibleVIewSource_OnFilter" />
+        </ResourceDictionary>
+    </Window.Resources>
+    
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="50*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <Grid Margin="14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Visible" />
-        <TextBlock Grid.Row="0" Grid.Column="2" Text="Hidden" />
-        <ListBox Grid.Row="1" Grid.Column="0" x:Name="ucVisibleColumns" SelectionMode="Multiple" />
-        <ListBox Grid.Row="1" Grid.Column="2" x:Name="ucHiddenColumns" SelectionMode="Multiple"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Visible" />
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Hidden" />
+            <ListBox Grid.Row="1" Grid.Column="0" x:Name="ucVisibleColumns" SelectionMode="Multiple" />
+            <ListBox Grid.Row="1" Grid.Column="2" x:Name="ucHiddenColumns" SelectionMode="Multiple"/>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
-            <Button Content=">>" Command="utils:MyCommands.HideAllColumn" />
-            <Button Content=">" Command="utils:MyCommands.HideColumn" />
-            <Button Content="&lt;" Command="utils:MyCommands.UnhideColumn" />
-            <Button Content="&lt;&lt;" Command="utils:MyCommands.UnhideAllColumn" />
-        </StackPanel>
-        
-        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="OK" />
-            <Button Content="Cancel" />
-        </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
+                <Button Content=">>" Command="utils:MyCommands.HideAllColumn" />
+                <Button Content=">" Command="utils:MyCommands.HideColumn" />
+                <Button Content="&lt;" Command="utils:MyCommands.UnhideColumn" />
+                <Button Content="&lt;&lt;" Command="utils:MyCommands.UnhideAllColumn" />
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="1" Style="{StaticResource ButtonsSection}">
+            <StackPanel>
+                <Button Content="OK" IsDefault="True"/>
+                <Button Content="Cancel" IsCancel="True"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

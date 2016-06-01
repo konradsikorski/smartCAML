@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Annotations;
-using KoS.Apps.SharePoint.SmartCAML.Editor.Controls;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 {
@@ -23,7 +15,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
     /// </summary>
     public partial class CustomizeColumnsWindow : Window
     {
-        public List<ColumnVisibility> Columns { get; set; } = new List<ColumnVisibility>();
+        public ObservableCollection<ColumnVisibility> Columns { get; set; } = new ObservableCollection<ColumnVisibility>();
 
         public CustomizeColumnsWindow()
         {
@@ -36,9 +28,19 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
             ucHiddenColumns.DisplayMemberPath = ucVisibleColumns.DisplayMemberPath = "Title";
 
-            Columns = columns;
-            ucHiddenColumns.ItemsSource = columns.Where(c => !c.IsVisible);
-            ucVisibleColumns.ItemsSource = columns.Where(c => c.IsVisible);
+            Columns = new ObservableCollection<ColumnVisibility>(columns);
+            //ucHiddenColumns.ItemsSource = columns.Where(c => !c.IsVisible);
+            //ucVisibleColumns.ItemsSource = columns.Where(c => c.IsVisible);
+
+            var hiddenViewSource = new CollectionViewSource { Source = columns, IsLiveFilteringRequested = true};
+            hiddenViewSource.Filter += (sender, args) => args.Accepted = !((ColumnVisibility)args.Item).IsVisible;
+
+            var visibleViewSource = new CollectionViewSource { Source = columns, IsLiveFilteringRequested = true };
+            visibleViewSource.Filter += (sender, args) => args.Accepted = ((ColumnVisibility)args.Item).IsVisible;
+
+            ucHiddenColumns.ItemsSource = hiddenViewSource.View;
+            ucVisibleColumns.ItemsSource = visibleViewSource.View;
+            
         }
 
         private void HideColumnCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -48,6 +50,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void HideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            foreach (ColumnVisibility item in ucVisibleColumns.SelectedItems)
+            {
+                item.IsVisible = false;
+            }
+
+            ((ICollectionView)ucHiddenColumns.ItemsSource).Refresh();
+            ((ICollectionView)ucVisibleColumns.ItemsSource).Refresh();
         }
 
         private void HideAllColumnCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -57,6 +66,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void HideAllColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            foreach (ColumnVisibility item in ucVisibleColumns.Items)
+            {
+                item.IsVisible = false;
+            }
         }
 
         private void UnhideColumnCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -66,6 +79,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void UnhideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            foreach (ColumnVisibility item in ucVisibleColumns.SelectedItems)
+            {
+                item.IsVisible = true;
+            }
         }
 
         private void UnhideAllColumnCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -74,6 +91,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
         }
 
         private void UnhideAllColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach (ColumnVisibility item in ucVisibleColumns.Items)
+            {
+                item.IsVisible = true;
+            }
+        }
+
+        private void VisibleVIewSource_OnFilter(object sender, FilterEventArgs e)
         {
         }
     }
