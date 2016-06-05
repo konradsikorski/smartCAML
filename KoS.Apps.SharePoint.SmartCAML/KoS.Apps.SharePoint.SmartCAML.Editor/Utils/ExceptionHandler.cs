@@ -11,7 +11,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 
         public static void HandleConnection(Exception ex)
         {
-            if(ex is FileNotFoundException) HandleConnection((FileNotFoundException)ex);
+            Telemetry.Instance.Native.TrackException(ex);
+            if (ex is FileNotFoundException) HandleConnection((FileNotFoundException)ex);
             else if (ex is WebException) HandleConnection((WebException)ex);
             else
             {
@@ -21,7 +22,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
             }
         }
 
-        public static void HandleConnection(FileNotFoundException ex)
+        private static void HandleConnection(FileNotFoundException ex)
         {
             Log.Error(ex);
             StatusNotification.Notify("Connection failed");
@@ -33,7 +34,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
                 MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        public static void HandleConnection(WebException ex)
+        private static void HandleConnection(WebException ex)
         {
             Log.Error(ex);
             StatusNotification.Notify("Connection failed");
@@ -66,6 +67,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 
         public static void Handle(Exception ex, string message = null)
         {
+            Telemetry.Instance.Native.TrackException(ex);
             Log.Error(ex);
             MessageBox.Show($"{message}\n\n{ex}", "SmartCAML", MessageBoxButton.OK, MessageBoxImage.Error);
         }

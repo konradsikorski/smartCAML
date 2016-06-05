@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
@@ -21,6 +22,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         public ConnectWindow()
         {
+            Telemetry.Instance.Native.TrackPageView("Connect");
             InitializeComponent();
 
 #if DEBUG
@@ -33,6 +35,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private async void ucConnectButton_Click(object sender, RoutedEventArgs e)
         {
+            Telemetry.Instance.Native.TrackEvent("OK", new Dictionary<string, string>
+            {
+                {"ProviderType", Model.ProviderType.ToString() },
+                {"UseCurrentUser", Model.UseCurrentUser.ToString() }
+            });
+
             var client = SharePointProviderFactory.Create(Model.ProviderType);
 
             try
@@ -63,16 +71,19 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void ucCancelButton_Click(object sender, RoutedEventArgs e)
         {
+            Telemetry.Instance.Native.TrackEvent("Cancel");
             DialogResult = false;
         }
 
         private void AdvanceOptionsButton_Click(object sender, RoutedEventArgs e)
         {
+            Telemetry.Instance.Native.TrackEvent("AdvanceOptions");
             Model.ShowAdvanceOptions = true;
         }
 
         private void HideAdvanceOptionsButton_Click(object sender, RoutedEventArgs e)
         {
+            Telemetry.Instance.Native.TrackEvent("AdvanceOptions");
             Model.ShowAdvanceOptions = false;
         }
 

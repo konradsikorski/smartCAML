@@ -81,6 +81,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             set { SetConfig(value); }
         }
 
+        public static string UserId
+        {
+            get
+            {
+                Guid guid;
+                var userId = GetConfig();
+                if (!string.IsNullOrEmpty(userId) && Guid.TryParse(userId, out guid)) return userId;
+
+                userId = Guid.NewGuid().ToString();
+                SetConfig(userId);
+                return userId;
+            }
+        }
+
         private static IEnumerable<string> GetCollection([CallerMemberName] string name = "")
         {
             var value = ConfigurationManager.AppSettings[name]?.Split(new[] { ";#" }, StringSplitOptions.RemoveEmptyEntries);
