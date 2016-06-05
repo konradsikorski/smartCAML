@@ -52,7 +52,6 @@
 
             <StackPanel  Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <TextBlock Style="{DynamicResource Label}" Margin="0,8,0,0">API:</TextBlock>
-                <RadioButton GroupName="API" IsChecked="{Binding ProviderType, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static provider:SharePointProviderType.SharePoint2013ServerModel}}" Margin="8,0,0,0">Server (SharePoint 2013)</RadioButton>
                 <RadioButton GroupName="API" IsChecked="{Binding ProviderType, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static provider:SharePointProviderType.SharePoint2013ClientModel}}" Margin="8,0,0,0">Client (SharePoint 2010+)</RadioButton>
                 <RadioButton GroupName="API" IsChecked="{Binding ProviderType, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static provider:SharePointProviderType.SharePointOnline}}" Margin="8,0,0,0">SharePoint Online</RadioButton>
                 <RadioButton GroupName="API" IsChecked="{Binding ProviderType, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static provider:SharePointProviderType.Fake}}" Margin="8,0,0,0" Visibility="Collapsed" x:Name="ucApiFake">Fake</RadioButton>

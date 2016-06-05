@@ -12,7 +12,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
             switch (type)
             {
                 case SharePointProviderType.Fake: return new FakeProvider();
-                case SharePointProviderType.SharePoint2013ServerModel: return new SharePoint2013ServerModelProvider();
                 case SharePointProviderType.SharePoint2013ClientModel: return new SharePoint2013ClientModelProvider();
                 case SharePointProviderType.SharePointOnline: return new SharePoint2013ClientModelProvider(true);
                 default:
