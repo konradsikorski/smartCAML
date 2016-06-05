@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs"
         xmlns:utils="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Utils"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"
         Title="Columns" 
         Height="400" 
-        Width="600" 
+        Width="500" 
         WindowStyle="ToolWindow"
         Background="{StaticResource DialogBackground}" 
         >
@@ -25,8 +27,24 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Style/DialogStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
-            <CollectionViewSource x:Key="VisibleVIewSource" Source="{Binding Columns}" Filter="VisibleVIewSource_OnFilter" />
+
+            <CollectionViewSource x:Key="VisibleViewSource" Source="{Binding Columns}"  IsLiveFilteringRequested="True" Filter="VisibleViewSource_OnFilter" >
+                <CollectionViewSource.LiveFilteringProperties>
+                    <system:String>IsVisible</system:String>
+                </CollectionViewSource.LiveFilteringProperties>
+                <CollectionViewSource.SortDescriptions>
+                    <componentModel:SortDescription PropertyName="InternalName" />
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+
+            <CollectionViewSource x:Key="HiddenViewSource" Source="{Binding Columns}"  IsLiveFilteringRequested="True" Filter="HiddenViewSource_OnFilter" >
+                <CollectionViewSource.LiveFilteringProperties>
+                    <system:String>IsVisible</system:String>
+                </CollectionViewSource.LiveFilteringProperties>
+                <CollectionViewSource.SortDescriptions>
+                    <componentModel:SortDescription PropertyName="InternalName" />
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
         </ResourceDictionary>
     </Window.Resources>
     
@@ -48,8 +66,8 @@
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Visible" />
             <TextBlock Grid.Row="0" Grid.Column="2" Text="Hidden" />
-            <ListBox Grid.Row="1" Grid.Column="0" x:Name="ucVisibleColumns" SelectionMode="Multiple" />
-            <ListBox Grid.Row="1" Grid.Column="2" x:Name="ucHiddenColumns" SelectionMode="Multiple"/>
+            <ListBox Grid.Row="1" Grid.Column="0" x:Name="ucVisibleColumns" SelectionMode="Extended" ItemsSource="{Binding Source={StaticResource VisibleViewSource}}" />
+            <ListBox Grid.Row="1" Grid.Column="2" x:Name="ucHiddenColumns" SelectionMode="Extended" ItemsSource="{Binding Source={StaticResource HiddenViewSource}}" />
 
             <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
                 <Button Content=">>" Command="utils:MyCommands.HideAllColumn" />
@@ -61,7 +79,7 @@
 
         <Border Grid.Row="1" Style="{StaticResource ButtonsSection}">
             <StackPanel>
-                <Button Content="OK" IsDefault="True"/>
+                <Button Content="OK" IsDefault="True" Click="OkButton_OnClick"/>
                 <Button Content="Cancel" IsCancel="True"/>
             </StackPanel>
         </Border>

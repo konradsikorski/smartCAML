@@ -178,14 +178,25 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void CustomizeColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            new CustomizeColumnsWindow(
+            var dialog = new CustomizeColumnsWindow(
                 ucItems.Columns.Select(c => new ColumnVisibility
                 {
                   IsVisible  = c.Visibility == Visibility.Visible,
                   InternalName = ((ColumnHeader)c.Header).InternalName,
                   Title = ((ColumnHeader)c.Header).Title
                 }).ToList()
-                ).ShowDialog();
+                );
+
+            if (dialog.ShowDialog() == true)
+            {
+                foreach (var gridColumn in ucItems.Columns)
+                {
+                    gridColumn.Visibility =
+                        dialog.Columns.First(c => c.InternalName == ((ColumnHeader) gridColumn.Header).InternalName).IsVisible
+                            ? Visibility.Visible
+                            : Visibility.Collapsed;
+                }
+            }
         }
     }
 }

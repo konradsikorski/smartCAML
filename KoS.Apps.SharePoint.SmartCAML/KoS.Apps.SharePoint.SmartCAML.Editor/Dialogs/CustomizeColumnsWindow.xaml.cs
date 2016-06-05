@@ -26,21 +26,24 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
         {
             InitializeComponent();
 
-            ucHiddenColumns.DisplayMemberPath = ucVisibleColumns.DisplayMemberPath = "Title";
+            ucHiddenColumns.DisplayMemberPath = ucVisibleColumns.DisplayMemberPath = "InternalName";
 
             Columns = new ObservableCollection<ColumnVisibility>(columns);
-            //ucHiddenColumns.ItemsSource = columns.Where(c => !c.IsVisible);
-            //ucVisibleColumns.ItemsSource = columns.Where(c => c.IsVisible);
 
-            var hiddenViewSource = new CollectionViewSource { Source = columns, IsLiveFilteringRequested = true};
-            hiddenViewSource.Filter += (sender, args) => args.Accepted = !((ColumnVisibility)args.Item).IsVisible;
+            this.DataContext = new
+            {
+                Columns
+            };
+        }
 
-            var visibleViewSource = new CollectionViewSource { Source = columns, IsLiveFilteringRequested = true };
-            visibleViewSource.Filter += (sender, args) => args.Accepted = ((ColumnVisibility)args.Item).IsVisible;
+        private void VisibleViewSource_OnFilter(object sender, FilterEventArgs args)
+        {
+            args.Accepted = ((ColumnVisibility) args.Item).IsVisible;
+        }
 
-            ucHiddenColumns.ItemsSource = hiddenViewSource.View;
-            ucVisibleColumns.ItemsSource = visibleViewSource.View;
-            
+        private void HiddenViewSource_OnFilter(object sender, FilterEventArgs args)
+        {
+            args.Accepted = !((ColumnVisibility)args.Item).IsVisible;
         }
 
         private void HideColumnCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -54,9 +57,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
             {
                 item.IsVisible = false;
             }
-
-            ((ICollectionView)ucHiddenColumns.ItemsSource).Refresh();
-            ((ICollectionView)ucVisibleColumns.ItemsSource).Refresh();
         }
 
         private void HideAllColumnCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -79,7 +79,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void UnhideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            foreach (ColumnVisibility item in ucVisibleColumns.SelectedItems)
+            foreach (ColumnVisibility item in ucHiddenColumns.SelectedItems)
             {
                 item.IsVisible = true;
             }
@@ -92,14 +92,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void UnhideAllColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            foreach (ColumnVisibility item in ucVisibleColumns.Items)
+            foreach (ColumnVisibility item in ucHiddenColumns.Items)
             {
                 item.IsVisible = true;
             }
         }
 
-        private void VisibleVIewSource_OnFilter(object sender, FilterEventArgs e)
+        private void OkButton_OnClick(object sender, RoutedEventArgs e)
         {
+            DialogResult = true;
         }
     }
 
