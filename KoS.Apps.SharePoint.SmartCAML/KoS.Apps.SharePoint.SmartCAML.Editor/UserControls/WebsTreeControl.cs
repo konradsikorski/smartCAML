@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Model;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
@@ -33,6 +34,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void ucLists_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            Telemetry.Instance.Native.TrackPageView("Main.WebsTree.DoubleClick");
             if ((ucLists.SelectedItem as SList) == null) return;
             ListExecute?.Invoke(this, EventArgs.Empty);
         }
@@ -51,6 +53,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
+            Telemetry.Instance.Native.TrackPageView("Main.WebsTree.Close");
             var web = (Web)((Button)sender).Tag;
 
             this.Webs.Remove(this.Webs.First(w => w.Client.Web == web));

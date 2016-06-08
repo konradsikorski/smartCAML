@@ -35,7 +35,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private async void ucConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("OK", new Dictionary<string, string>
+            Telemetry.Instance.Native.TrackEvent("Connect.OK", new Dictionary<string, string>
             {
                 {"ProviderType", Model.ProviderType.ToString() },
                 {"UseCurrentUser", Model.UseCurrentUser.ToString() }
@@ -71,19 +71,19 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void ucCancelButton_Click(object sender, RoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("Cancel");
+            Telemetry.Instance.Native.TrackEvent("Connect.Cancel");
             DialogResult = false;
         }
 
         private void AdvanceOptionsButton_Click(object sender, RoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("AdvanceOptions");
+            Telemetry.Instance.Native.TrackEvent("Connect.AdvanceOptions");
             Model.ShowAdvanceOptions = true;
         }
 
         private void HideAdvanceOptionsButton_Click(object sender, RoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("AdvanceOptions");
+            Telemetry.Instance.Native.TrackEvent("Connect.AdvanceOptions");
             Model.ShowAdvanceOptions = false;
         }
 

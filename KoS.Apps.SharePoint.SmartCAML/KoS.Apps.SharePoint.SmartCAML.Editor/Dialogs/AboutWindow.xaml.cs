@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Deployment.Application;
 using System.Diagnostics;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
@@ -18,13 +19,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         public AboutWindow()
         {
+            Telemetry.Instance.Native.TrackPageView("About");
             InitializeComponent();
             ucVersion.Text = VersionUtil.GetVersion();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/konradsikorski/smartCAML");
+            Telemetry.Instance.Native.TrackEvent("About.GitHub");
+            Process.Start("https://github.com/konradsikorski/smartCAML");
         }
 
         private async void AboutWindow_OnLoaded(object sender, RoutedEventArgs e)
@@ -41,6 +44,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
                 if (updateInfo.UpdateAvailable)
                 {
+                    Telemetry.Instance.Native.TrackEvent("About.UpdateAvailable", new Dictionary<string, string>
+                    {
+                        {"currentVersion", VersionUtil.GetVersion() },
+                        {"newVersion", updateInfo.AvailableVersion.ToString(4) }
+                    });
                     UpdateStatusMessage($"New version '{updateInfo.AvailableVersion.ToString(4)}' is available.", true);
                     ucUpdateButton.Visibility = Visibility.Visible;
                 }
@@ -57,6 +65,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void UcUpdateButton_OnClick(object sender, RoutedEventArgs e)
         {
+            Telemetry.Instance.Native.TrackEvent("About.Update");
             UpdateStatusMessage("Updating...", false);
 
             ClickOnceHelper.DoUpdateAsync(
@@ -85,6 +94,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void DonateButton_OnClick(object sender, RoutedEventArgs e)
         {
+            Telemetry.Instance.Native.TrackEvent("About.Donate");
             try
             {
                 Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HTEBZ3Y37F2ZL");

@@ -1,80 +1,108 @@
 ﻿<Window x:Class="KoS.Apps.SharePoint.SmartCAML.Editor.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
+        xmlns:userControls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.UserControls"
         xmlns:utils="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Utils"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:userControls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.UserControls"
-        mc:Ignorable="d"
-        Title="MainWindow" 
-        MinHeight="200"
-        MinWidth="400"
-        Height="500" 
+        Title="MainWindow"
         Width="700"
+        Height="500"
+        MinWidth="400"
+        MinHeight="200"
+        Closing="MainWindow_OnClosing"
         Loaded="MainWindow_OnLoaded"
-        Closing="MainWindow_OnClosing">
+        mc:Ignorable="d">
 
     <Window.CommandBindings>
-        <CommandBinding x:Name="ConnectCommand" Command="utils:MyCommands.Connect"  CanExecute="ConnectCommand_CanExecute" Executed="ConnectCommand_Executed" />
-        <CommandBinding x:Name="NewQueryCommand" Command="utils:MyCommands.NewQuery" CanExecute="NewQueryCommand_CanExecute" Executed="NewQueryCommand_Executed"/>
-        <CommandBinding x:Name="RunQueryCommand" Command="utils:MyCommands.RunQuery" CanExecute="RunQueryCommand_CanExecute" Executed="RunQueryCommand_Executed"/>
-        <CommandBinding x:Name="SaveChangesCommand" Command="utils:MyCommands.SaveItems" CanExecute="SaveChangesCommand_CanExecute" Executed="SaveChangesCommand_Executed"/>
-        <CommandBinding x:Name="CloseQueryTabCommand" Command="utils:MyCommands.CloseQueryTab" CanExecute="CloseQueryTabCommand_CanExecute" Executed="CloseQueryTabCommand_Executed"/>
-        <CommandBinding x:Name="AboutCommand" Command="ApplicationCommands.Help" Executed="AboutCommand_Executed"/>
+        <CommandBinding x:Name="ConnectCommand"
+                        CanExecute="ConnectCommand_CanExecute"
+                        Command="utils:MyCommands.Connect"
+                        Executed="ConnectCommand_Executed" />
+        <CommandBinding x:Name="NewQueryCommand"
+                        CanExecute="NewQueryCommand_CanExecute"
+                        Command="utils:MyCommands.NewQuery"
+                        Executed="NewQueryCommand_Executed" />
+        <CommandBinding x:Name="RunQueryCommand"
+                        CanExecute="RunQueryCommand_CanExecute"
+                        Command="utils:MyCommands.RunQuery"
+                        Executed="RunQueryCommand_Executed" />
+        <CommandBinding x:Name="SaveChangesCommand"
+                        CanExecute="SaveChangesCommand_CanExecute"
+                        Command="utils:MyCommands.SaveItems"
+                        Executed="SaveChangesCommand_Executed" />
+        <CommandBinding x:Name="CloseQueryTabCommand"
+                        CanExecute="CloseQueryTabCommand_CanExecute"
+                        Command="utils:MyCommands.CloseQueryTab"
+                        Executed="CloseQueryTabCommand_Executed" />
+        <CommandBinding x:Name="AboutCommand"
+                        Command="ApplicationCommands.Help"
+                        Executed="AboutCommand_Executed" />
     </Window.CommandBindings>
-    
-    <DockPanel >
+
+    <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
                 <Button Command="utils:MyCommands.Connect" ToolTip="(Ctrl+O)">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/SmartCAML;component/Resources/Images/addConnection.png"/>
+                        <Image Source="/SmartCAML;component/Resources/Images/addConnection.png" />
                         <TextBlock Margin="3,0,0,0">Connect</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button Command="utils:MyCommands.NewQuery" ToolTip="(Ctrl+N)">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/SmartCAML;component/Resources/Images/newQuery.png"/>
+                        <Image Source="/SmartCAML;component/Resources/Images/newQuery.png" />
                         <TextBlock Margin="3,0,0,0">New Query</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Command="ApplicationCommands.Stop" Content="Browse" Visibility="Collapsed" />
+                <Button Command="ApplicationCommands.Stop"
+                        Content="Browse"
+                        Visibility="Collapsed" />
             </ToolBar>
             <ToolBar>
                 <Button Command="utils:MyCommands.RunQuery" ToolTip="(F5)">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/SmartCAML;component/Resources/Images/runQuery.png"/>
+                        <Image Source="/SmartCAML;component/Resources/Images/runQuery.png" />
                         <TextBlock Margin="3,0,0,0">Run Query</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button Command="utils:MyCommands.SaveItems" ToolTip="Save changed items to SharePoint (Ctrl+S)">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/SmartCAML;component/Resources/Images/saveItems.png"/>
+                        <Image Source="/SmartCAML;component/Resources/Images/saveItems.png" />
                         <TextBlock Margin="3,0,0,0">Save Items</TextBlock>
                     </StackPanel>
                 </Button>
                 <Menu Background="Transparent" Visibility="Collapsed">
                     <MenuItem Header="Filter">
-                        <MenuItem Header="Show hidden fields" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Show readonly fields" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Show hidden fields"
+                                  IsCheckable="True"
+                                  IsChecked="True" />
+                        <MenuItem Header="Show readonly fields"
+                                  IsCheckable="True"
+                                  IsChecked="True" />
                     </MenuItem>
                 </Menu>
             </ToolBar>
             <ToolBar>
-                <xctk:DropDownButton Background="Transparent" BorderThickness="0" BorderBrush="Transparent" ToolTip="Settings">
+                <xctk:DropDownButton Background="Transparent"
+                                     BorderBrush="Transparent"
+                                     BorderThickness="0"
+                                     ToolTip="Settings">
                     <xctk:DropDownButton.DropDownContent>
                         <userControls:QuickSettingsControl />
                     </xctk:DropDownButton.DropDownContent>
-                    <Image Source="/SmartCAML;component/Resources/Images/gear.png"/>
+                    <Image Source="/SmartCAML;component/Resources/Images/gear.png" />
                 </xctk:DropDownButton>
-                <Button Command="ApplicationCommands.Help" ToolTip="About" >
-                    <Image Source="/SmartCAML;component/Resources/Images/help.png"/>
+                <Button Command="ApplicationCommands.Help" ToolTip="About">
+                    <Image Source="/SmartCAML;component/Resources/Images/help.png" />
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        <StatusBar x:Name="ucStatusBar" DockPanel.Dock="Bottom" Height="22">
+        <StatusBar x:Name="ucStatusBar"
+                   Height="22"
+                   DockPanel.Dock="Bottom">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -91,11 +119,14 @@
             </StatusBarItem>
             <Separator Grid.Column="1" />
             <StatusBarItem Grid.Column="2">
-                <ProgressBar x:Name="ucStatusProgress" Value="0" Width="90" Height="16" />
+                <ProgressBar x:Name="ucStatusProgress"
+                             Width="90"
+                             Height="16"
+                             Value="0" />
             </StatusBarItem>
         </StatusBar>
 
-        <!--Background="#FFF7F7F7"-->
+        <!--  Background="#FFF7F7F7"  -->
         <Grid Background="#FFE3E8F4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="25*" />
@@ -103,10 +134,19 @@
                 <ColumnDefinition Width="75*" />
             </Grid.ColumnDefinitions>
 
-            <controls:WebsTreeControl Grid.Column="0" x:Name="ucWebs" ListExecute="UcWebs_ListExecute" CloseWeb="UcWebs_OnCloseWeb"/>
-            
-            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="Transparent" />
-            <controls:QueryTabControl Grid.Column="2" x:Name="ucQueries" Background="#FFF2F6FF" Margin="0,0,2,0" />
+            <controls:WebsTreeControl x:Name="ucWebs"
+                                      Grid.Column="0"
+                                      CloseWeb="UcWebs_OnCloseWeb"
+                                      ListExecute="UcWebs_ListExecute" />
+
+            <GridSplitter Grid.Column="1"
+                          Width="5"
+                          HorizontalAlignment="Stretch"
+                          Background="Transparent" />
+            <controls:QueryTabControl x:Name="ucQueries"
+                                      Grid.Column="2"
+                                      Margin="0,0,2,0"
+                                      Background="#FFF2F6FF" />
         </Grid>
     </DockPanel>
 </Window>

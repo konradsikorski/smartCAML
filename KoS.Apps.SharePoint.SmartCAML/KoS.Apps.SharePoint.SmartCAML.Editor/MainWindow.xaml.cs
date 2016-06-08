@@ -66,7 +66,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         private void ConnectCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("Connect");
+            Telemetry.Instance.Native.TrackEvent("Main.Connect");
             var dialog = new ConnectWindow();
 
             if (dialog.ShowDialog() == true)
@@ -82,7 +82,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         private async void NewQueryCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("NewQuery");
+            Telemetry.Instance.Native.TrackEvent("Main.NewQuery");
             await ucQueries.AddQuery(ucWebs.SelectedList);
         }
 
@@ -93,7 +93,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         private async void RunQueryCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("RunQuery");
+            Telemetry.Instance.Native.TrackEvent("Main.RunQuery");
+            Telemetry.Instance.Native.TrackMetric("RunQuery", 1);
+
             var query = ucQueries.SelectedQueryTab.GetQuery();
             try
             {
@@ -119,7 +121,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         private async void SaveChangesCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("SaveChanges");
+            Telemetry.Instance.Native.TrackEvent("Main.SaveChanges");
             var dirtyItems = ucQueries.SelectedQueryTab.ucItems.GetDirtyItems();
             var index = 0;
 
@@ -164,13 +166,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 
         private void CloseQueryTabCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("CloseQueryTab");
+            Telemetry.Instance.Native.TrackEvent("Main.CloseQueryTab");
             ucQueries?.CloseQuery(ucQueries?.SelectedQueryTab);
         }
 
         private void AboutCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("AboutCommand");
+            Telemetry.Instance.Native.TrackEvent("Main.AboutCommand");
             new AboutWindow().ShowDialog();
         }
 

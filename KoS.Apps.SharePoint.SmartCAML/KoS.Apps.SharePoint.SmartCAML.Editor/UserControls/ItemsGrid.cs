@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
@@ -150,6 +151,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void HideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.HideColumn");
             var column = (DataGridColumnHeader)e.OriginalSource;
             column.Column.Visibility = Visibility.Collapsed;
         }
@@ -170,6 +172,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void UnHideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.UnHideColumn");
             foreach (var column in ucItems.Columns)
             {
                 column.Visibility = Visibility.Visible;
@@ -178,6 +181,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void CustomizeColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.CustomizeColumn");
             var dialog = new CustomizeColumnsWindow(
                 ucItems.Columns.Select(c => new ColumnVisibility
                 {
