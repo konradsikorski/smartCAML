@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Properties;
 using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor
@@ -11,8 +14,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
     {
         public static IEnumerable<string> SharePointUrlHistory
         {
-            get { return GetCollection(); }
-            set { SetCollection(value); }
+            get { return FromStringCollection(Settings.Default.SharePointUrlHistory); }
+            set { Settings.Default.SharePointUrlHistory = ToStringCollection(value); }
         }
 
         public static SharePointProviderType LastSelectedProvider
@@ -23,76 +26,97 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 #if DEBUG
                 defaultValue = SharePointProviderType.Fake;
 #endif
-                var value = GetConfig((int)defaultValue);
-
-                SharePointProviderType provider;
-                return Enum.TryParse(value, out provider)
+                SharePointProviderType provider = Enum.TryParse(Settings.Default.LastSelectedProvider, out provider)
                     ? provider
                     : defaultValue;
+
+#if !DEBUG
+               if (provider == SharePointProviderType.Fake) provider = defaultValue; 
+#endif
+                return provider;
             }
-            set { SetConfig((int)value); }
+            set { Settings.Default.LastSelectedProvider = ((int) value).ToString(); }
         }
 
         public static double ConnectWindowWidth
         {
-            get { return GetConfig(360).ToDouble(); }
-            set { SetConfig(value); }
+            get { return Settings.Default.ConnectWindowWidth; }
+            set { Settings.Default.ConnectWindowWidth = value; }
         }
 
         public static double WindowWidth
         {
-            get { return GetConfig(700).ToDouble(); }
-            set { SetConfig(value); }
+            get { return Settings.Default.WindowWidth; }
+            set { Settings.Default.WindowWidth = value; }
         }
 
         public static double WindowHeight
         {
-            get { return GetConfig(500).ToDouble(); }
-            set { SetConfig(value); }
+            get { return Settings.Default.WindowHeight; }
+            set { Settings.Default.WindowHeight = value; }
         }
 
         public static bool WasMaximazed
         {
-            get { return GetConfig().ToBool(); }
-            set { SetConfig(value);}
+            get { return Settings.Default.WasMaximazed; }
+            set { Settings.Default.WasMaximazed = value; }
         }
 
         public static string LastUser
         {
-            get { return GetConfig(); }
-            set { SetConfig(value); }
+            get { return Settings.Default.LastUser; }
+            set { Settings.Default.LastUser = value; }
         }
 
         public static bool UseCurrentUser
         {
-            get { return GetConfig(true).ToBool(true); }
-            set { SetConfig(value);}
+            get { return Settings.Default.UseCurrentUser; }
+            set { Settings.Default.UseCurrentUser = value; }
         }
 
         public static IEnumerable<string> UsersHistory
         {
-            get { return GetCollection(); }
-            set { SetCollection(value); }
+            get { return FromStringCollection(Settings.Default.UsersHistory); }
+            set { Settings.Default.UsersHistory = ToStringCollection(value); }
         }
 
         public static bool DisplayColumnsByTitle
         {
-            get { return GetConfig().ToBool(true); }
-            set { SetConfig(value); }
+            get { return Settings.Default.DisplayColumnsByTitle; }
+            set { Settings.Default.DisplayColumnsByTitle = value; }
         }
 
         public static string UserId
         {
             get
             {
-                Guid guid;
-                var userId = GetConfig();
-                if (!string.IsNullOrEmpty(userId) && Guid.TryParse(userId, out guid)) return userId;
+                if (Guid.Empty.Equals(Settings.Default.UserId))
+                {
+                    Settings.Default.UserId = Guid.Empty;
+                    Settings.Default.Save();
+                }
 
-                userId = Guid.NewGuid().ToString();
-                SetConfig(userId);
-                return userId;
+                return Settings.Default.UserId.ToString();
             }
+        }
+
+        public static void Save()
+        {
+            Settings.Default.Save();
+        }
+
+        private static StringCollection ToStringCollection(IEnumerable<string> collection)
+        {
+            var newValue = new StringCollection();
+            newValue.AddRange(collection.ToArray());
+            return newValue;
+        }
+
+        private static IEnumerable<string> FromStringCollection(StringCollection collection)
+        {
+            return collection == null
+                ? Enumerable.Empty<string>()
+                : collection.Cast<string>();
         }
 
         private static IEnumerable<string> GetCollection([CallerMemberName] string name = "")

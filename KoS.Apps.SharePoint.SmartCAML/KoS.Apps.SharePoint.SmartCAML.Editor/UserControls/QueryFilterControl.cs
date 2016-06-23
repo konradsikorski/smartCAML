@@ -22,9 +22,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     public partial class QueryFilterControl : UserControl
     {
         #region Fields
-        public Control ucFieldValue;
-        public ComboBox ucLookupAs;
-        public CheckBox ucIncludeTime;
+        private Control ucFieldValue;
+        private ComboBox ucLookupAs;
+        private CheckBox ucIncludeTime;
 
         public QueryOperator SelectedQueryOperator => ucAndOr.SelectedEnum<QueryOperator>().Value;
         public Field SelectedField => (Field)ucField.SelectedItem;
@@ -141,6 +141,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             if ((fieldOperator.Key == FilterOperator.Includes || fieldOperator.Key == FilterOperator.NotIncludes)
                 && (SelectedField.Type != FieldType.Lookup || !((FieldLookup)SelectedField).AllowMultivalue))
                 args.Accepted = false;
+
+            if (fieldOperator.Key == FilterOperator.Membership && SelectedField.Type != FieldType.User)
+                args.Accepted = false;
         }
 
         private void ucField_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -155,6 +158,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                 
                 FilterOperatorViewSource?.View.Refresh();
             }
+        }
+        private void UcFilterOperator_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
         }
 
         private void RemoveFilterButton_Click(object sender, RoutedEventArgs e)
@@ -261,7 +267,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         private Control CreateUser(string oldValue)
         {
             var control = CreateDropDown(oldValue);
-            control.ItemsSource = new[] { "@Me", "Browse..." };
+            control.ItemsSource = new[] {"@Me", "Browse..."};
 
             return control;
         }

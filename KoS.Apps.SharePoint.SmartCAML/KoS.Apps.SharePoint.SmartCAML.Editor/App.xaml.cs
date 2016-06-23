@@ -26,6 +26,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             _run.Stop();
             Telemetry.Instance.Native.TrackMetric("RunDuration", _run.Elapsed.TotalMinutes);
             Telemetry.Instance.Close();
+            Config.Save();
         }
 
         private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs dispatcherUnhandledExceptionEventArgs)
