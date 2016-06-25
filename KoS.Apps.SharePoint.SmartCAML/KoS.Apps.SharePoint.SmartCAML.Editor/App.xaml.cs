@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Threading;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
@@ -26,6 +25,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             _run.Stop();
             Telemetry.Instance.Native.TrackMetric("RunDuration", _run.Elapsed.TotalMinutes);
             Telemetry.Instance.Close();
+
+            Config.TotalRunTime = Config.TotalRunTime.Add(_run.Elapsed);
             Config.Save();
         }
 
@@ -33,7 +34,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         {
             ExceptionHandler.Handle(dispatcherUnhandledExceptionEventArgs.Exception,
                 "Unexpected error ocured. The application will be closed");
-            //Shutdown();
         }
     }
 }

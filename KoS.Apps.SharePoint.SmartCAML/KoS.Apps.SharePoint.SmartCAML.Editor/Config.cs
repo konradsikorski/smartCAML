@@ -100,6 +100,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             }
         }
 
+        public static TimeSpan TotalRunTime
+        {
+            get { return Settings.Default.TotalRunTime; }
+            set { Settings.Default.TotalRunTime = value; }
+        }
+
         public static void Save()
         {
             Settings.Default.Save();

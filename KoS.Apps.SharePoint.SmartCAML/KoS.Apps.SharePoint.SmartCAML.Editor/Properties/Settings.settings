@@ -35,5 +35,8 @@
     <Setting Name="LastSelectedProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="TotalRunTime" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:00:00</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
