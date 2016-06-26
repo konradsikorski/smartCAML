@@ -28,3 +28,6 @@ You can edit searched items. Just start typing in cells and press Save
 * Date field
 
 ![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/d1c697d5-265b-42c2-abf7-da1e0ea43600.png)
+
+## Changelog
+The list of changes in each version is available **[here](https://github.com/konradsikorski/smartCAML/releases)**.
