@@ -106,6 +106,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             set { Settings.Default.TotalRunTime = value; }
         }
 
+        public static string LastVersion
+        {
+            get { return Settings.Default.LastVersion; }
+            set { Settings.Default.LastVersion = value; }
+        }
+
+        public static string ServiceAddress => "";
+
         public static void Save()
         {
             Settings.Default.Save();

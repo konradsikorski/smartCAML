@@ -164,5 +164,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Properties {
                 this["TotalRunTime"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastVersion {
+            get {
+                return ((string)(this["LastVersion"]));
+            }
+            set {
+                this["LastVersion"] = value;
+            }
+        }
     }
 }

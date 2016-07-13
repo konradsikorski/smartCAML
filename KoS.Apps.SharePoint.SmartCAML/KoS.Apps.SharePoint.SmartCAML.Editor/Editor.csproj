@@ -69,6 +69,9 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\smartCaml.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -305,6 +308,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\smartCaml.ico" />
     <Resource Include="Resources\Images\gear.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -339,6 +343,10 @@
     <ProjectReference Include="..\KoS.Apps.SharePoint.SmartCAML.SharePointProvider\SharePointProvider.csproj">
       <Project>{a7cfa48e-3331-4de5-b0e9-ed67fa4e7e34}</Project>
       <Name>SharePointProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceProxy\ServiceProxy.csproj">
+      <Project>{3bff4c84-0922-4454-bf4e-7601ed29b720}</Project>
+      <Name>ServiceProxy</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
