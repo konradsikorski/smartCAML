@@ -21,18 +21,24 @@ namespace KoS.Apps.SharePoint.SmartCAML.ServiceProxy
 
         public async Task InstallationCompleted(string version)
         {
-            var response = await Client.PostAsJsonAsync(Url(new[] { "update", "install" }, new Dictionary<string, object>
+            var response = await Client.PostAsJsonAsync(Url(new[] { "trace", "InstallationCompleted" }, new 
             {
-                ["version"] = version
+                appVersion = version,
+                appCode = "smartcaml"
             }), String.Empty);
+
+            if (!response.IsSuccessStatusCode) throw await ExceptionFromResponse(response);
         }
 
         public async Task UpdateCompleted(string version)
         {
-            var response = await Client.PostAsJsonAsync(Url(new[] { "update", "register" }, new Dictionary<string, object>
+            var response = await Client.PostAsJsonAsync(Url(new[] { "trace", "UpdateCompleted" }, new
             {
-                ["version"] = version
+                appVersion = version,
+                appCode = "smartcaml"
             }), String.Empty);
+
+            if (!response.IsSuccessStatusCode) throw await ExceptionFromResponse(response);
         }
 
         private HttpClient CreateClient(string serviceAddress)
@@ -50,6 +56,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.ServiceProxy
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
 
             return client;
+        }
+
+        private static string Url(string[] parts, object urlParams = null)
+        {
+            return Url(parts, TypeHelper.ObjectToDictionary(urlParams));
         }
 
         private static string Url(string[] parts, Dictionary<string, object> urlParams = null)
@@ -72,6 +83,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.ServiceProxy
 
             var partsUrl = string.Join("/", parts);
             return $"{partsUrl}{paramsString}";
+        }
+
+        private async Task<Exception> ExceptionFromResponse(HttpResponseMessage response)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            return new Exception(error);
         }
     }
 }

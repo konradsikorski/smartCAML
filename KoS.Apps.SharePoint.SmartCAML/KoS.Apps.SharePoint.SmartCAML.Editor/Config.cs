@@ -112,7 +112,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             set { Settings.Default.LastVersion = value; }
         }
 
-        public static string ServiceAddress => "";
+        public static string ServiceAddress =>
+#if DEBUG
+            "http://localhost:7870/api/";
+#else
+            "https://sikorski-workshop.scm.azurewebsites.net/api/";
+#endif
 
         public static void Save()
         {

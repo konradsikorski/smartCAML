@@ -32,32 +32,41 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             var currentVersion = VersionUtil.GetVersion();
             if (currentVersion == Config.LastVersion) return;
 
-            Action task;
+            Func<Task> task;
             if( string.IsNullOrEmpty(Config.LastVersion))
-                task = () =>
+                 task = async  () =>
                 {
-                    new ServiceClient(Config.ServiceAddress).InstallationCompleted(currentVersion).RunSynchronously();
+                    try
+                    {
+                        await new ServiceClient(Config.ServiceAddress).InstallationCompleted(currentVersion);
+                        //TODO: move to task continue
+                        Config.LastVersion = currentVersion;
+                        Config.Save();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                        throw;
+                    }
                 };
             else
-                task = () =>
+                task = async () =>
                 {
-                    new ServiceClient(Config.ServiceAddress).UpdateCompleted(currentVersion).RunSynchronously();
+                    try
+                    {
+                        await new ServiceClient(Config.ServiceAddress).UpdateCompleted(currentVersion);
+                        //TODO: move to task continue
+                        Config.LastVersion = currentVersion;
+                        Config.Save();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                        throw;
+                    }
                 };
 
-            Task.Factory.StartNew(task)
-            .ContinueWith(completedTask =>
-            {
-                Log.Info("Updater service completed. Has errors?: " + completedTask.IsFaulted);
-                if (completedTask.IsCompleted)
-                {
-                    Config.LastVersion = currentVersion;
-                    Config.Save();
-                }
-                else
-                {
-                    Log.Error(completedTask.Exception);
-                }
-            });
+            Task.Factory.StartNew(task);
         }
 
         private void OnExit(object sender, ExitEventArgs exitEventArgs)
