@@ -32,41 +32,23 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             var currentVersion = VersionUtil.GetVersion();
             if (currentVersion == Config.LastVersion) return;
 
-            Func<Task> task;
-            if( string.IsNullOrEmpty(Config.LastVersion))
-                 task = async  () =>
-                {
-                    try
-                    {
-                        await new ServiceClient(Config.ServiceAddress).InstallationCompleted(currentVersion);
-                        //TODO: move to task continue
-                        Config.LastVersion = currentVersion;
-                        Config.Save();
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex);
-                        throw;
-                    }
-                };
-            else
-                task = async () =>
-                {
-                    try
-                    {
-                        await new ServiceClient(Config.ServiceAddress).UpdateCompleted(currentVersion);
-                        //TODO: move to task continue
-                        Config.LastVersion = currentVersion;
-                        Config.Save();
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex);
-                        throw;
-                    }
-                };
+            var serviceTask  = string.IsNullOrEmpty(Config.LastVersion)
+                ? (Func<Task>)(async () => await new ServiceClient(Config.ServiceAddress).InstallationCompleted(currentVersion))
+                : (Func<Task>)(async () => await new ServiceClient(Config.ServiceAddress).UpdateCompleted(currentVersion));
 
-            Task.Factory.StartNew(task);
+            Task.Factory.StartNew(async () =>
+            {
+                try
+                {
+                    await serviceTask();
+                    Config.LastVersion = currentVersion;
+                    Config.Save();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+            });
         }
 
         private void OnExit(object sender, ExitEventArgs exitEventArgs)

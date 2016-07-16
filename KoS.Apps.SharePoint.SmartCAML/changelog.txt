@@ -1,3 +1,0 @@
-1.8.0
-+ New application icon and logo
-+ Send update information to the server

@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Providers.SharePoint2013Cli
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8F470B24-8058-40AD-B6FC-7C5FD95F5BD3}"
 	ProjectSection(SolutionItems) = preProject
-		changelog.txt = changelog.txt
+		changelog.md = changelog.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceProxy", "ServiceProxy\ServiceProxy.csproj", "{3BFF4C84-0922-4454-BF4E-7601ED29B720}"
