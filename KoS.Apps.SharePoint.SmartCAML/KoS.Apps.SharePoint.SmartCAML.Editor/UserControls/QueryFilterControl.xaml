@@ -78,8 +78,7 @@
         <ComboBox x:Name="ucFilterOperator"
                   MinWidth="100"
                   Margin="4,0,0,0"
-                  ItemsSource="{Binding Source={StaticResource FilterOperatorViewSource}}"
-                  SelectionChanged="UcFilterOperator_OnSelectionChanged" />
+                  ItemsSource="{Binding Source={StaticResource FilterOperatorViewSource}}" />
     </StackPanel>
 
 </UserControl>

@@ -89,9 +89,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             Changed?.Invoke(this, EventArgs.Empty);
         }
 
-        public QueryBuilder Build()
+        public ViewBuilder Build()
         {
-            var builder = new QueryBuilder();
+            var builder = new ViewBuilder();
             foreach (var control in ucFilters.Children.OfType<QueryFilterControl>())
             {
                 control.BuildQuery(builder);

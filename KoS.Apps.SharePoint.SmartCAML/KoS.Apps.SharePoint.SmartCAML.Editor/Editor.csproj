@@ -153,6 +153,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingConverters\EnumDescriptionConverter.cs" />
+    <Compile Include="Builder\QueryFilters\BaseQueryFilterController.cs" />
+    <Compile Include="Builder\QueryFilters\BooleanQueryFilterController.cs" />
+    <Compile Include="Builder\QueryFilters\ChoiceQueryFilterController.cs" />
+    <Compile Include="Builder\QueryFilters\ContentTypeIdQueryFilterController.cs" />
+    <Compile Include="Builder\QueryFilters\DateTimeQueryFilterController.cs" />
+    <Compile Include="Builder\QueryFilters\DropdownQueryFilterController.cs" />
+    <Compile Include="Builder\QueryFilters\EmptyQueryFilterController.cs" />
+    <Compile Include="Builder\QueryFilters\IQueryFilterController.cs" />
+    <Compile Include="Builder\QueryFilters\LookupQueryFilterController.cs" />
+    <Compile Include="Builder\QueryFilters\MembershipQueryFilterController.cs" />
+    <Compile Include="Builder\QueryFilters\QueryFilterFactory.cs" />
+    <Compile Include="Builder\QueryFilters\UserQueryFilterController.cs" />
     <Compile Include="Controls\ClosableTabItem.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Dialogs\CustomizeColumnsWindow.xaml.cs">
@@ -238,7 +250,7 @@
     <Compile Include="BindingConverters\BooleanConverter.cs" />
     <Compile Include="BindingConverters\EnumToBooleanConverter.cs" />
     <Compile Include="BindingConverters\RadioButtonCheckedConverter.cs" />
-    <Compile Include="Builder\QueryBuilder.cs" />
+    <Compile Include="Builder\ViewBuilder.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Controls\WatermarkComboBox.cs" />
     <Compile Include="Dialogs\AboutWindow.xaml.cs">
