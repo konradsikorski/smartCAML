@@ -153,6 +153,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingConverters\EnumDescriptionConverter.cs" />
+    <Compile Include="Builder\Filters\Filter.cs" />
+    <Compile Include="Builder\Filters\IFilter.cs" />
+    <Compile Include="Builder\Filters\InFilter.cs" />
     <Compile Include="Builder\QueryFilters\BaseQueryFilterController.cs" />
     <Compile Include="Builder\QueryFilters\BooleanQueryFilterController.cs" />
     <Compile Include="Builder\QueryFilters\ChoiceQueryFilterController.cs" />
@@ -160,6 +163,7 @@
     <Compile Include="Builder\QueryFilters\DateTimeQueryFilterController.cs" />
     <Compile Include="Builder\QueryFilters\DropdownQueryFilterController.cs" />
     <Compile Include="Builder\QueryFilters\EmptyQueryFilterController.cs" />
+    <Compile Include="Builder\QueryFilters\InQueryFilterController.cs" />
     <Compile Include="Builder\QueryFilters\IQueryFilterController.cs" />
     <Compile Include="Builder\QueryFilters\LookupQueryFilterController.cs" />
     <Compile Include="Builder\QueryFilters\MembershipQueryFilterController.cs" />
@@ -409,6 +413,7 @@
   <ItemGroup>
     <Resource Include="Resources\Images\donate.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -47,7 +47,7 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel x:Name="ucContainer" Orientation="Horizontal">
+    <WrapPanel x:Name="ucContainer" Orientation="Horizontal">
         <Button Margin="4,0,0,0"
                 Background="Transparent"
                 BorderBrush="Transparent"
@@ -79,6 +79,6 @@
                   MinWidth="100"
                   Margin="4,0,0,0"
                   ItemsSource="{Binding Source={StaticResource FilterOperatorViewSource}}" />
-    </StackPanel>
+    </WrapPanel>
 
 </UserControl>

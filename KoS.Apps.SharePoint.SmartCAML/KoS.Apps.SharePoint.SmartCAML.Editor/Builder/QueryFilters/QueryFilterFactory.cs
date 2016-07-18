@@ -15,6 +15,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
                     return new EmptyQueryFilterController(filterField, filterOperator);
                 case FilterOperator.Membership:
                     return new MembershipQueryFilterController(filterField, filterOperator);
+                case FilterOperator.In:
+                    return new InQueryFilterController(filterField, filterOperator);
             }
 
             switch (filterField.Type)

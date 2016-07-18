@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
@@ -37,6 +38,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
         }
 
         protected abstract IEnumerable<Control> InitializeControls(string oldValue);
+
+        protected void AddToParent(Control control)
+        {
+            Controls.Add(control);
+            Parent.Children.Add(control);
+        }
+
+        protected void RemoveFromParent(Control control)
+        {
+            Parent.Children.Remove(control);
+            Controls.Remove(control);
+        }
 
         public void Dispose()
         {

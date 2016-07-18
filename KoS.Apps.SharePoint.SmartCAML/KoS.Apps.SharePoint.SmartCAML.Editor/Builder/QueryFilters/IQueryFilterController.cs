@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
