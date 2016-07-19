@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security;
@@ -162,6 +163,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     if (value is string[]) return Converter.ChoiceMultiValueToString((string[])value);
                     return value.ToString();
 
+                case Model.FieldType.DateTime:
+                    return ((DateTime)value).ToLocalTime().ToString(CultureInfo.CurrentCulture);
+
                 default:
                     return value.ToString();
 
@@ -306,6 +310,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 if (((Model.FieldLookup)field).AllowMultivalue) return Converter.ToUserCollectionValue(value);
                 else return Converter.ToUserValue(value);
             }
+            if (field.Type == Model.FieldType.DateTime) return DateTime.Parse(value).ToUniversalTime();
 
             return value;
         }
