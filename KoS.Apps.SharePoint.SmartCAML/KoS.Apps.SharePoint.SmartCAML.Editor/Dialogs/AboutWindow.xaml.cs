@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Deployment.Application;
 using System.Diagnostics;
+using System.IO;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using System.Windows;
 using System.Windows.Media;
 using NLog;
+using NLog.Targets;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 {
@@ -24,10 +26,23 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
             ucVersion.Text = VersionUtil.GetVersion();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void GitHubButton_Click(object sender, RoutedEventArgs e)
         {
             Telemetry.Instance.Native.TrackEvent("About.GitHub");
             Process.Start("https://github.com/konradsikorski/smartCAML");
+        }
+
+        private void LogsFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            var logsTarget = LogManager.Configuration.FindTargetByName<FileTarget>("File");
+            if (logsTarget == null) return;
+
+            var logsFilePath = logsTarget.FileName.Render(null);
+
+            if ( File.Exists(logsFilePath) )
+                Process.Start(logsFilePath);
+            else
+                MessageBox.Show($"Could not find log file:\n{logsFilePath}");
         }
 
         private async void AboutWindow_OnLoaded(object sender, RoutedEventArgs e)

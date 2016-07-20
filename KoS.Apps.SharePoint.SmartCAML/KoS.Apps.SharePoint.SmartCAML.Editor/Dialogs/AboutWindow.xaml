@@ -82,12 +82,20 @@
                         Style="{StaticResource BaseLinkButton}"
                         Visibility="Collapsed" />
             </StackPanel>
-            <Button Grid.Row="4"
-                    Grid.Column="1"
-                    Margin="4"
-                    Click="Button_Click"
-                    Content="GitHub"
-                    Style="{StaticResource LinkButton}" />
+
+            <StackPanel Grid.Row="4"
+                        Grid.Column="1"
+                        Orientation="Horizontal">
+                <Button Margin="4"
+                        Click="GitHubButton_Click"
+                        Content="GitHub"
+                        Style="{StaticResource LinkButton}" />
+                <Button Margin="4"
+                        Click="LogsFileButton_Click"
+                        Content="Logs file"
+                        Style="{StaticResource LinkButton}" />
+            </StackPanel>
+
             <Button Grid.Row="5"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"

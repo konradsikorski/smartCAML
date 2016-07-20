@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Properties;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using KoS.Apps.SharePoint.SmartCAML.ServiceProxy;
 using NLog;
@@ -21,17 +23,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         {
             this.DispatcherUnhandledException += OnDispatcherUnhandledException;
             this.Exit += OnExit;
-            Telemetry.Instance.Start();
             _run = Stopwatch.StartNew();
 
+            Log.Info($"User settings file location: {ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath}");
+
             CheckIfUpdated();
+            Telemetry.Instance.Start();
         }
 
         private void CheckIfUpdated()
         {
             var currentVersion = VersionUtil.GetVersion();
+            Log.Info($"Application Started | currentVersion:{currentVersion} | lastVersion:{Config.LastVersion}");
             if (currentVersion == Config.LastVersion) return;
-
+            Settings.Default.Upgrade();
+            
             var serviceTask  = string.IsNullOrEmpty(Config.LastVersion)
                 ? (Func<Task>)(async () => await new ServiceClient(Config.ServiceAddress).InstallationCompleted(currentVersion))
                 : (Func<Task>)(async () => await new ServiceClient(Config.ServiceAddress).UpdateCompleted(currentVersion));
@@ -40,6 +46,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             {
                 try
                 {
+                    Log.Info($"Calling service: {Config.ServiceAddress}");
                     await serviceTask();
                     Config.LastVersion = currentVersion;
                     Config.Save();

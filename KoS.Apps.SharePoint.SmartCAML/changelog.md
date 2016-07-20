@@ -1,5 +1,13 @@
 ## Changelog
-#### v. 1.8.0
+### v. 1.8.3
+##### New
++ Migrate user settings after app upgrade
++ Add link to logs file in About window
+##### Fix
++ Generating User Id
++ Service address
+
+### v. 1.8.0
 ##### New
 + Application icon and logo
 + Send update and install information to the server

@@ -92,7 +92,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             {
                 if (Guid.Empty.Equals(Settings.Default.UserId))
                 {
-                    Settings.Default.UserId = Guid.Empty;
+                    Settings.Default.UserId = Guid.NewGuid();
                     Settings.Default.Save();
                 }
 
@@ -116,7 +116,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
 #if DEBUG
             "http://localhost:7870/api/";
 #else
-            "https://sikorski-workshop.scm.azurewebsites.net/api/";
+            "https://sikorski-workshop.azurewebsites.net/api/";
 #endif
 
         public static void Save()
