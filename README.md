@@ -8,22 +8,22 @@ The list of changes in each version is available **[here](https://github.com/kon
 
 ## Features
 #### Connect
-![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/6eb3b3d0-e649-4fdb-8ed7-fab2dc9832aa.png)
+![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/f2acfb43-cdd6-43cc-b191-2530ae7ff586.png)
 
 #### Main Window
 * Tree of all connected webs
 * Each caml query is in separate tab
 
-![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/80d7d50f-3d00-4ae2-96de-bcaec15f46a4.png)
+![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/5ae29a44-83d8-48e0-a010-03d3f28424bf.png)
 
 #### Xml Editor
 
-![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/a9736e81-8b3a-45c3-8b7e-a66ea2dff4b0.png)
+![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/02526dc5-cd6c-4fd0-beb0-139b1566022a.png)
 
 #### Edit Items
 You can edit searched items. Just start typing in cells and press Save
 
-![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/cf38227d-4a0e-4e7d-aa4a-9f059e56c5eb.png)
+![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/525fb981-88b4-42fe-82e9-6c45c382287f.png)
 
 #### Field helpers
 * Boolean field
