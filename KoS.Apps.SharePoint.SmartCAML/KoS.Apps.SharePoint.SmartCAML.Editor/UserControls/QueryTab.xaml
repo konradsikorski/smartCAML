@@ -29,7 +29,8 @@
                          AcceptsReturn="True"
                          HorizontalScrollBarVisibility="Auto"
                          TextWrapping="Wrap"
-                         VerticalScrollBarVisibility="Auto" />
+                         VerticalScrollBarVisibility="Auto"
+                         TextChanged="UcQuery_TextChanged"/>
             </TabItem>
         </TabControl>
 

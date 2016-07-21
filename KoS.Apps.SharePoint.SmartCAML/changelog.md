@@ -3,8 +3,9 @@
 ### v. 1.8.4
 ##### New
 + User column has now "lookup id" dropdown
++ pasing text to Xml tab will be formated as nice xml
 ##### Fix
- + boolen column uses User designer and vice versa
++ boolen column uses User designer and vice versa
 
 ### v. 1.8.3
 ##### New
