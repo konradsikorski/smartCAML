@@ -5,7 +5,7 @@ using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 {
-    class UserQueryFilterController : DropdownQueryFilterController
+    class UserQueryFilterController : LookupQueryFilterController
     {
         public UserQueryFilterController(Field field, FilterOperator? filterOperator) : base(field, filterOperator)
         {
@@ -15,13 +15,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
         {
             var controls = base.InitializeControls(oldValue);
 
-            _control.DisplayMemberPath = "Text";
-            _control.SelectedValuePath = "Value";
-            _control.ItemsSource = new[]
-            {
-                new {Value = "0", Text = "False"},
-                new {Value = "1", Text = "True"}
-            };
+            _control.ItemsSource = new[] { "@Me", "Browse..." };
 
             return controls;
         }

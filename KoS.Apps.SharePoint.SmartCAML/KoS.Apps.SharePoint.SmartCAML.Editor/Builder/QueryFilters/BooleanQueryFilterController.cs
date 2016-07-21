@@ -15,7 +15,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
         {
             var controls = base.InitializeControls(oldValue);
 
-            _control.ItemsSource = new[] { "@Me", "Browse..." };
+            _control.DisplayMemberPath = "Text";
+            _control.SelectedValuePath = "Value";
+            _control.ItemsSource = new[]
+            {
+                new {Value = "0", Text = "False"},
+                new {Value = "1", Text = "True"}
+            };
 
             return controls;
         }

@@ -1,4 +1,11 @@
 ## Changelog
+
+### v. 1.8.4
+##### New
++ User column has now "lookup id" dropdown
+##### Fix
+ + boolen column uses User designer and vice versa
+
 ### v. 1.8.3
 ##### New
 + Migrate user settings after app upgrade
