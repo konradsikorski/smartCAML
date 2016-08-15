@@ -176,5 +176,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Properties {
                 this["LastVersion"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RecentConnections {
+            get {
+                return ((string)(this["RecentConnections"]));
+            }
+            set {
+                this["RecentConnections"] = value;
+            }
+        }
     }
 }
