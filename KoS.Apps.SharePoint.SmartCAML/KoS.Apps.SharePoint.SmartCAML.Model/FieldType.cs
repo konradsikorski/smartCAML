@@ -36,5 +36,7 @@
         Geolocation,
         OutcomeChoice,
         MaxItems,
+        //Custom
+        Taxonomy
     }
 }

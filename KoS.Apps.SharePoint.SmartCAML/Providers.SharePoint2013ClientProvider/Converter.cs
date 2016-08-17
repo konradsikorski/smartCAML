@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 {
@@ -44,6 +45,23 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             if(value.Length == 0) return string.Empty;
 
            return value.Aggregate((all, current) => all + LookupCollectionItemSeparator + current);
+        }
+
+        public static string TaxonomyValueToString(TaxonomyFieldValue value)
+        {
+            if (value == null) return string.Empty;
+            return value.Label;
+        }
+
+        public static string TaxonomyCollectionValueToString(TaxonomyFieldValueCollection value)
+        {
+            if (value == null) return string.Empty;
+            if (value.ToList().Count == 0) return string.Empty;
+
+            return value
+                .ToList()
+                .Select(lv => TaxonomyValueToString(lv))
+                .Aggregate((all, current) => all + LookupCollectionItemSeparator + current);
         }
 
         #endregion

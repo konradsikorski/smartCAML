@@ -7,10 +7,12 @@ using System.Security;
 using System.Threading.Tasks;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 using Client = Microsoft.SharePoint.Client;
 using Field = Microsoft.SharePoint.Client.Field;
 using FieldType = Microsoft.SharePoint.Client.FieldType;
 using ListItem = Microsoft.SharePoint.Client.ListItem;
+using TaxonomyField = Microsoft.SharePoint.Client.Taxonomy.TaxonomyField;
 using Web = KoS.Apps.SharePoint.SmartCAML.Model.Web;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
@@ -35,6 +37,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 context.Load(context.Web, 
                     w => w.Id,
                     w => w.Title);
+                await Task.Factory.StartNew(() => context.ExecuteQuery());
 
                 context.Load(context.Web.Lists, lists => lists.Include(
                     l => l.Id,
@@ -166,6 +169,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 case Model.FieldType.DateTime:
                     return ((DateTime)value).ToLocalTime().ToString(CultureInfo.CurrentCulture);
 
+                case Model.FieldType.Taxonomy:
+                    if (value is TaxonomyFieldValue) return Converter.TaxonomyValueToString((TaxonomyFieldValue) value);
+                    if (value is TaxonomyFieldValueCollection) return Converter.TaxonomyCollectionValueToString((TaxonomyFieldValueCollection)value);
+                    return value.ToString();
+
                 default:
                     return value.ToString();
 
@@ -188,7 +196,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     f => f.Title,
                     f => f.InternalName,
                     f => f.Group,
-                    f => f.FieldTypeKind));
+                    f => f.FieldTypeKind,
+                    f => f.TypeAsString
+                    ));
 
                 await Task.Factory.StartNew(() => context.ExecuteQuery());
 
@@ -219,6 +229,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                         break;
                     case FieldType.DateTime:
                         context.Load((Client.FieldDateTime)listField, f => f.DisplayFormat);
+                        break;
+                    case FieldType.Invalid:
+                        switch (listField.TypeAsString)
+                        {
+                            case "TaxonomyFieldType":
+                            case "TaxonomyFieldTypeMulti":
+                                context.Load((TaxonomyField) listField,
+                                    f => f.TermSetId,
+                                    f => f.TextField
+                                    );
+                                break;
+                        }
                         break;
                 }
             }
@@ -257,6 +279,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     field = new Model.FieldLookup { AllowMultivalue = ((Client.FieldUser)listField).AllowMultipleValues };
                     break;
 
+                case FieldType.Invalid:
+                    switch (listField.TypeAsString)
+                    {
+                        case "TaxonomyFieldType":
+                            field = new Model.TaxonomyField {AllowMultivalue = false, Type = Model.FieldType.Taxonomy};
+                            break;
+                        case "TaxonomyFieldTypeMulti":
+                            field = new Model.TaxonomyField { AllowMultivalue = true, Type = Model.FieldType.Taxonomy };
+                            break;
+                        default:
+                            field = new Model.Field();
+                            break;
+                    }
+                    break;
+
                 default:
                     field = new Model.Field();
                     break;
@@ -268,7 +305,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             field.Title = listField.Title;
             field.InternalName = listField.InternalName;
             field.Group = listField.Group;
-            field.Type = (Model.FieldType)listField.FieldTypeKind;
+            if( field.Type == 0 ) field.Type = (Model.FieldType)listField.FieldTypeKind;
 
             return field;
         }

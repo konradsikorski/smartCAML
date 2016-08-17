@@ -18,7 +18,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
             {
                 Log.Error(ex);
                 StatusNotification.Notify("Connection failed");
-                MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(ex.Message, "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -31,7 +31,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
                 MessageBox.Show("Could not load file or assembly 'Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c'.\n\n" +
                     "Make shure you are running application on SharePoint sever or change the connection type to 'Client' in 'advance settings'.", "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
             else
-                MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(ex.Message, "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private static void HandleConnection(WebException ex)
@@ -57,7 +57,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
                         MessageBox.Show("You are not authorized to open this site", "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
                     default:
-                        MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show(ex.Message, "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
                 }
             }
@@ -69,7 +69,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
         {
             Telemetry.Instance.Native.TrackException(ex);
             Log.Error(ex);
-            MessageBox.Show($"{message}\n\n{ex}", "SmartCAML", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"{message}\n\n{ex.Message}", "SmartCAML", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
