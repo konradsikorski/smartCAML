@@ -283,10 +283,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     switch (listField.TypeAsString)
                     {
                         case "TaxonomyFieldType":
-                            field = new Model.TaxonomyField {AllowMultivalue = false, Type = Model.FieldType.Taxonomy};
+                            field = new Model.FieldTaxonomy {AllowMultivalue = false, Type = Model.FieldType.Taxonomy, IsReadonly = true};
                             break;
                         case "TaxonomyFieldTypeMulti":
-                            field = new Model.TaxonomyField { AllowMultivalue = true, Type = Model.FieldType.Taxonomy };
+                            field = new Model.FieldTaxonomy { AllowMultivalue = true, Type = Model.FieldType.Taxonomy, IsReadonly = true};
                             break;
                         default:
                             field = new Model.Field();
@@ -301,7 +301,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
             field.Id = listField.Id;
             field.IsHidden = listField.Hidden;
-            field.IsReadonly = listField.ReadOnlyField;
+            field.IsReadonly |= listField.ReadOnlyField;
             field.Title = listField.Title;
             field.InternalName = listField.InternalName;
             field.Group = listField.Group;
@@ -324,8 +324,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 foreach (var change in item.Changes)
                 {
                     var field = item.List.Fields.First(f => f.InternalName == change.Key);
+                    var value = ConvertFieldValue(field, item[change.Key]);
 
-                    serverItem[change.Key] = ConvertFieldValue( field, item[change.Key]);
+                    serverItem[change.Key] = value;
                 }
 
                 serverItem.Update();
@@ -348,6 +349,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 else return Converter.ToUserValue(value);
             }
             if (field.Type == Model.FieldType.DateTime) return DateTime.Parse(value).ToUniversalTime();
+            if (field.Type == Model.FieldType.Taxonomy)
+            {
+                if (((Model.FieldTaxonomy)field).AllowMultivalue) return Converter.ToTaxonomyCollectionValue(value);
+                else return Converter.ToTaxonomyValue(value);
+            }
 
             return value;
         }

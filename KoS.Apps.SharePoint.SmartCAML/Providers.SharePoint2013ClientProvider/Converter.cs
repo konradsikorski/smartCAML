@@ -134,6 +134,24 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 : null;
         }
 
+        public static TaxonomyFieldValue ToTaxonomyValue(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return null;
+
+            var lookupSplit = value.Split(new[] { LookupValueSeparator }, StringSplitOptions.None);
+
+            return new TaxonomyFieldValue
+            {
+                Label = lookupSplit[0],
+                TermGuid = lookupSplit[1]
+            };
+        }
+
+        public static TaxonomyFieldValueCollection ToTaxonomyCollectionValue(string value)
+        {
+            throw new NotSupportedException();
+        }
+
         #endregion
     }
 }

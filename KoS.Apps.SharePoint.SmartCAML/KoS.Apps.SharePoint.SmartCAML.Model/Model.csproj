@@ -52,7 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ListQuery.cs" />
     <Compile Include="SList.cs" />
-    <Compile Include="TaxonomyField.cs" />
+    <Compile Include="FieldTaxonomy.cs" />
     <Compile Include="Web.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
