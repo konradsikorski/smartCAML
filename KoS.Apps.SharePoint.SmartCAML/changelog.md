@@ -1,15 +1,16 @@
 ## Changelog
 
-### v. 1.8.4
+### v. 1.8.5
 ##### New
 + User column has now "lookup id" dropdown
 + pasing text to Xml tab will be formated as nice xml
++ new certificate for publishing clickonce because old expired
 ##### Fix
 + boolen column uses User designer and vice versa
 
 ### v. 1.8.3
 ##### New
-+ Migrate user settings after app upgrade
++ Keep user settings after app upgrade
 + Add link to logs file in About window
 ##### Fix
 + Generating User Id

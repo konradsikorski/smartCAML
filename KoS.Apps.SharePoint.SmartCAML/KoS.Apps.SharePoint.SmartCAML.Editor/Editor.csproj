@@ -32,7 +32,7 @@
     <ProductName>SmartCAML</ProductName>
     <PublisherName>Konrad Sikorski</PublisherName>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.8.3.0</ApplicationVersion>
+    <ApplicationVersion>1.8.5.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -58,10 +58,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>6D3F54EF319EC4D11F4AC87DCAD3D214F97CBE10</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>BECD18A63FC3D9AC2BE813E9CD6E3ABC9244B2C4</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Editor_ClickOnce.pfx</ManifestKeyFile>
+    <ManifestKeyFile>smartCaml-2017.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -110,6 +110,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -152,6 +153,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\PasswordBoxWatermarkBehavior.cs" />
     <Compile Include="BindingConverters\EnumDescriptionConverter.cs" />
     <Compile Include="Builder\Filters\Filter.cs" />
     <Compile Include="Builder\Filters\IFilter.cs" />
@@ -174,6 +176,8 @@
     <Compile Include="Dialogs\CustomizeColumnsWindow.xaml.cs">
       <DependentUpon>CustomizeColumnsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Events\WeakPropertyChangeNotifier.cs" />
+    <Compile Include="Extensions\AdornerExtensions.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Model\ConnectionSettings.cs" />
     <Compile Include="Settings.cs" />
@@ -326,6 +330,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="smartCaml-2017.pfx" />
     <Resource Include="Resources\smartCaml.ico" />
     <Resource Include="Resources\Images\gear.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
