@@ -1,5 +1,12 @@
 ## Changelog
 
+### v. 1.8.6
+##### Update
++ Change the description for API section in Connect window
+
+##### Fix
++ Change the watermark for password input in Connect window
+
 ### v. 1.8.5
 ##### New
 + User column has now "lookup id" dropdown
