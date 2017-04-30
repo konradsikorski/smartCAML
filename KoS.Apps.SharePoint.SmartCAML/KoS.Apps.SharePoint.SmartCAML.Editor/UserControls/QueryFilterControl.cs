@@ -12,13 +12,14 @@ using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Extensions;
 using KoS.Apps.SharePoint.SmartCAML.Model;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Core.Interfaces;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 {
     /// <summary>
     /// Interaction logic for QueryFilterControl.xaml
     /// </summary>
-    public partial class QueryFilterControl : UserControl
+    public partial class QueryFilterControl : UserControl, IDisplayField, IOrderListElement
     {
         #region Fields
         private IQueryFilterController _filterController;
@@ -53,11 +54,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         public event EventHandler Up;
         public event EventHandler Down;
 
-        private BoolToStringConverter DisplayMemberConverter => (BoolToStringConverter)this.Resources["DisplayMemberConverter"];
-        private CollectionViewSource FieldsViewSource => (CollectionViewSource)this.Resources["FieldsViewSource"];
+        public BoolToStringConverter DisplayMemberConverter => (BoolToStringConverter)this.Resources["DisplayMemberConverter"];
+        public CollectionViewSource FieldsViewSource => (CollectionViewSource)this.Resources["FieldsViewSource"];
         private CollectionViewSource FilterOperatorViewSource => (CollectionViewSource) this.Resources["FilterOperatorViewSource"];
 
         public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(nameof(DisplayColumnsByTitle), typeof(bool), typeof(QueryFilterControl), new FrameworkPropertyMetadata(DisplayColumnsByTitlePropertyChanged));
+        private static void DisplayColumnsByTitlePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (QueryFilterControl)d;
+            var source = control.FieldsViewSource;
+            var sortPropertyName = (string)control.DisplayMemberConverter.Convert(e.NewValue, typeof(string), null, CultureInfo.CurrentCulture);
+
+            source.SortDescriptions.Clear();
+            source.SortDescriptions.Add(new SortDescription(sortPropertyName, ListSortDirection.Ascending));
+        }
+
         [Bindable(true)]
         public bool DisplayColumnsByTitle
         {
@@ -71,15 +82,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             }
         }
 
-        private static void DisplayColumnsByTitlePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (QueryFilterControl) d;
-            var source = control.FieldsViewSource;
-            var sortPropertyName = (string)control.DisplayMemberConverter.Convert(e.NewValue, typeof (string), null, CultureInfo.CurrentCulture);
-
-            source.SortDescriptions.Clear();
-            source.SortDescriptions.Add(new SortDescription(sortPropertyName, ListSortDirection.Ascending));
-        }
+        public FrameworkElement Control => this;
 
         #endregion
         #region Constructors

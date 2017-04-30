@@ -173,6 +173,10 @@
     <Compile Include="Builder\QueryFilters\UserQueryFilterController.cs" />
     <Compile Include="Controls\ClosableTabItem.cs" />
     <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Core\Interfaces\IDisplayField.cs" />
+    <Compile Include="Core\Interfaces\IOrderListElement.cs" />
+    <Compile Include="Core\OrderedList.cs" />
+    <Compile Include="Core\OrderListElement.cs" />
     <Compile Include="Dialogs\CustomizeColumnsWindow.xaml.cs">
       <DependentUpon>CustomizeColumnsWindow.xaml</DependentUpon>
     </Compile>
@@ -185,6 +189,12 @@
       <DependentUpon>ClosableTabHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="UserControls\OrderByBuilderControl.xaml.cs">
+      <DependentUpon>OrderByBuilderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\OrderByFilterControl.xaml.cs">
+      <DependentUpon>OrderByFilterControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\QuickSettingsControl.xaml.cs">
       <DependentUpon>QuickSettingsControl.xaml</DependentUpon>
     </Compile>
@@ -217,6 +227,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ItemsGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\OrderByBuilderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\OrderByFilterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

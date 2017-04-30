@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:usercontrols="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.UserControls"
              x:Name="UserControl"
              d:DesignHeight="300"
              d:DesignWidth="300"
@@ -18,10 +19,14 @@
         <TabControl Grid.Row="0">
             <TabItem x:Name="DesignerTab" Header="Designer">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <local:QueryBuilderControl x:Name="ucQueryBuilder"
+                    <StackPanel>
+                        <local:QueryBuilderControl x:Name="ucQueryBuilder"
                                                Margin="4"
                                                DisplayColumnsByTitle="{Binding ElementName=UserControl,
                                                                                Path=TabConfig.DisplayColymnsByTitle}" />
+                        <usercontrols:OrderByBuilderControl
+                                               Margin="4" />
+                    </StackPanel>
                 </ScrollViewer>
             </TabItem>
             <TabItem x:Name="XmlTab" Header="XML">

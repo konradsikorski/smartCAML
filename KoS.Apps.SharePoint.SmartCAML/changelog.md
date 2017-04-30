@@ -6,6 +6,7 @@
 
 ##### Fix
 + Change the watermark for password input in Connect window
++ Down arrow used to order query was not working
 
 ### v. 1.8.5
 ##### New
