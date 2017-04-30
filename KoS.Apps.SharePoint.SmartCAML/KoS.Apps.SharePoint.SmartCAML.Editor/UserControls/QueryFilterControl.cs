@@ -13,6 +13,7 @@ using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Extensions;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Core.Interfaces;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 {
@@ -159,11 +160,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         #endregion
 
-        public void BuildQuery(ViewBuilder builder)
+        public IFilter GetFilter()
         {
-            if (SelectedField == null) return;
-
-            builder.Filters.Add( FilterController.GetFilter(SelectedQueryOperator));
+            return (SelectedField == null) 
+                ? null
+                : FilterController.GetFilter(SelectedQueryOperator);
         }
     }
 }

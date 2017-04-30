@@ -171,6 +171,7 @@
     <Compile Include="Builder\QueryFilters\MembershipQueryFilterController.cs" />
     <Compile Include="Builder\QueryFilters\QueryFilterFactory.cs" />
     <Compile Include="Builder\QueryFilters\UserQueryFilterController.cs" />
+    <Compile Include="Builder\QueryOrderBy.cs" />
     <Compile Include="Controls\ClosableTabItem.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Core\Interfaces\IDisplayField.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Dialogs\CustomizeColumnsWindow.xaml.cs">
       <DependentUpon>CustomizeColumnsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Enums\OrderByDirection.cs" />
     <Compile Include="Events\WeakPropertyChangeNotifier.cs" />
     <Compile Include="Extensions\AdornerExtensions.cs" />
     <Compile Include="Extensions\StringExtension.cs" />

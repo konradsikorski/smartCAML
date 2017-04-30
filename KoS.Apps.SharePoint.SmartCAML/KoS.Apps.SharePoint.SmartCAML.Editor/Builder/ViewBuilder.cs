@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
+using System.Linq;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
@@ -7,11 +8,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
     public class ViewBuilder
     {
         public List<IFilter> Filters { get; private set; } = new List<IFilter>();
+        public List<QueryOrderBy> OrderBy { get; private set; } = new List<QueryOrderBy>();
 
         public XElement ToXml()
         {
-            XElement rootNode = null;
-            XElement lastNode = null;
+            return new XElement("Query",
+                BuildWhereNode(),
+                BuildOrderByNode()
+                );
+        }
+
+        private XElement BuildWhereNode()
+        {
+            XElement rootFilterNode = null;
+            XElement lastFilterNode = null;
 
             for (int i = 0; i < Filters.Count; i++)
             {
@@ -23,18 +33,29 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
                     ? new XElement(filter.QueryOperator.ToString(), operatorNode)
                     : operatorNode;
 
-                if (lastNode == null)
+                if (lastFilterNode == null)
                 {
-                    rootNode = lastNode = parent;
+                    rootFilterNode = lastFilterNode = parent;
                 }
                 else
                 {
-                    lastNode.Add(parent);
-                    lastNode = parent;
+                    lastFilterNode.Add(parent);
+                    lastFilterNode = parent;
                 }
             }
 
-            return new XElement("Where", rootNode);
+            return new XElement("Where", rootFilterNode);
+        }
+
+        private XElement BuildOrderByNode()
+        {
+            return 
+                OrderBy.Count == 0
+                ? null
+                : new XElement(
+                    "OrderBy",
+                    OrderBy.Select(ob => ob.ToXml())
+                );
         }
     }
 }

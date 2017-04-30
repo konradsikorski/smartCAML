@@ -1,4 +1,8 @@
-﻿using KoS.Apps.SharePoint.SmartCAML.Editor.Core.Interfaces;
+﻿using KoS.Apps.SharePoint.SmartCAML.Editor.Builder;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Core.Interfaces;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Extensions;
+using KoS.Apps.SharePoint.SmartCAML.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +25,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
     /// </summary>
     public partial class OrderByFilterControl : UserControl, IOrderListElement
     {
+        public OrderByDirection SelectedDirection => ucOrderDirection.SelectedEnum<OrderByDirection>().Value;
+        public Field SelectedField => (Field)ucField.SelectedItem;
+
         public OrderByFilterControl()
         {
             InitializeComponent();
+            ucOrderDirection.BindToEnum<OrderByDirection>(0);
         }
 
         public FrameworkElement Control => this;
@@ -50,6 +58,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
         private void ucField_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        public QueryOrderBy GetOrder()
+        {
+            return SelectedField == null
+                ? null
+                : new QueryOrderBy
+                {
+                    Direction = SelectedDirection,
+                    FieldName = SelectedField?.InternalName
+                };
         }
     }
 }

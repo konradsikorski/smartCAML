@@ -24,8 +24,10 @@
                                                Margin="4"
                                                DisplayColumnsByTitle="{Binding ElementName=UserControl,
                                                                                Path=TabConfig.DisplayColymnsByTitle}" />
-                        <usercontrols:OrderByBuilderControl
-                                               Margin="4" />
+                        <usercontrols:OrderByBuilderControl x:Name="ucOrderByBuilder"
+                                               Margin="4"
+                                               DisplayColumnsByTitle="{Binding ElementName=UserControl,
+                                                                               Path=TabConfig.DisplayColymnsByTitle}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

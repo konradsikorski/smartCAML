@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Core;
+using System.Collections.Generic;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 {
@@ -45,25 +47,25 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void AddFilter()
         {
-            Controller
-                .Add()
-                .SetBinding(QueryFilterControl.DisplayColumnsByTitleProperty, new Binding
+            var filter = Controller.Add();
+
+            filter.SetBinding(QueryFilterControl.DisplayColumnsByTitleProperty, new Binding
             {
                 Source = this,
                 Path = new PropertyPath(nameof(DisplayColumnsByTitle)),
                 Mode = BindingMode.TwoWay
             });
+
+            filter.Changed += (sender,  e) => Changed?.Invoke(sender, e);
         }
 
-        public ViewBuilder Build()
+        public IEnumerable<IFilter> GetFilters()
         {
-            var builder = new ViewBuilder();
-            foreach (var control in ucFilters.Children.OfType<QueryFilterControl>())
-            {
-                control.BuildQuery(builder);
-            }
-
-            return builder;
+            return ucFilters
+                .Children
+                .OfType<QueryFilterControl>()
+                .Select( c => c.GetFilter())
+                .Where( f => f != null);
         }
     }
 }

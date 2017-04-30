@@ -30,7 +30,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             ucItems.List = list;
 
             ucQueryBuilder.DataContext = List;
-            ucQueryBuilder.Changed += (sender, args) => ucQuery.Text = ucQueryBuilder.Build().ToXml().ToString();
+            ucQueryBuilder.Changed += (sender, args) => ucQuery.Text = BuildQuery().ToXml().ToString();
 
             DataObject.AddPastingHandler(ucQuery, UcQuery_OnPaste);
         }
@@ -72,9 +72,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         {
             var query = (XmlTab.IsSelected)
                 ? ucQuery.Text
-                : ucQueryBuilder.Build().ToXml().ToString();
+                : BuildQuery().ToXml().ToString();
 
             return new ListQuery { List = List, Query = query };
+        }
+
+        private Builder.ViewBuilder BuildQuery()
+        {
+            var query = new Builder.ViewBuilder();
+            query.Filters.AddRange(ucQueryBuilder.GetFilters());
+            query.OrderBy.AddRange(ucOrderByBuilder.GetOrders());
+            return query;
         }
 
         internal void QueryResult(List<ListItem> items)

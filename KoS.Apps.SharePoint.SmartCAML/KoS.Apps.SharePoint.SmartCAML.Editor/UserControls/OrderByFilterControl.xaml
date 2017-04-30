@@ -67,12 +67,9 @@
                   SelectedValuePath="InternalName"
                   SelectionChanged="ucField_SelectionChanged"
                   ToolTip="Field" />
-        <ComboBox x:Name="ucFilterOperator"
+        <ComboBox x:Name="ucOrderDirection"
                   MinWidth="100"
                   Margin="4,0,0,0"
-                  >
-            <ComboBoxItem>Ascendig</ComboBoxItem>
-            <ComboBoxItem>Descendig</ComboBoxItem>
-        </ComboBox>
+                  />
     </WrapPanel>
 </UserControl>
