@@ -30,9 +30,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             ucItems.List = list;
 
             ucQueryBuilder.DataContext = List;
-            ucQueryBuilder.Changed += (sender, args) => ucQuery.Text = BuildQuery().ToXml().ToString();
+            ucQueryBuilder.Changed += Designer_Changed;
+
+            ucOrderByBuilder.DataContext = List;
+            ucOrderByBuilder.Changed += Designer_Changed;
 
             DataObject.AddPastingHandler(ucQuery, UcQuery_OnPaste);
+        }
+
+        private void Designer_Changed(object sender, EventArgs e)
+        {
+            ucQuery.Text = BuildQuery().ToXml().ToString();
         }
 
         private void UcQuery_OnPaste(object sender, DataObjectPastingEventArgs e)

@@ -1,22 +1,15 @@
-﻿using KoS.Apps.SharePoint.SmartCAML.Editor.Builder;
+﻿using KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Builder;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Core.Interfaces;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Extensions;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
 {
@@ -27,6 +20,33 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
     {
         public OrderByDirection SelectedDirection => ucOrderDirection.SelectedEnum<OrderByDirection>().Value;
         public Field SelectedField => (Field)ucField.SelectedItem;
+
+        public BoolToStringConverter DisplayMemberConverter => (BoolToStringConverter)this.Resources["DisplayMemberConverter"];
+        public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(nameof(DisplayColumnsByTitle), typeof(bool), typeof(OrderByFilterControl), new FrameworkPropertyMetadata(DisplayColumnsByTitlePropertyChanged));
+        private static void DisplayColumnsByTitlePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (OrderByFilterControl)d;
+            var source = control.FieldsViewSource;
+            var sortPropertyName = (string)control.DisplayMemberConverter.Convert(e.NewValue, typeof(string), null, CultureInfo.CurrentCulture);
+
+            source.SortDescriptions.Clear();
+            source.SortDescriptions.Add(new SortDescription(sortPropertyName, ListSortDirection.Ascending));
+        }
+
+        [Bindable(true)]
+        public bool DisplayColumnsByTitle
+        {
+            get
+            {
+                return (bool)this.GetValue(DisplayColumnsByTitleProperty);
+            }
+            set
+            {
+                this.SetValue(DisplayColumnsByTitleProperty, value);
+            }
+        }
+
+        public CollectionViewSource FieldsViewSource => (CollectionViewSource)this.Resources["FieldsViewSource"];
 
         public OrderByFilterControl()
         {
@@ -55,9 +75,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
             RemoveClick?.Invoke(this, EventArgs.Empty);
         }
 
-        private void ucField_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            Changed?.Invoke(this, EventArgs.Empty);
         }
 
         public QueryOrderBy GetOrder()
