@@ -44,7 +44,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
         {
             var filter = Controller.Add();
 
-            filter.SetBinding(OrderByBuilderControl.DisplayColumnsByTitleProperty, new Binding
+            filter.SetBinding(OrderByFilterControl.DisplayColumnsByTitleProperty, new Binding
             {
                 Source = this,
                 Path = new PropertyPath(nameof(DisplayColumnsByTitle)),

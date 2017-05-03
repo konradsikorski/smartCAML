@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:bindingConverters="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-             xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.UserControls"
-             x:Name="ucUserControl"
+             x:Name="thisUserControl"
              mc:Ignorable="d" 
              d:DesignWidth="300" 
              Height="25.691">
@@ -62,7 +61,7 @@
                 Padding="4, 0" />
         <ComboBox x:Name="ucField"
                   Margin="4,0,0,0"
-                  DisplayMemberPath="{Binding ElementName=ucUserControl,
+                  DisplayMemberPath="{Binding ElementName=thisUserControl,
                                               Path=DisplayColumnsByTitle,
                                               Converter={StaticResource DisplayMemberConverter}}"
                   IsEditable="True"

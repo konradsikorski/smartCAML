@@ -24,8 +24,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
             var ucIncludeTime = new CheckBox
             {
                 MinWidth = _controlWidth,
-                Margin = _controlMargin,
-                Padding = new Thickness(0, 2, 0, 0),
+                Margin = new Thickness(_controlMargin.Left, _controlMargin.Top + 4, _controlMargin.Right, _controlMargin.Bottom),                
                 Content = "Include time",
                 IsChecked = !_dateOnly
             };

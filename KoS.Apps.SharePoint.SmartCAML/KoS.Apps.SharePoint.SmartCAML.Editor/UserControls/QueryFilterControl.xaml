@@ -4,9 +4,8 @@
              xmlns:bindingConverters="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             x:Name="ucUserControl"
+             x:Name="thisUserControl"
              d:DesignHeight="30"
              d:DesignWidth="300"
              Loaded="QueryFilterControl_OnLoaded"
@@ -67,7 +66,7 @@
         <ComboBox x:Name="ucAndOr" Margin="4,0,0,0" />
         <ComboBox x:Name="ucField"
                   Margin="4,0,0,0"
-                  DisplayMemberPath="{Binding ElementName=ucUserControl,
+                  DisplayMemberPath="{Binding ElementName=thisUserControl,
                                               Path=DisplayColumnsByTitle,
                                               Converter={StaticResource DisplayMemberConverter}}"
                   IsEditable="True"
