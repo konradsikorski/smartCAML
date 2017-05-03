@@ -3,6 +3,7 @@
 ### v. 1.8.6
 ##### Update
 + Change the description for API section in Connect window
++ Read order by settings from xml to designer
 
 ##### Fix
 + Change the watermark for password input in Connect window

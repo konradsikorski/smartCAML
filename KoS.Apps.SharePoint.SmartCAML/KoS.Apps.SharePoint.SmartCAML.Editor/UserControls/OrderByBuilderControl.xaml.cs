@@ -42,7 +42,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
 
         private void AddOrderByButton_Click(object sender, RoutedEventArgs e)
         {
+            AddFilter();
+        }
+
+        private OrderByFilterControl AddFilter(QueryOrderBy orderBy = null)
+        {
             var filter = Controller.Add();
+            filter.Refresh(orderBy);
 
             filter.SetBinding(OrderByFilterControl.DisplayColumnsByTitleProperty, new Binding
             {
@@ -52,6 +58,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
             });
 
             filter.Changed += (senderChanged, eChanged) => Changed?.Invoke(senderChanged, eChanged);
+            return filter;
         }
 
         internal IEnumerable<QueryOrderBy> GetOrders()
@@ -61,6 +68,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
                 .OfType<OrderByFilterControl>()
                 .Select(c => c.GetOrder())
                 .Where(f => f != null);
+        }
+
+        internal void Refresh(ViewBuilder view)
+        {
+            ucFilters.Children.Clear();
+
+            foreach (var orderBy in view.OrderBy)
+            {
+                AddFilter(orderBy);
+            }
         }
     }
 }

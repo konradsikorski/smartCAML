@@ -54,6 +54,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void UcQuery_TextChanged(object sender, TextChangedEventArgs e)
         {
+            //if XML tab is selected and text wa changed than set tag to true (means modified)
+            if(XmlTab.IsSelected) XmlTab.Tag = true;
+
             if (string.IsNullOrWhiteSpace(ucQuery.Text)) return;
 
             if (ucQuery.Tag as bool? == true)
@@ -97,6 +100,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         {
             ucItems.SetFields();
             ucItems.QueryResult(items);
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if( DesignerTab.IsSelected && (bool?)XmlTab.Tag == true)
+            {
+                XmlTab.Tag = false;
+                var view = Builder.ViewBuilder.FromXml(ucQuery.Text);
+
+                if (view != null) ucOrderByBuilder.Refresh(view);
+            }
         }
     }
 

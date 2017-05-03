@@ -16,7 +16,7 @@
             <RowDefinition Height="60*" />
         </Grid.RowDefinitions>
 
-        <TabControl Grid.Row="0">
+        <TabControl Grid.Row="0" SelectionChanged="TabControl_SelectionChanged">
             <TabItem x:Name="DesignerTab" Header="Designer">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel>

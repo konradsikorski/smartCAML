@@ -33,6 +33,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
             source.SortDescriptions.Add(new SortDescription(sortPropertyName, ListSortDirection.Ascending));
         }
 
+        internal void Refresh(QueryOrderBy orderBy)
+        {
+            if (orderBy == null) return;
+
+            ucField.SelectedValue = orderBy.FieldName;
+            ucOrderDirection.SelectEnum(orderBy.Direction);
+        }
+
         [Bindable(true)]
         public bool DisplayColumnsByTitle
         {

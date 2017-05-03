@@ -57,5 +57,46 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
                     OrderBy.Select(ob => ob.ToXml())
                 );
         }
+
+        public static ViewBuilder FromXml(string xml)
+        {
+            var viewBuilder = new ViewBuilder();
+            if (string.IsNullOrWhiteSpace(xml)) return viewBuilder;
+
+            XDocument doc;
+            try
+            {
+                doc = XDocument.Parse(xml);
+            }
+            catch(System.Xml.XmlException)
+            {
+                return null;
+            }
+
+            // read where
+            // ... todo
+
+            // read orderBy
+            var queryNode = doc.Element("Query");
+            var orderNode = queryNode?.Element("OrderBy") ?? doc.Element("OrderBy");
+
+            if (orderNode != null)
+            {
+                foreach (var node in orderNode.Descendants("FieldRef"))
+                {
+                    bool isAscending;
+                    var ascending = node.Attribute("Ascending")?.Value;
+                    if (!bool.TryParse(ascending, out isAscending)) isAscending = true;
+
+                    viewBuilder.OrderBy.Add(new QueryOrderBy
+                    {
+                        FieldName = node.Attribute("Name")?.Value,
+                        Direction = isAscending ? Enums.OrderByDirection.Ascending : Enums.OrderByDirection.Descending
+                    });
+                }
+            }
+
+            return viewBuilder;
+        }
     }
 }

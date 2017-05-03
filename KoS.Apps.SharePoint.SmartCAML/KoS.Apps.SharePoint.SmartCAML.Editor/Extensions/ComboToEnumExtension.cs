@@ -62,5 +62,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Extensions
                 ? (T?)@this.SelectedValue
                 : null;
         }
+
+        public static void SelectEnum<T>(this ComboBox @this, T value) where T : struct
+        {
+            @this.SelectedValue = value;
+        }
     }
 }
