@@ -178,6 +178,32 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             }
         }
 
+        private void UnpinColumnCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            var columnHeader = (DataGridColumnHeader)e.OriginalSource;
+            e.CanExecute = columnHeader.Column.DisplayIndex < ucItems.FrozenColumnCount;
+        }
+
+        private void UnpinColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.UnpinColumn");
+            var columnHeader = (DataGridColumnHeader)e.OriginalSource;
+            columnHeader.Column.DisplayIndex = --ucItems.FrozenColumnCount;
+        }
+
+        private void PinColumnCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            var columnHeader = (DataGridColumnHeader)e.OriginalSource;
+            e.CanExecute = columnHeader.Column.DisplayIndex >= ucItems.FrozenColumnCount;
+        }
+
+        private void PinColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.PinColumn");
+            var columnHeader = (DataGridColumnHeader)e.OriginalSource;
+            columnHeader.Column.DisplayIndex = ucItems.FrozenColumnCount++;
+        }
+
         private void HideColumnCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
