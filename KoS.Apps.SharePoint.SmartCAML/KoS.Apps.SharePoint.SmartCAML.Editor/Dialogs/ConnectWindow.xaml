@@ -69,13 +69,13 @@
             </Grid>
 
             <StackPanel Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <TextBlock Margin="0,8,0,0" Style="{DynamicResource Label}">API:</TextBlock>
+                <TextBlock Margin="0,8,0,0" Style="{DynamicResource Label}">SharePoint:</TextBlock>
                 <RadioButton Margin="8,0,0,0"
                              GroupName="SharePoint"
                              IsChecked="{Binding ProviderType,
                                                  Converter={StaticResource EnumConverter},
                                                  ConverterParameter={x:Static provider:SharePointProviderType.SharePoint2013ClientModel}}">
-                    On-premises (SharePoint 2010+)
+                    On-premises (2010+)
                 </RadioButton>
                 <RadioButton Margin="8,0,0,0"
                              GroupName="API"
