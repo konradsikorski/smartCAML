@@ -63,7 +63,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
                 foreach (var column in List.Fields.Select( c => new
                     {
-                        Header = new ColumnHeader { Title = c.Title, InternalName = c.InternalName},
+                        Header = new ColumnHeader { Title = c.Title, InternalName = c.InternalName, IsHidden = c.IsHidden, IsReadOnly = c.IsReadonly},
                         Bind = c.InternalName,
                         Field = c
                     }).OrderBy( c => DisplayColumnsByTitle ? c.Header.Title : c.Header.InternalName))
@@ -130,6 +130,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         {
             public string Title { get; set; }
             public string InternalName { get; set; }
+
+            public bool IsHidden { get; set; }
+
+            public bool IsReadOnly { get; set; }
             
             public override string ToString()
             {
@@ -141,6 +145,36 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                 return format?.ToLower() == nameof(InternalName).ToLower()
                     ? InternalName
                     : Title;
+            }
+        }
+
+        private void HideAllHiddenColumnsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void HideAllHiddenColumnsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.HideAllHiddenColumns");
+
+            foreach (var column in ucItems.Columns)
+            {
+                if (((ColumnHeader)column.Header).IsHidden) column.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void HideAllReadonlyColumnsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void HideAllReadonlyColumnsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.HideAllHiddenColumns");
+
+            foreach (var column in ucItems.Columns)
+            {
+                if (((ColumnHeader)column.Header).IsReadOnly) column.Visibility = Visibility.Collapsed;
             }
         }
 

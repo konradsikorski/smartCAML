@@ -4,6 +4,7 @@
 ##### Update
 + Change the description for API section in Connect window
 + Read order by settings from xml to designer
++ new options for items grid header context menu: "Hide all hidden" and "Hide all readonly"
 
 ##### Fix
 + Change the watermark for password input in Connect window

@@ -10,6 +10,8 @@
 
     <UserControl.CommandBindings>
         <CommandBinding Command="utils:MyCommands.HideColumn" CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.HideAllHiddenColumns" CanExecute="HideAllHiddenColumnsCommand_CanExecute" Executed="HideAllHiddenColumnsCommand_Executed" />
+        <CommandBinding Command="utils:MyCommands.HideAllReadonlyColumns" CanExecute="HideAllReadonlyColumnsCommand_CanExecute" Executed="HideAllReadonlyColumnsCommand_Executed" />
         <CommandBinding Command="utils:MyCommands.HideUnPinedColumn" CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
         <CommandBinding Command="utils:MyCommands.UnhideAllColumn" CanExecute="UnHideColumnCommand_CanExecute" Executed="UnHideColumnCommand_Executed" />
         <CommandBinding Command="utils:MyCommands.PinColumn" CanExecute="HideColumnCommand_CanExecute" Executed="HideColumnCommand_Executed" />
@@ -42,7 +44,11 @@
             <DataGrid.Resources>
                 <ContextMenu x:Key="DataGridColumnHeaderContextMenu" >
                     <MenuItem Header="Hide" Command="utils:MyCommands.HideColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
-                    <MenuItem Header="Unhide all" Command="utils:MyCommands.UnhideAllColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Header="Hide all">
+                        <MenuItem Header="Hidden columns" Command="utils:MyCommands.HideAllHiddenColumns" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                        <MenuItem Header="Readonly columns" Command="utils:MyCommands.HideAllReadonlyColumns" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                    </MenuItem>
+                    <MenuItem Header="Show all" Command="utils:MyCommands.UnhideAllColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
                     <Separator />
                     <MenuItem Header="Customize..." Command="utils:MyCommands.CustomizeColumn" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
                 </ContextMenu>
