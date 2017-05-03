@@ -181,6 +181,9 @@
     <Compile Include="Dialogs\CustomizeColumnsWindow.xaml.cs">
       <DependentUpon>CustomizeColumnsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enums\OrderByDirection.cs" />
     <Compile Include="Events\WeakPropertyChangeNotifier.cs" />
     <Compile Include="Extensions\AdornerExtensions.cs" />
@@ -209,6 +212,10 @@
     <Compile Include="Utils\Telemetry.cs" />
     <Compile Include="Utils\VersionUtil.cs" />
     <Page Include="Dialogs\CustomizeColumnsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

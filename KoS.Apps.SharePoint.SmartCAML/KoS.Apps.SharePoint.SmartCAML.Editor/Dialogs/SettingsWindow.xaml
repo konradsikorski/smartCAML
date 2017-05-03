@@ -1,0 +1,71 @@
+﻿<Window x:Class="KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs"
+        mc:Ignorable="d"
+        Title="Settings"
+        ShowInTaskbar="True"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="ToolWindow"
+        Height="400" 
+        Width="300">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/DialogStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+    <Grid Background="#FFE3E8F4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="75*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBox x:Name="ucWebs"
+                                      Grid.Column="0" />
+
+        <GridSplitter Grid.Column="1"
+                          Width="5"
+                          HorizontalAlignment="Stretch"
+                          Background="Transparent" />
+            <StackPanel x:Name="ucQueries"
+                                      Grid.Column="2"
+                                      Margin="0,0,2,0"
+                                      Background="#FFF2F6FF" >
+                <Label>Pined columns:</Label>
+                <TextBox AcceptsReturn="True" Height="60"/>
+                <Label>Columns order:</Label>
+                <TextBox AcceptsReturn="True" Height="60"/>
+                <Label>Hide columns:</Label>
+                <CheckBox>Hidden</CheckBox>
+                <CheckBox>Readonly</CheckBox>
+                <Label>Other:</Label>
+                <CheckBox>Show 'Connect' window on start</CheckBox>
+            </StackPanel>
+    </Grid>
+        <Border Grid.Row="1" Style="{StaticResource ButtonsSection}">
+            <StackPanel>
+                <Button 
+                        Content="Default"
+                         />
+                <Button 
+                        Content="OK"
+                        IsDefault="True" />
+                <Button 
+                        Content="Cancel"
+                        IsCancel="True" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
