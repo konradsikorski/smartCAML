@@ -2,6 +2,7 @@
 
 ### v. 1.8.6
 ##### Update
++ 'Inlude time' option available in caml designer for DateTime fields
 + Change the description for API section in Connect window
 + Read order by settings from xml to designer
 + New options for items grid header context menu: "Hide all hidden" and "Hide all readonly"

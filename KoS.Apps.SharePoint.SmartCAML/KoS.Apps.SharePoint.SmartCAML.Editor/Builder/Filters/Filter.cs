@@ -14,6 +14,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters
         public string FieldValue { get; set; }
         public Dictionary<string, string> FilterAttributes { get; set; } = new Dictionary<string, string>();
         public Dictionary<string, string> FieldRefAttributes { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> ValueAttributes { get; set; } = new Dictionary<string, string>();
 
         public XElement ToXml()
         {
@@ -33,6 +34,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters
             {
                 var valueNode = new XElement("Value",
                     new XAttribute("Type", FieldType),
+                    ValueAttributes.Select(a => new XAttribute(a.Key, a.Value ?? string.Empty)),
                     FieldValue
                     );
                 operatorNode.Add(valueNode);

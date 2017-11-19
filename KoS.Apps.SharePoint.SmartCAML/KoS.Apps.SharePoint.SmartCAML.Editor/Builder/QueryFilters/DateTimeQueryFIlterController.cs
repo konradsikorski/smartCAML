@@ -5,31 +5,55 @@ using System.Windows.Controls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 using Xceed.Wpf.Toolkit;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Model.FieldType;
+using System.Windows.Data;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 {
     class DateTimeQueryFilterController :BaseQueryFilterController
     {
-        private readonly bool _dateOnly;
-        private DateTimePicker _control;
+        private DateTimeFieldTypeModel _model;
 
         public DateTimeQueryFilterController(Field field, FilterOperator? filterOperator) : base(field, filterOperator)
         {
-            _dateOnly = ((FieldDateTime)field).DateOnly;
+            _model = new DateTimeFieldTypeModel(field);
         }
 
         protected override IEnumerable<Control> InitializeControls(string oldValue)
         {
-            // todo: http://www.codeproject.com/Articles/414414/SharePoint-Working-with-Dates-in-CAML
+            return new Control[]
+            {
+                BuildIncludeTimeControl(),
+                BuildDateTimeControl(oldValue)
+            };
+        }
+
+        private Control BuildIncludeTimeControl()
+        {
             var ucIncludeTime = new CheckBox
             {
                 MinWidth = _controlWidth,
-                Margin = new Thickness(_controlMargin.Left, _controlMargin.Top + 4, _controlMargin.Right, _controlMargin.Bottom),                
-                Content = "Include time",
-                IsChecked = !_dateOnly
+                Margin = new Thickness(_controlMargin.Left, _controlMargin.Top + 4, _controlMargin.Right, _controlMargin.Bottom),
+                Content = "Include time"
             };
 
-            _control = new DateTimePicker
+            ucIncludeTime.Checked += (o, args) => OnValueChanged();
+            ucIncludeTime.Unchecked += (o, args) => OnValueChanged();
+
+            var modelBinding = new Binding(nameof(_model.IncludeTime))
+            {
+                Source = _model,
+                Mode = BindingMode.TwoWay
+            };
+            ucIncludeTime.SetBinding(CheckBox.IsCheckedProperty, modelBinding);
+
+            return ucIncludeTime;
+        }
+
+        private Control BuildDateTimeControl(string oldValue)
+        {
+            var control = new DateTimePicker
             {
                 MinWidth = _controlWidth,
                 Margin = _controlMargin,
@@ -41,19 +65,29 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
                 Text = oldValue
             };
 
-            _control.ValueChanged += (o, args) => OnValueChanged();
-            _control.LostFocus += (o, args) => OnValueChanged();
+            control.ValueChanged += (o, args) => OnValueChanged();
+            control.LostFocus += (o, args) => OnValueChanged();
 
-            return new Control[]
+            var modelBinding = new Binding(nameof(_model.Date))
             {
-                ucIncludeTime,
-                _control
+                Source = _model,
+                Mode = BindingMode.TwoWay
             };
+            control.SetBinding(DateTimePicker.TextProperty, modelBinding);
+
+            return control;
         }
 
         public override string GetValue()
         {
-            return _control.Text ?? String.Empty;
+            return _model.Date ?? String.Empty;
+        }
+
+        protected override void UpdateFilter(Filter filter)
+        {
+            base.UpdateFilter(filter);
+
+            filter.ValueAttributes.Add("IncludeTimeValue", _model.IncludeTime.ToString());
         }
     }
 }
