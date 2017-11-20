@@ -209,5 +209,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
                 }
             }
         }
+
+        public Task<List<KeyValuePair<string, string>>> GetLookupItems(FieldLookup lookup)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

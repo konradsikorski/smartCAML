@@ -5,6 +5,8 @@ using System.Windows.Controls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Model;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
+using System.Threading.Tasks;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 {
@@ -12,6 +14,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
     {
         private ComboBox _ucLookupAs;
         private bool LookupAsId => _ucLookupAs.SelectedIndex == 0;
+        private bool DataLoaded { get; set; }
 
         public LookupQueryFilterController(Field field, FilterOperator? filterOperator) : base(field, filterOperator)
         {
@@ -21,6 +24,15 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
         {
             var controls = base.InitializeControls(oldValue);
 
+            return new[]
+            {
+                BuildLookupIdSwitch()
+            }
+            .Concat(controls);
+        }
+
+        private Control BuildLookupIdSwitch()
+        {
             _ucLookupAs = new ComboBox
             {
                 MinWidth = _controlWidth,
@@ -32,10 +44,37 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 
             _ucLookupAs.SelectionChanged += (o, args) => OnValueChanged();
 
-            return new[]
+            return _ucLookupAs;
+        }
+
+        protected override async void Value_DropDownOpened(object sender, EventArgs e)
+        {
+            base.Value_DropDownOpened(sender, e);
+
+            if (!DataLoaded)
             {
-                _ucLookupAs
-            }.Concat(controls);
+                DataLoaded = true;
+                StatusNotification.NotifyWithProgress("Loading list items");
+
+                var items =  await GetListItems();
+                _control.DisplayMemberPath = "Value";
+                _control.SelectedValuePath = "Key";
+                _control.ItemsSource = items;
+
+                StatusNotification.Notify("List items loaded");
+            }
+        }
+
+        public override string GetValue()
+        {
+            return !LookupAsId || String.IsNullOrEmpty(_control.SelectedValue?.ToString())
+                ? _control.Text ?? String.Empty
+                : _control.SelectedValue?.ToString();
+        }
+
+        protected async Task<List<KeyValuePair<string,string>>> GetListItems()
+        {
+            return await Field.List.Web.Client.GetLookupItems((FieldLookup)Field);
         }
 
         protected override void UpdateFilter(Filter filter)

@@ -2,6 +2,10 @@
 
 ### v. 1.8.6
 ##### Update
++ Lookup field dropdown in designer now load items
+
+### v. 1.8.6
+##### Update
 + 'Inlude time' option available in caml designer for DateTime fields
 + Change the description for API section in Connect window
 + Read order by settings from xml to designer

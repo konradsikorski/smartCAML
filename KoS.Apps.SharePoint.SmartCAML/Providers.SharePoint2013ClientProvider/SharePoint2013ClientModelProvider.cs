@@ -107,6 +107,40 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             }
         }
 
+        public async Task<List<KeyValuePair<string, string>>> GetLookupItems(Model.FieldLookup lookup)
+        {
+            if (!lookup.List.Web.Id.Equals(lookup.LookupWebId)) throw new NotImplementedException();
+
+            using (var context = CreateContext(lookup.List.Web.Url))
+            {
+                var caml = $@"
+                    <Query>
+                        <Where />
+                        <OrderBy>
+                            <FieldRef Name=""{lookup.LookupField}"" Ascending=""True"" />
+                        </OrderBy>
+                    </Query>";
+
+                var list = context.Web.Lists.GetByTitle(lookup.LookupList);
+                var items = list.GetItems(CamlQuery.CreateAllItemsQuery());
+
+                context.Load(items, elements => elements.Include(
+                    i => i.Id,
+                    i => i[lookup.LookupField]
+                    ));
+
+                await Task.Factory.StartNew(() => context.ExecuteQuery());
+
+                return items.Cast<ListItem>()
+                    .Select( i => new KeyValuePair<string, string>(
+                        i.Id.ToString(), 
+                        i[lookup.LookupField] != null ? i[lookup.LookupField].ToString() : string.Empty
+                        )
+                    )
+                    .ToList();
+            }
+        }
+
         #region Get Items
 
         public async Task<List<Model.ListItem>> ExecuteQuery(Model.ListQuery query)
@@ -276,11 +310,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     break;
 
                 case FieldType.Lookup:
-                    field = new Model.FieldLookup { AllowMultivalue = ((Client.FieldLookup)listField).AllowMultipleValues };
+                    field = new Model.FieldLookup {
+                        AllowMultivalue = ((Client.FieldLookup)listField).AllowMultipleValues,
+                        LookupField = ((Client.FieldLookup)listField).LookupField,
+                        LookupList = ((Client.FieldLookup)listField).LookupList,
+                        LookupWebId = ((Client.FieldLookup)listField).LookupWebId
+                    };
                     break;
 
                 case FieldType.User:
-                    field = new Model.FieldLookup { AllowMultivalue = ((Client.FieldUser)listField).AllowMultipleValues };
+                    field = new Model.FieldLookup {
+                        AllowMultivalue = ((Client.FieldUser)listField).AllowMultipleValues,
+                        LookupField = ((Client.FieldLookup)listField).LookupField,
+                        LookupList = ((Client.FieldUser)listField).LookupList,
+                        LookupWebId = ((Client.FieldUser)listField).LookupWebId
+                    };
                     break;
 
                 case FieldType.Invalid:

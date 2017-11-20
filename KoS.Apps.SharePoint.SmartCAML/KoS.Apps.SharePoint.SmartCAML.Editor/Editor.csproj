@@ -190,6 +190,7 @@
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Model\ConnectionSettings.cs" />
     <Compile Include="Model\FieldType\DateTimeFieldTypeModel.cs" />
+    <Compile Include="Model\FieldType\LookupFieldTypeModel.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UserControls\ClosableTabHeader.xaml.cs">
       <DependentUpon>ClosableTabHeader.xaml</DependentUpon>

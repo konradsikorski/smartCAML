@@ -207,5 +207,26 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                 };
             });
         }
+
+        public async Task<List<KeyValuePair<string, string>>> GetLookupItems(FieldLookup lookup)
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                System.Threading.Thread.Sleep(2000);
+            });
+
+            return new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("1", "Test 1"),
+                new KeyValuePair<string, string>("4", "Test 4"),
+                new KeyValuePair<string, string>("8", "Test 8"),
+                new KeyValuePair<string, string>("3", "Test 3"),
+                new KeyValuePair<string, string>("6", "Test 6"),
+                new KeyValuePair<string, string>("7", "Test 7"),
+                new KeyValuePair<string, string>("5", "Test 5"),
+                new KeyValuePair<string, string>("2", "Test 2"),
+                new KeyValuePair<string, string>("9", "Test 9")
+            };
+        }
     }
 }
