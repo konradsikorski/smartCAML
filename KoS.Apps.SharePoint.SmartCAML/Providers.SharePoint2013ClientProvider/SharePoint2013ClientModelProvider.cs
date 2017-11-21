@@ -109,10 +109,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
         public async Task<List<KeyValuePair<string, string>>> GetLookupItems(Model.FieldLookup lookup)
         {
-            if (!lookup.List.Web.Id.Equals(lookup.LookupWebId)) throw new NotImplementedException();
-
             using (var context = CreateContext(lookup.List.Web.Url))
             {
+                var lookupField = string.IsNullOrEmpty(lookup.LookupField) ? "Title" : lookup.LookupField;
                 var caml = $@"
                     <Query>
                         <Where />
@@ -121,12 +120,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                         </OrderBy>
                     </Query>";
 
-                var list = context.Web.Lists.GetByTitle(lookup.LookupList);
+                var web = context.Site.OpenWebById(lookup.LookupWebId);
+                var list = web.Lists.GetById(Guid.Parse(lookup.LookupList));
                 var items = list.GetItems(CamlQuery.CreateAllItemsQuery());
 
                 context.Load(items, elements => elements.Include(
                     i => i.Id,
-                    i => i[lookup.LookupField]
+                    i => i[lookupField]
                     ));
 
                 await Task.Factory.StartNew(() => context.ExecuteQuery());
@@ -134,7 +134,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 return items.Cast<ListItem>()
                     .Select( i => new KeyValuePair<string, string>(
                         i.Id.ToString(), 
-                        i[lookup.LookupField] != null ? i[lookup.LookupField].ToString() : string.Empty
+                        i[lookupField] != null ? i[lookupField].ToString() : string.Empty
                         )
                     )
                     .ToList();
@@ -254,10 +254,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 switch (listField.FieldTypeKind)
                 {
                     case FieldType.Lookup:
-                        context.Load((Client.FieldLookup)listField, f => f.AllowMultipleValues);
+                        context.Load((Client.FieldLookup)listField,
+                            f => f.AllowMultipleValues,
+                            f => f.LookupField,
+                            f => f.LookupList,
+                            f => f.LookupWebId
+                            );
                         break;
                     case FieldType.User:
-                        context.Load((Client.FieldUser)listField, f => f.AllowMultipleValues);
+                        context.Load((Client.FieldUser)listField,
+                            f => f.AllowMultipleValues,
+                            f => f.LookupField,
+                            f => f.LookupList,
+                            f => f.LookupWebId
+                            );
                         break;
                     case FieldType.Choice:
                         context.Load((Client.FieldChoice)listField, f => f.Choices);

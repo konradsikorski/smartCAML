@@ -3,6 +3,7 @@
 ### v. 1.8.6
 ##### Update
 + Lookup field dropdown in designer now load items
++ User field dropdown in designer now load items
 
 ### v. 1.8.6
 ##### Update

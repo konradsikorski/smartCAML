@@ -54,14 +54,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
             if (!DataLoaded)
             {
                 DataLoaded = true;
-                StatusNotification.NotifyWithProgress("Loading list items");
 
-                var items =  await GetListItems();
-                _control.DisplayMemberPath = "Value";
-                _control.SelectedValuePath = "Key";
-                _control.ItemsSource = items;
-
-                StatusNotification.Notify("List items loaded");
+                try
+                {
+                    StatusNotification.NotifyWithProgress("Loading list items");
+                    var items =  await GetListItems();
+                    _control.DisplayMemberPath = "Value";
+                    _control.SelectedValuePath = "Key";
+                    _control.ItemsSource = _control.ItemsSource.Cast<KeyValuePair<string, string>>().Concat(items);
+                    StatusNotification.Notify("List items loaded");
+                }
+                catch(Exception ex)
+                {
+                    ExceptionHandler.Handle(ex);
+                    StatusNotification.Notify("Loading list items failed");
+                }
             }
         }
 
