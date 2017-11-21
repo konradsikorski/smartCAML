@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using KoS.Apps.SharePoint.SmartCAML.Editor.Core.Commands;
+using System.Windows.Input;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 {
@@ -19,6 +20,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
         public static RoutedUICommand PinColumn = new RoutedUICommand();
         public static RoutedUICommand UnpinColumn = new RoutedUICommand();
         public static RoutedUICommand CustomizeColumn = new RoutedUICommand();
+        public static DonateCommand Donate = new DonateCommand();
 
         static MyCommands()
         {

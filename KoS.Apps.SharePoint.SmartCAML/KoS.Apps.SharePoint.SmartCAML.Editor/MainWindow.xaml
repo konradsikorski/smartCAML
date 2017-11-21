@@ -99,6 +99,11 @@
                     <Image Source="/SmartCAML;component/Resources/Images/help.png" />
                 </Button>
             </ToolBar>
+            <ToolBar>
+                <Button Command="utils:MyCommands.Donate" ToolTip="Support author" Padding="2,0" BorderThickness="0" >
+                    <Image Source="/Resources/Images/donateButton.png" Height="18" />
+                </Button>
+            </ToolBar>
         </ToolBarTray>
         <StatusBar x:Name="ucStatusBar"
                    Height="22"

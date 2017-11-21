@@ -174,6 +174,7 @@
     <Compile Include="Builder\QueryOrderBy.cs" />
     <Compile Include="Controls\ClosableTabItem.cs" />
     <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Core\Commands\DonateCommand.cs" />
     <Compile Include="Core\Interfaces\IDisplayField.cs" />
     <Compile Include="Core\Interfaces\IOrderListElement.cs" />
     <Compile Include="Core\OrderedList.cs" />
@@ -359,6 +360,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\Images\donateButton.png" />
     <None Include="smartCaml-2017.pfx" />
     <Resource Include="Resources\smartCaml.ico" />
     <Resource Include="Resources\Images\gear.png" />
