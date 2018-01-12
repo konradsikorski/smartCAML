@@ -206,6 +206,13 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
+# Windows Store app package directories and files
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+*.appx
+
 # LightSwitch generated files
 GeneratedArtifacts/
 _Pvt_Extensions/
