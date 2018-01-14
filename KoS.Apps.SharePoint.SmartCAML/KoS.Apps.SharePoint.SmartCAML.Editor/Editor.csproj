@@ -197,6 +197,12 @@
       <DependentUpon>ClosableTabHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="UserControls\ConnectWindow.xaml.cs">
+      <DependentUpon>ConnectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ConnectWindowPopup.xaml.cs">
+      <DependentUpon>ConnectWindowPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\OrderByBuilderControl.xaml.cs">
       <DependentUpon>OrderByBuilderControl.xaml</DependentUpon>
     </Compile>
@@ -231,6 +237,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\ClosableTabHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ConnectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ConnectWindowPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
