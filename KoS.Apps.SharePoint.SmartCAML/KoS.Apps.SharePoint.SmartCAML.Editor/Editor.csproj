@@ -288,10 +288,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\ConnectWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -331,9 +327,6 @@
     <Compile Include="Controls\QueryTabControl.cs" />
     <Compile Include="UserControls\WebsTreeControl.cs">
       <DependentUpon>WebsTreeControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\ConnectWindow.xaml.cs">
-      <DependentUpon>ConnectWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -19,11 +19,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Style/DialogStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="StyleWatermarkLabel">
-                <Setter Property="TextBlock.Foreground" Value="{x:Static SystemColors.ControlDarkBrush}" />
-                <Setter Property="FrameworkElement.Opacity" Value="0.8" />
-                <Setter Property="TextBlock.FontSize" Value="12" />
-                <Setter Property="TextBlock.Margin" Value="6,4,4,4" />
+            <Style x:Key="PlaceholderText" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{x:Static SystemColors.ControlDarkBrush}" />
+                <Setter Property="Margin" Value="4,2,0,0" />
+                <Setter Property="IsHitTestVisible" Value="False" />
             </Style>
 
             <bindingConverters:RadioButtonCheckedConverter x:Key="EnumConverter" />
@@ -60,22 +59,38 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <StackPanel Margin="14,8,14,14">
-                <TextBlock Style="{DynamicResource Label}">SharePoint Site Url:</TextBlock>
-                <ComboBox IsEditable="True"
-                      ItemsSource="{Binding SharePointWebUrlHistory}"
-                      Text="{Binding SharePointWebUrl}" />
-
-                <Grid Margin="0,2,0,0" Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource InvertBooleanToVisibilityConverter}}">
-                    <TextBlock Foreground="#FF6E6E6E" Text="{Binding Path=ProviderType, Converter={StaticResource EnumDescriptionConverter}, Mode=OneWay}" />
-                    <Button HorizontalAlignment="Right"
-                        Click="AdvanceOptionsButton_Click"
-                        Style="{StaticResource LinkButton}">
-                        Advanced options
-                    </Button>
+                <TextBlock Style="{DynamicResource Label}">SharePoint:</TextBlock>
+                <Grid>
+                    <ComboBox 
+                        x:Name="ucSharePointUrl"
+                        IsEditable="True"
+                        ItemsSource="{Binding SharePointWebUrlHistory}"
+                        Text="{Binding SharePointWebUrl}" />
+                    <TextBlock Text="Site url (http://...)" Margin="4,2,0,0" IsHitTestVisible="False" Foreground="{x:Static SystemColors.ControlDarkBrush}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ucSharePointUrl,Path=Text}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </Grid>
+                <ComboBox 
+                        Margin="0,4,0,0"
+                        IsEditable="False"
+                        ItemsSource="{Binding SharePointProviders}"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding Path=ProviderType}"
+                        />
 
                 <StackPanel Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <TextBlock Margin="0,8,0,0" Style="{DynamicResource Label}">SharePoint:</TextBlock>
+                    
+                    <!--<TextBlock Margin="0,8,0,0" Style="{DynamicResource Label}">SharePoint:</TextBlock>
                     <RadioButton Margin="8,0,0,0"
                              GroupName="SharePoint"
                              IsChecked="{Binding ProviderType,
@@ -98,30 +113,19 @@
                                                  ConverterParameter={x:Static provider:SharePointProviderType.Fake}}"
                              Visibility="Collapsed">
                         Fake
-                    </RadioButton>
-
+                    </RadioButton>-->
+                </StackPanel>
+                <StackPanel>
                     <TextBlock Margin="0,8,0,0" Style="{DynamicResource Label}">Account:</TextBlock>
-                    <RadioButton Margin="8,0,0,0"
-                             GroupName="Account"
-                             IsChecked="{Binding UseCurrentUser}">
-                        Current User
-                    </RadioButton>
-                    <RadioButton Margin="8,0,0,0"
-                             GroupName="Account"
-                             IsChecked="{Binding UseSpecificUser,
-                                                 Mode=OneTime}">
-                        Specific User
-                    </RadioButton>
 
-                    <Grid Margin="24,4,0,0" 
-                          Visibility="{Binding Path=UseCurrentUser, Converter={StaticResource InvertBooleanToVisibilityConverter}}">
+                    <Grid Margin="0,4,0,0">
                         <ComboBox 
                               x:Name="ucLogin"
-                          IsEditable="True"
-                          ItemsSource="{Binding UsersHistory}"
-                          Text="{Binding UserName}"
+                              IsEditable="True"
+                              ItemsSource="{Binding UsersHistory}"
+                              Text="{Binding UserName}"
                            />
-                        <TextBlock Margin="4,2,0,0" Text="Login" IsHitTestVisible="False" Foreground="gray">
+                        <TextBlock Text="Login" Margin="4,2,0,0" IsHitTestVisible="False" Foreground="{x:Static SystemColors.ControlDarkBrush}">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Hidden"/>
@@ -135,30 +139,17 @@
                         </TextBlock>
                     </Grid>
 
-
-                    <Grid Margin="24,4,0,0" 
-                          Visibility="{Binding Path=UseCurrentUser, Converter={StaticResource InvertBooleanToVisibilityConverter}}">
+                    <Grid Margin="0,4,0,0">
                         <PasswordBox 
-                            
                             x:Name="ucPassword"
-                             ap:PasswordBoxAssistant.BindPassword="true"
-                             ap:PasswordBoxAssistant.BoundPassword="{Binding UserPassword, UpdateSourceTrigger=PropertyChanged}"
-                             ap:PasswordBoxAssistant.BindPlaceholder="{Binding ElementName=ucPasswordPlaceholder}"
-                             
-                             Padding="0,2"
-                             PasswordChanged="PasswordBox_OnPasswordChanged"
+                            ap:PasswordBoxAssistant.BindPassword="true"
+                            ap:PasswordBoxAssistant.BoundPassword="{Binding UserPassword, UpdateSourceTrigger=PropertyChanged}"
+                            ap:PasswordBoxAssistant.BindPlaceholder="{Binding ElementName=ucPasswordPlaceholder}"
+                            Padding="0,2"
+                            PasswordChanged="PasswordBox_OnPasswordChanged"
                         />
-                        <TextBlock x:Name="ucPasswordPlaceholder" Margin="4,2,0,0" Text="Password" IsHitTestVisible="False" Foreground="gray">
-                        </TextBlock>
+                        <TextBlock x:Name="ucPasswordPlaceholder" Text="Password" Style="{StaticResource PlaceholderText}" />
                     </Grid>
-
-                    <Button HorizontalAlignment="Right"
-                        Click="HideAdvanceOptionsButton_Click"
-                        Style="{StaticResource LinkButton}"
-                        Visibility="{Binding ShowAdvanceOptions,
-                                             Converter={StaticResource BooleanToVisibilityConverter}}">
-                        Hide advanced options
-                    </Button>
                 </StackPanel>
             </StackPanel>
 

@@ -24,10 +24,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
             Telemetry.Instance.Native.TrackPageView("Connect");
             InitializeComponent();
 
-#if DEBUG
-            ucApiFake.Visibility = Visibility.Visible;
-#endif
-
             this.Width = Config.ConnectWindowWidth;
             this.DataContext = new ConnectWindowModel();
         }
@@ -37,7 +33,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
             Telemetry.Instance.Native.TrackEvent("Connect.OK", new Dictionary<string, string>
             {
                 {"ProviderType", Model.ProviderType.ToString() },
-                {"UseCurrentUser", Model.UseCurrentUser.ToString() }
             });
 
             var client = SharePointProviderFactory.Create(Model.ProviderType);
@@ -47,10 +42,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
                 Model.IsConnecting = true;
                 StatusNotification.NotifyWithProgress("Connecting...");
 
-                var userName = !Model.UseCurrentUser ? Model.UserName : null;
-                var userPassword = !Model.UseCurrentUser ? Model.UserPassword : null;
-
-                if (await client.Connect(Model.SharePointWebUrl, userName, userPassword) != null)
+                if (await client.Connect(Model.SharePointWebUrl, Model.UserName, Model.UserPassword) != null)
                 {
                     Client = client;
                     Model.AddNewUrl(Model.SharePointWebUrl);

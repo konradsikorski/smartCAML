@@ -33,12 +33,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.AttachedProperties
                 new PropertyMetadata(false)
             );
 
-        public static string GetBindPlaceholder(DependencyObject dp)
+        public static UIElement GetBindPlaceholder(DependencyObject dp)
         {
-            return (string)dp.GetValue(BindPlaceholder);
+            return (UIElement)dp.GetValue(BindPlaceholder);
         }
 
-        public static void SetBindPlaceholder(DependencyObject dp, string value)
+        public static void SetBindPlaceholder(DependencyObject dp, UIElement value)
         {
             dp.SetValue(BindPlaceholder, value);
         }
@@ -72,7 +72,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.AttachedProperties
 
         private static void ShowHidePlaceholder(PasswordBox box)
         {
-            var placeholder = GetBoundPlaceholder(box);
+            var placeholder = GetBindPlaceholder(box);
 
             if (box.Visibility == Visibility.Visible && box.Password == string.Empty)
                 placeholder.Visibility = Visibility.Visible;
