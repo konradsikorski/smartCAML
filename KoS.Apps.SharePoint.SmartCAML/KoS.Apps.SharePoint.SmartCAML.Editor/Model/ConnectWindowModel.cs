@@ -27,7 +27,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
             SharePointWebUrlHistory = new ObservableCollection<string>( Config.SharePointUrlHistory );
             if( SharePointWebUrlHistory.Count > 0 ) SharePointWebUrl = SharePointWebUrlHistory[0];
             UserName = Config.LastUser;
-            UsersHistory = new ObservableCollection<string>(Config.UsersHistory);
+            UsersHistory = new ObservableCollection<string>(Config.UsersHistory?.Where( u => !String.IsNullOrEmpty(u)));
 
             if (UsersHistory.Count > 0)
             {
@@ -119,16 +119,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
 
         public void AddNewUrl(string url)
         {
+            if (string.IsNullOrEmpty(url)) return;
+
             var index = SharePointWebUrlHistory.IndexOf(url);
             if (index >= 0) SharePointWebUrlHistory.RemoveAt(index);
             SharePointWebUrlHistory.Insert(0, url);
         }
 
-        public void AddUserToHistory()
+        public void AddUserToHistory(string userName)
         {
-            var index = UsersHistory.IndexOf(UserName);
+            if (string.IsNullOrEmpty(userName)) return;
+
+            var index = UsersHistory.IndexOf(userName);
             if (index >= 0) UsersHistory.RemoveAt(index);
-            UsersHistory.Insert(0, UserName);
+            UsersHistory.Insert(0, userName);
         }
 
         private SecureString SecureStringFromString(string text)

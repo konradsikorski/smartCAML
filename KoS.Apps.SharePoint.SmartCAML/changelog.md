@@ -1,5 +1,12 @@
 ## Changelog
 
+### v. 1.9
+##### New
++ Lookup and User fields now loads available options to dropdown
+##### Update
++ Connect window is now as popup not a dialog
++ Redesign connect window
+
 ### v. 1.8.6
 ##### Update
 + Lookup field dropdown in designer now load items

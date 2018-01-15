@@ -46,7 +46,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
                 {
                     Client = client;
                     Model.AddNewUrl(Model.SharePointWebUrl);
-                    Model.AddUserToHistory();
+                    Model.AddUserToHistory(Model.UserName);
                     Model.Save();
 
                     DialogResult(this, client);
