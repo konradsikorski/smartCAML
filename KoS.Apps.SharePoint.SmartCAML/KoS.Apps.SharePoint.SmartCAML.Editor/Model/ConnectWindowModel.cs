@@ -96,6 +96,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
                 if (_isConnecting == value) return;
                 _isConnecting = value;
                 OnPropertyChanged();
+
+                if(_isConnecting) ErrorMessage = null;
+            }
+        }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                if (_errorMessage == value) return;
+                _errorMessage = value;
+                OnPropertyChanged();
             }
         }
 

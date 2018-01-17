@@ -9,60 +9,50 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
     {
         public static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
 
-        public static void HandleConnection(Exception ex)
+        public static string HandleConnection(Exception ex)
         {
             Telemetry.Instance.Native.TrackException(ex);
-            if (ex is FileNotFoundException) HandleConnection((FileNotFoundException)ex);
-            else if (ex is WebException) HandleConnection((WebException)ex);
-            else
-            {
-                Log.Error(ex);
-                StatusNotification.Notify("Connection failed");
-                MessageBox.Show(ex.Message, "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
-
-        private static void HandleConnection(FileNotFoundException ex)
-        {
             Log.Error(ex);
             StatusNotification.Notify("Connection failed");
 
+            if (ex is FileNotFoundException) return HandleConnection((FileNotFoundException)ex);
+            else if (ex is WebException) return HandleConnection((WebException)ex);
+            else return ex.Message;
+        }
+
+        private static string HandleConnection(FileNotFoundException ex)
+        {
             if (ex.Message.Contains("Microsoft.SharePoint"))
-                MessageBox.Show("Could not load file or assembly 'Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c'.\n\n" +
-                    "Make shure you are running application on SharePoint sever or change the connection type to 'Client' in 'advance settings'.", "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+               return
+                    "Could not load file or assembly 'Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c'.\n\n" +
+                    "Make shure you are running application on SharePoint sever or change the connection type to 'Client' in 'advance settings'.";
             else
-                MessageBox.Show(ex.Message, "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                return ex.Message;
         }
 
-        private static void HandleConnection(WebException ex)
+        private static string HandleConnection(WebException ex)
         {
-            Log.Error(ex);
-            StatusNotification.Notify("Connection failed");
-
             if (ex.Status == WebExceptionStatus.NameResolutionFailure)
             {
-                MessageBox.Show("Could not find the server. Please check the URL.", "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                return "Could not find the server. Please check the URL.";
             }
-            else if ( ex.Response is HttpWebResponse)
+            else if (ex.Response is HttpWebResponse)
             {
                 var response = (HttpWebResponse)ex.Response;
 
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.BadGateway:
-                        MessageBox.Show("Could not find the server. Please check the URL.", "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
-                        break;
+                        return "Could not find the server. Please check the URL.";
                     case HttpStatusCode.Unauthorized:
                     case HttpStatusCode.Forbidden:
-                        MessageBox.Show("You are not authorized to open this site", "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
-                        break;
+                        return "You are not authorized to open this site";
                     default:
-                        MessageBox.Show(ex.Message, "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
-                        break;
+                        return ex.Message;
                 }
             }
             else
-                MessageBox.Show(ex.ToString(), "Connection failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                return ex.Message;
         }
 
         public static void Handle(Exception ex, string message = null)

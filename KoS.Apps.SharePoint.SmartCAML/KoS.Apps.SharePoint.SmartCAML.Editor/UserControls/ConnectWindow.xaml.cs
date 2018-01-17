@@ -55,7 +55,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleConnection(ex);
+                Model.ErrorMessage = "Error: " + ExceptionHandler.HandleConnection(ex);
             }
 
             Model.IsConnecting = false;

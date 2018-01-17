@@ -27,6 +27,7 @@
 
             <bindingConverters:RadioButtonCheckedConverter x:Key="EnumConverter" />
             <bindingConverters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+            <bindingConverters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
             <bindingConverters:BoolToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter"
                                                          False="Visible"
                                                          True="Collapsed" />
@@ -79,6 +80,7 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </Grid>
+                
                 <ComboBox 
                         Margin="0,4,0,0"
                         IsEditable="False"
@@ -88,33 +90,6 @@
                         SelectedValue="{Binding Path=ProviderType}"
                         />
 
-                <StackPanel Visibility="{Binding ShowAdvanceOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    
-                    <!--<TextBlock Margin="0,8,0,0" Style="{DynamicResource Label}">SharePoint:</TextBlock>
-                    <RadioButton Margin="8,0,0,0"
-                             GroupName="SharePoint"
-                             IsChecked="{Binding ProviderType,
-                                                 Converter={StaticResource EnumConverter},
-                                                 ConverterParameter={x:Static provider:SharePointProviderType.SharePoint2013ClientModel}}">
-                        On-premises (2010+)
-                    </RadioButton>
-                    <RadioButton Margin="8,0,0,0"
-                             GroupName="API"
-                             IsChecked="{Binding ProviderType,
-                                                 Converter={StaticResource EnumConverter},
-                                                 ConverterParameter={x:Static provider:SharePointProviderType.SharePointOnline}}">
-                        Online
-                    </RadioButton>
-                    <RadioButton x:Name="ucApiFake"
-                             Margin="8,0,0,0"
-                             GroupName="API"
-                             IsChecked="{Binding ProviderType,
-                                                 Converter={StaticResource EnumConverter},
-                                                 ConverterParameter={x:Static provider:SharePointProviderType.Fake}}"
-                             Visibility="Collapsed">
-                        Fake
-                    </RadioButton>-->
-                </StackPanel>
                 <StackPanel>
                     <TextBlock Margin="0,8,0,0" Style="{DynamicResource Label}">Account:</TextBlock>
 
@@ -150,6 +125,13 @@
                         />
                         <TextBlock x:Name="ucPasswordPlaceholder" Text="Password" Style="{StaticResource PlaceholderText}" />
                     </Grid>
+                    
+                    <TextBlock Margin="0,8,0,0"
+                               Foreground="#FFE00D0D"
+                               TextWrapping="Wrap"
+                               Text="{Binding ErrorMessage}"
+                               Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"
+                               />
                 </StackPanel>
             </StackPanel>
 
