@@ -51,7 +51,7 @@
                 <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
             <TextBlock FontSize="14" FontWeight="Bold" Foreground="#FF3E71CB" Margin="6,0,0,0">Connect to SharePoint</TextBlock>
-            <Button Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold" Click="ucCancelButton_Click">X</Button>
+            <Button Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Click="ucCancelButton_Click" FontSize="10">✖</Button>
         </Grid>
 
         <Grid Grid.Row="1">
