@@ -107,6 +107,40 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             }
         }
 
+        public async Task<List<KeyValuePair<string, string>>> GetLookupItems(Model.FieldLookup lookup)
+        {
+            using (var context = CreateContext(lookup.List.Web.Url))
+            {
+                var lookupField = string.IsNullOrEmpty(lookup.LookupField) ? "Title" : lookup.LookupField;
+                var caml = $@"
+                    <Query>
+                        <Where />
+                        <OrderBy>
+                            <FieldRef Name=""{lookup.LookupField}"" Ascending=""True"" />
+                        </OrderBy>
+                    </Query>";
+
+                var web = context.Site.OpenWebById(lookup.LookupWebId);
+                var list = web.Lists.GetById(Guid.Parse(lookup.LookupList));
+                var items = list.GetItems(CamlQuery.CreateAllItemsQuery());
+
+                context.Load(items, elements => elements.Include(
+                    i => i.Id,
+                    i => i[lookupField]
+                    ));
+
+                await Task.Factory.StartNew(() => context.ExecuteQuery());
+
+                return items.Cast<ListItem>()
+                    .Select( i => new KeyValuePair<string, string>(
+                        i.Id.ToString(), 
+                        i[lookupField] != null ? i[lookupField].ToString() : string.Empty
+                        )
+                    )
+                    .ToList();
+            }
+        }
+
         #region Get Items
 
         public async Task<List<Model.ListItem>> ExecuteQuery(Model.ListQuery query)
@@ -220,10 +254,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 switch (listField.FieldTypeKind)
                 {
                     case FieldType.Lookup:
-                        context.Load((Client.FieldLookup)listField, f => f.AllowMultipleValues);
+                        context.Load((Client.FieldLookup)listField,
+                            f => f.AllowMultipleValues,
+                            f => f.LookupField,
+                            f => f.LookupList,
+                            f => f.LookupWebId
+                            );
                         break;
                     case FieldType.User:
-                        context.Load((Client.FieldUser)listField, f => f.AllowMultipleValues);
+                        context.Load((Client.FieldUser)listField,
+                            f => f.AllowMultipleValues,
+                            f => f.LookupField,
+                            f => f.LookupList,
+                            f => f.LookupWebId
+                            );
                         break;
                     case FieldType.Choice:
                         context.Load((Client.FieldChoice)listField, f => f.Choices);
@@ -276,11 +320,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     break;
 
                 case FieldType.Lookup:
-                    field = new Model.FieldLookup { AllowMultivalue = ((Client.FieldLookup)listField).AllowMultipleValues };
+                    field = new Model.FieldLookup {
+                        AllowMultivalue = ((Client.FieldLookup)listField).AllowMultipleValues,
+                        LookupField = ((Client.FieldLookup)listField).LookupField,
+                        LookupList = ((Client.FieldLookup)listField).LookupList,
+                        LookupWebId = ((Client.FieldLookup)listField).LookupWebId
+                    };
                     break;
 
                 case FieldType.User:
-                    field = new Model.FieldLookup { AllowMultivalue = ((Client.FieldUser)listField).AllowMultipleValues };
+                    field = new Model.FieldLookup {
+                        AllowMultivalue = ((Client.FieldUser)listField).AllowMultipleValues,
+                        LookupField = ((Client.FieldLookup)listField).LookupField,
+                        LookupList = ((Client.FieldUser)listField).LookupList,
+                        LookupWebId = ((Client.FieldUser)listField).LookupWebId
+                    };
                     break;
 
                 case FieldType.Invalid:

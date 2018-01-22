@@ -26,8 +26,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 
             _control.SelectionChanged += (o, args) => OnValueChanged();
             _control.LostFocus += (o, args) => OnValueChanged();
+            _control.DropDownOpened += Value_DropDownOpened;
 
             return new[] {_control};
+        }
+
+        protected virtual async void Value_DropDownOpened(object sender, EventArgs e)
+        {
         }
 
         public override string GetValue()

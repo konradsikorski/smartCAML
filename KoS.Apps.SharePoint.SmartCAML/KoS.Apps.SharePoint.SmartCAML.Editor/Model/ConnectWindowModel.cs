@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +8,9 @@ using System.Runtime.InteropServices;
 using System.Security;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Annotations;
 using KoS.Apps.SharePoint.SmartCAML.SharePointProvider;
+using System.Collections.Generic;
+
+using KoS.Apps.SharePoint.SmartCAML.Editor.Extensions;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
 {
@@ -15,7 +19,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         private string _sharePoinWebtUrl;
         private bool _showAdvanceOptions;
         private SharePointProviderType _providerType;
-        private bool _useCurrentUser;
         private bool _isConnecting;
         private static SecureString _lastPassword;
 
@@ -23,16 +26,22 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         {
             SharePointWebUrlHistory = new ObservableCollection<string>( Config.SharePointUrlHistory );
             if( SharePointWebUrlHistory.Count > 0 ) SharePointWebUrl = SharePointWebUrlHistory[0];
-            ProviderType = Config.LastSelectedProvider;
             UserName = Config.LastUser;
-            UsersHistory = new ObservableCollection<string>(Config.UsersHistory);
-            UseCurrentUser = Config.UseCurrentUser;
+            UsersHistory = new ObservableCollection<string>(Config.UsersHistory?.Where( u => !String.IsNullOrEmpty(u)));
 
-            if (!UseCurrentUser && UsersHistory.Count > 0)
+            if (UsersHistory.Count > 0)
             {
                 UserName = UsersHistory[0];
                 UserPassword = SecureStringToString(_lastPassword);
             }
+
+            ProviderType = Config.LastSelectedProvider;
+            SharePointProviders = EnumExtension.ToDictionary<SharePointProviderType>();
+#if !DEBUG
+            SharePointProviders = SharePointProviders.Where( p => p.Key != SharePointProviderType.Fake).ToList();
+#endif
+            if (SharePointProviders.All(p => p.Key != ProviderType))
+                ProviderType = SharePointProviders.First().Key;
         }
 
         [Required]
@@ -48,6 +57,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         }
 
         public ObservableCollection<string> SharePointWebUrlHistory { get; set; }
+
+        public List<KeyValuePair<SharePointProviderType, string>> SharePointProviders { get; set; }
 
         public bool ShowAdvanceOptions
         {
@@ -77,28 +88,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
 
         public ObservableCollection<string> UsersHistory { get; set; }
 
-        public bool UseCurrentUser
-        {
-            get { return _useCurrentUser; }
-            set
-            {
-                if (value == _useCurrentUser) return;
-                _useCurrentUser = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool UseSpecificUser
-        {
-            get { return !UseCurrentUser; }
-            set
-            {
-                if (UseCurrentUser != !value) return;
-                UseCurrentUser = !value;
-                OnPropertyChanged();
-            }
-        }
-
         public bool IsConnecting
         {
             get { return _isConnecting; }
@@ -106,6 +95,20 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
             {
                 if (_isConnecting == value) return;
                 _isConnecting = value;
+                OnPropertyChanged();
+
+                if(_isConnecting) ErrorMessage = null;
+            }
+        }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                if (_errorMessage == value) return;
+                _errorMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -122,26 +125,28 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
 
         public void Save()
         {
-            Config.UseCurrentUser = UseCurrentUser;
             Config.LastSelectedProvider = ProviderType;
             Config.SharePointUrlHistory = SharePointWebUrlHistory;
-            Config.UseCurrentUser = UseCurrentUser;
             Config.UsersHistory = UsersHistory;
             _lastPassword = SecureStringFromString(UserPassword);
         }
 
         public void AddNewUrl(string url)
         {
+            if (string.IsNullOrEmpty(url)) return;
+
             var index = SharePointWebUrlHistory.IndexOf(url);
             if (index >= 0) SharePointWebUrlHistory.RemoveAt(index);
             SharePointWebUrlHistory.Insert(0, url);
         }
 
-        public void AddUserToHistory()
+        public void AddUserToHistory(string userName)
         {
-            var index = UsersHistory.IndexOf(UserName);
+            if (string.IsNullOrEmpty(userName)) return;
+
+            var index = UsersHistory.IndexOf(userName);
             if (index >= 0) UsersHistory.RemoveAt(index);
-            UsersHistory.Insert(0, UserName);
+            UsersHistory.Insert(0, userName);
         }
 
         private SecureString SecureStringFromString(string text)

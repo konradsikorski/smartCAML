@@ -14,5 +14,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
         Task FillListFields(SList list);
         Task SaveItem(ListItem item);
         Task FillContentTypes(SList list, bool fillAlsoWeb = true);
+        Task<List<KeyValuePair<string, string>>> GetLookupItems(FieldLookup lookup);
     }
 }

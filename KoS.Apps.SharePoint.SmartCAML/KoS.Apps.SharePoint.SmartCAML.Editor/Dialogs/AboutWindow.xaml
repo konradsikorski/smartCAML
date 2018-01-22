@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:utils="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Utils"
         Title="About  - SmartCAML"
         Width="320"
         Height="260"
@@ -100,8 +101,8 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Margin="0,10,0,0"
-                    Click="DonateButton_OnClick"
-                    Style="{StaticResource ImageButton}">
+                    Style="{StaticResource ImageButton}"
+                    Command="utils:MyCommands.Donate">
                 <Image Height="40" Source="../Resources/Images/donate.png" />
             </Button>
         </Grid>

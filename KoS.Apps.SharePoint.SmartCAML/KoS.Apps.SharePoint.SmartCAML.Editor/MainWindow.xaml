@@ -42,92 +42,98 @@
                         Executed="AboutCommand_Executed" />
     </Window.CommandBindings>
 
-    <DockPanel>
-        <ToolBarTray DockPanel.Dock="Top">
-            <ToolBar>
-                <Button Command="utils:MyCommands.Connect" ToolTip="(Ctrl+O)">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/SmartCAML;component/Resources/Images/addConnection.png" />
-                        <TextBlock Margin="3,0,0,0">Connect</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button Command="utils:MyCommands.NewQuery" ToolTip="(Ctrl+N)">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/SmartCAML;component/Resources/Images/newQuery.png" />
-                        <TextBlock Margin="3,0,0,0">New Query</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button Command="ApplicationCommands.Stop"
-                        Content="Browse"
-                        Visibility="Collapsed" />
-            </ToolBar>
-            <ToolBar>
-                <Button Command="utils:MyCommands.RunQuery" ToolTip="(F5)">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/SmartCAML;component/Resources/Images/runQuery.png" />
-                        <TextBlock Margin="3,0,0,0">Run Query</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button Command="utils:MyCommands.SaveItems" ToolTip="Save changed items to SharePoint (Ctrl+S)">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/SmartCAML;component/Resources/Images/saveItems.png" />
-                        <TextBlock Margin="3,0,0,0">Save Items</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Menu Background="Transparent" Visibility="Collapsed">
-                    <MenuItem Header="Filter">
-                        <MenuItem Header="Show hidden fields"
-                                  IsCheckable="True"
-                                  IsChecked="True" />
-                        <MenuItem Header="Show readonly fields"
-                                  IsCheckable="True"
-                                  IsChecked="True" />
-                    </MenuItem>
-                </Menu>
-            </ToolBar>
-            <ToolBar>
-                <xctk:DropDownButton Background="Transparent"
-                                     BorderBrush="Transparent"
-                                     BorderThickness="0"
-                                     ToolTip="Settings">
-                    <xctk:DropDownButton.DropDownContent>
-                        <userControls:QuickSettingsControl />
-                    </xctk:DropDownButton.DropDownContent>
-                    <Image Source="/SmartCAML;component/Resources/Images/gear.png" />
-                </xctk:DropDownButton>
-                <Button Command="ApplicationCommands.Help" ToolTip="About">
-                    <Image Source="/SmartCAML;component/Resources/Images/help.png" />
-                </Button>
-            </ToolBar>
-        </ToolBarTray>
-        <StatusBar x:Name="ucStatusBar"
-                   Height="22"
-                   DockPanel.Dock="Bottom">
-            <StatusBar.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="100" />
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </ItemsPanelTemplate>
-            </StatusBar.ItemsPanel>
-            <StatusBarItem>
-                <TextBlock Name="ucStatusMessage" />
-            </StatusBarItem>
-            <Separator Grid.Column="1" />
-            <StatusBarItem Grid.Column="2">
-                <ProgressBar x:Name="ucStatusProgress"
-                             Width="90"
-                             Height="16"
-                             Value="0" />
-            </StatusBarItem>
-        </StatusBar>
+    <Grid>
+        <DockPanel>
+            <ToolBarTray DockPanel.Dock="Top">
+                <ToolBar>
+                    <Button Command="utils:MyCommands.Connect" ToolTip="(Ctrl+O)">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/SmartCAML;component/Resources/Images/addConnection.png" />
+                            <TextBlock Margin="3,0,0,0">Connect</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="utils:MyCommands.NewQuery" ToolTip="(Ctrl+N)">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/SmartCAML;component/Resources/Images/newQuery.png" />
+                            <TextBlock Margin="3,0,0,0">New Query</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="ApplicationCommands.Stop"
+                            Content="Browse"
+                            Visibility="Collapsed" />
+                </ToolBar>
+                <ToolBar>
+                    <Button Command="utils:MyCommands.RunQuery" ToolTip="(F5)">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/SmartCAML;component/Resources/Images/runQuery.png" />
+                            <TextBlock Margin="3,0,0,0">Run Query</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="utils:MyCommands.SaveItems" ToolTip="Save changed items to SharePoint (Ctrl+S)">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/SmartCAML;component/Resources/Images/saveItems.png" />
+                            <TextBlock Margin="3,0,0,0">Save Items</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Menu Background="Transparent" Visibility="Collapsed">
+                        <MenuItem Header="Filter">
+                            <MenuItem Header="Show hidden fields"
+                                      IsCheckable="True"
+                                      IsChecked="True" />
+                            <MenuItem Header="Show readonly fields"
+                                      IsCheckable="True"
+                                      IsChecked="True" />
+                        </MenuItem>
+                    </Menu>
+                </ToolBar>
+                <ToolBar>
+                    <xctk:DropDownButton Background="Transparent"
+                                         BorderBrush="Transparent"
+                                         BorderThickness="0"
+                                         ToolTip="Settings">
+                        <xctk:DropDownButton.DropDownContent>
+                            <userControls:QuickSettingsControl />
+                        </xctk:DropDownButton.DropDownContent>
+                        <Image Source="/SmartCAML;component/Resources/Images/gear.png" />
+                    </xctk:DropDownButton>
+                    <Button Command="ApplicationCommands.Help" ToolTip="About">
+                        <Image Source="/SmartCAML;component/Resources/Images/help.png" />
+                    </Button>
+                </ToolBar>
+                <ToolBar>
+                    <Button Command="utils:MyCommands.Donate" ToolTip="Support author" Padding="2,0" BorderThickness="0" >
+                        <Image Source="/Resources/Images/donateButton.png" Height="18" />
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+            <StatusBar x:Name="ucStatusBar"
+                       Height="22"
+                       DockPanel.Dock="Bottom">
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
+                <StatusBarItem>
+                    <TextBlock Name="ucStatusMessage" />
+                </StatusBarItem>
+                <Separator Grid.Column="1" />
+                <StatusBarItem Grid.Column="2">
+                    <ProgressBar x:Name="ucStatusProgress"
+                                 Width="90"
+                                 Height="16"
+                                 Value="0" />
+                </StatusBarItem>
+            </StatusBar>
 
-        <!--  Background="#FFF7F7F7"  -->
-        <Grid Background="#FFE3E8F4">
+            <!--  Background="#FFF7F7F7"  -->
+            <Grid Background="#FFE3E8F4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="25*" />
                 <ColumnDefinition Width="5" />
@@ -148,5 +154,8 @@
                                       Margin="0,0,2,0"
                                       Background="#FFF2F6FF" />
         </Grid>
-    </DockPanel>
+        </DockPanel>
+        
+        <userControls:ConnectWindowPopup x:Name="ucConnectPopup"  Margin="0,0,0,22" />
+    </Grid>
 </Window>

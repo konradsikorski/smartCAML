@@ -6,7 +6,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
     {
         [Description("Fake")]
         Fake = 0,
-        [Description("SharePoint Client")]
+        [Description("SharePoint on-premisses")]
         SharePoint2013ClientModel = 2,
         [Description("SharePoint Online")]
         SharePointOnline = 3
