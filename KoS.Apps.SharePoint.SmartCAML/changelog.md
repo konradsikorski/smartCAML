@@ -3,9 +3,11 @@
 ### v. 1.9
 ##### New
 + Lookup and User fields now loads available options to dropdown
++ Now SmartCAML is also available in Windows Store!
 ##### Update
 + Connect window is now as popup not a dialog
 + Redesign connect window
++ .NET 4.6.1 is now required
 
 ### v. 1.8.6
 ##### Update
