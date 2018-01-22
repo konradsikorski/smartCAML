@@ -1,7 +1,17 @@
 # SmartCAML
-This ClickOnce app helps you build SharePoint Caml queries. You can connect to SharePoint 2010+ on premiss and to Office 365.
+Best SharePoint CAML query designer app.
+* Quickly build and test CAML queries
+* Update SharePoint list items directly from query results
+* Support for SharePoint 2010+ on premiss and Office 365
 
-**Install** the latest version from **[here](https://sikorski-workshop.azurewebsites.net/Application/Details/smartcaml)**.
+## Install
+You can install the latest version from **[here](https://sikorski-workshop.azurewebsites.net/Application/Details/smartcaml)**.
+
+The app is also available on Windows Store:
+
+[<img src="https://assets.windowsphone.com/85864462-9c82-451e-9355-a3d5f874397a/English_get-it-from-MS_InvariantCulture_Default.png" width="100">](https://www.microsoft.com/store/apps/9NN8GJPNXVFG?ocid=badge)
+
+<a href="https://www.microsoft.com/store/apps/9NN8GJPNXVFG?ocid=badge"><img width="100" src="https://assets.windowsphone.com/85864462-9c82-451e-9355-a3d5f874397a/English_get-it-from-MS_InvariantCulture_Default.png" alt="Get it from Microsoft" /></a>
 
 ## Changelog
 The list of changes in each version is available **[here](https://github.com/konradsikorski/smartCAML/releases)**.
@@ -11,8 +21,8 @@ The list of changes in each version is available **[here](https://github.com/kon
 ![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/f2acfb43-cdd6-43cc-b191-2530ae7ff586.png)
 
 #### Main Window
-* Tree of all connected webs
-* Each caml query is in separate tab
+* Tree view for all opened SharePoint webs
+* Each caml query has separate tab
 
 ![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/5ae29a44-83d8-48e0-a010-03d3f28424bf.png)
 
