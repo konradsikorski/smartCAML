@@ -90,49 +90,47 @@
                         SelectedValue="{Binding Path=ProviderType}"
                         />
 
-                <StackPanel>
-                    <TextBlock Margin="0,8,0,0" Style="{DynamicResource Label}">Account:</TextBlock>
+                <TextBlock Margin="0,8,0,0" Style="{DynamicResource Label}">Account:</TextBlock>
 
-                    <Grid Margin="0,4,0,0">
-                        <ComboBox 
-                              x:Name="ucLogin"
-                              IsEditable="True"
-                              ItemsSource="{Binding UsersHistory}"
-                              Text="{Binding UserName}"
-                           />
-                        <TextBlock Text="Login" Margin="4,2,0,0" IsHitTestVisible="False" Foreground="{x:Static SystemColors.ControlDarkBrush}">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=ucLogin,Path=Text}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
-
-                    <Grid Margin="0,4,0,0">
-                        <PasswordBox 
-                            x:Name="ucPassword"
-                            ap:PasswordBoxAssistant.BindPassword="true"
-                            ap:PasswordBoxAssistant.BoundPassword="{Binding UserPassword, UpdateSourceTrigger=PropertyChanged}"
-                            ap:PasswordBoxAssistant.BindPlaceholder="{Binding ElementName=ucPasswordPlaceholder}"
-                            Padding="0,2"
-                            PasswordChanged="PasswordBox_OnPasswordChanged"
+                <Grid Margin="0,4,0,0">
+                    <ComboBox 
+                            x:Name="ucLogin"
+                            IsEditable="True"
+                            ItemsSource="{Binding UsersHistory}"
+                            Text="{Binding UserName}"
                         />
-                        <TextBlock x:Name="ucPasswordPlaceholder" Text="Password" Style="{StaticResource PlaceholderText}" />
-                    </Grid>
+                    <TextBlock Text="Login" Margin="4,2,0,0" IsHitTestVisible="False" Foreground="{x:Static SystemColors.ControlDarkBrush}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ucLogin,Path=Text}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+
+                <Grid Margin="0,4,0,0">
+                    <PasswordBox 
+                        x:Name="ucPassword"
+                        ap:PasswordBoxAssistant.BindPassword="true"
+                        ap:PasswordBoxAssistant.BoundPassword="{Binding UserPassword, UpdateSourceTrigger=PropertyChanged}"
+                        ap:PasswordBoxAssistant.BindPlaceholder="{Binding ElementName=ucPasswordPlaceholder}"
+                        Padding="0,2"
+                        PasswordChanged="PasswordBox_OnPasswordChanged"
+                    />
+                    <TextBlock x:Name="ucPasswordPlaceholder" Text="Password" Style="{StaticResource PlaceholderText}" />
+                </Grid>
                     
-                    <TextBlock Margin="0,8,0,0"
-                               Foreground="#FFE00D0D"
-                               TextWrapping="Wrap"
-                               Text="{Binding ErrorMessage}"
-                               Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"
-                               />
-                </StackPanel>
+                <TextBlock Margin="0,8,0,0"
+                            Foreground="#FFE00D0D"
+                            TextWrapping="Wrap"
+                            Text="{Binding ErrorMessage}"
+                            Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"
+                            />
             </StackPanel>
 
             <Border Grid.Row="1" Style="{StaticResource ButtonsSection}">

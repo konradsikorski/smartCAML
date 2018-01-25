@@ -25,7 +25,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
         public ConnectWindowModel()
         {
             SharePointWebUrlHistory = new ObservableCollection<string>( Config.SharePointUrlHistory );
-            if( SharePointWebUrlHistory.Count > 0 ) SharePointWebUrl = SharePointWebUrlHistory[0];
+            SharePointWebUrl = (SharePointWebUrlHistory.Count > 0) ? SharePointWebUrlHistory[0]: String.Empty;
             UserName = Config.LastUser;
             UsersHistory = new ObservableCollection<string>(Config.UsersHistory?.Where( u => !String.IsNullOrEmpty(u)));
 
@@ -50,6 +50,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Model
             get { return _sharePoinWebtUrl; }
             set
             {
+                value = value ?? string.Empty;
+
                 if (value == _sharePoinWebtUrl) return;
                 _sharePoinWebtUrl = value;
                 OnPropertyChanged();

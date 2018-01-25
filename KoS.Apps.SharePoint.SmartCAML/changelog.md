@@ -1,5 +1,9 @@
 ## Changelog
 
+### v. 1.10
+##### Fix
++ placeholder for 'site url' dropdown is now working when it is empty on start
+
 ### v. 1.9
 ##### New
 + Lookup and User fields now loads available options to dropdown
