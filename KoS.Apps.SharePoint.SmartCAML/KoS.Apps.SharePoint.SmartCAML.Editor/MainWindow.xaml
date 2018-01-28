@@ -132,28 +132,27 @@
                 </StatusBarItem>
             </StatusBar>
 
-            <!--  Background="#FFF7F7F7"  -->
             <Grid Background="#FFE3E8F4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25*" />
-                <ColumnDefinition Width="5" />
-                <ColumnDefinition Width="75*" />
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="75*" />
+                </Grid.ColumnDefinitions>
 
-            <controls:WebsTreeControl x:Name="ucWebs"
-                                      Grid.Column="0"
-                                      CloseWeb="UcWebs_OnCloseWeb"
-                                      ListExecute="UcWebs_ListExecute" />
+                <controls:WebsTreeControl x:Name="ucWebs"
+                                          Grid.Column="0"
+                                          CloseWeb="UcWebs_OnCloseWeb"
+                                          ListExecute="UcWebs_ListExecute" />
 
-            <GridSplitter Grid.Column="1"
-                          Width="5"
-                          HorizontalAlignment="Stretch"
-                          Background="Transparent" />
-            <controls:QueryTabControl x:Name="ucQueries"
-                                      Grid.Column="2"
-                                      Margin="0,0,2,0"
-                                      Background="#FFF2F6FF" />
-        </Grid>
+                <GridSplitter Grid.Column="1"
+                              Width="5"
+                              HorizontalAlignment="Stretch"
+                              Background="Transparent" />
+                <controls:QueryTabControl x:Name="ucQueries"
+                                          Grid.Column="2"
+                                          Margin="0,0,2,0"
+                                          Background="#FFF2F6FF" />
+            </Grid>
         </DockPanel>
         
         <userControls:PopupWindow x:Name="ucConnectPopup"  Margin="0,0,0,22" />

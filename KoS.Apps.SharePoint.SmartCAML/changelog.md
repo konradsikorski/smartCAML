@@ -1,6 +1,8 @@
 ## Changelog
 
 ### v. 1.10
+##### Update
++ about window as popup
 ##### Fix
 + placeholder for 'site url' dropdown is now working when it is empty on start
 

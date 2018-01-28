@@ -279,10 +279,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\AboutWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -298,9 +294,6 @@
     <Compile Include="Builder\ViewBuilder.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Controls\WatermarkComboBox.cs" />
-    <Compile Include="Dialogs\AboutWindow.xaml.cs">
-      <DependentUpon>AboutWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Extensions\ComboToEnumExtension.cs" />
     <Compile Include="UserControls\FilterBuilder.cs">
       <DependentUpon>FilterBuilder.xaml</DependentUpon>

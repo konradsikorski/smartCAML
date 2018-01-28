@@ -20,7 +20,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
         <ContentControl Grid.Column="1" Grid.Row="1" x:Name="ucContent"/>
     </Grid>
 </UserControl>
