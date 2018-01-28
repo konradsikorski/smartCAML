@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
 using System.Windows;
 using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using KoS.Apps.SharePoint.SmartCAML.Model;
+using KoS.Apps.SharePoint.SmartCAML.Editor.UserControls;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor
 {
@@ -24,9 +24,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             this.Height = Config.WindowHeight;
             if(Config.WasMaximazed) this.WindowState = WindowState.Maximized;
 
-            ucConnectPopup.Connected += (client) => Connected(client);
-
             ((RoutedCommand)ConnectCommand.Command).InputGestures.Add(new KeyGesture(Key.O, ModifierKeys.Control));
+
             Telemetry.Instance.Native.TrackPageView("Main");
         }
 
@@ -70,7 +69,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         {
             Telemetry.Instance.Native.TrackEvent("Main.Connect");
 
-            ucConnectPopup.Visibility = Visibility.Visible;
+            var connectWindow = new ConnectWindow();
+            connectWindow.DialogResult += (window, provider) => Connected(provider);
+            ucConnectPopup.Show(connectWindow);
         }
 
         private void NewQueryCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -171,15 +172,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         private void AboutCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Telemetry.Instance.Native.TrackEvent("Main.AboutCommand");
-            new AboutWindow().ShowDialog();
+            ucConnectPopup.Show(new AboutWindow());
         }
 
         #endregion
 
         private void Connected(ISharePointProvider client)
         {
-            ucConnectPopup.Visibility = Visibility.Collapsed;
-            
             if(client != null)
                 ucWebs.Add(client);
         }

@@ -156,6 +156,6 @@
         </Grid>
         </DockPanel>
         
-        <userControls:ConnectWindowPopup x:Name="ucConnectPopup"  Margin="0,0,0,22" />
+        <userControls:PopupWindow x:Name="ucConnectPopup"  Margin="0,0,0,22" />
     </Grid>
 </Window>

@@ -4,15 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:ap="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.AttachedProperties"
-        xmlns:behaviors="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Behaviors"
-        xmlns:bindingConverters="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:provider="clr-namespace:KoS.Apps.SharePoint.SmartCAML.SharePointProvider;assembly=KoS.Apps.SharePoint.SmartCAML.SharePointProvider"
-        xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="320" 
-             d:DesignWidth="300"
-        Background="{StaticResource DialogBackground}">
+            xmlns:behaviors="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Behaviors"
+            xmlns:bindingConverters="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters"
+            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+            xmlns:provider="clr-namespace:KoS.Apps.SharePoint.SmartCAML.SharePointProvider;assembly=KoS.Apps.SharePoint.SmartCAML.SharePointProvider"
+            xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.UserControls"
+            mc:Ignorable="d" 
+            d:DesignHeight="320" 
+            d:DesignWidth="300"
+            MinWidth="360"
+            Background="{StaticResource DialogBackground}">
 
     <UserControl.Resources>
         <ResourceDictionary>

@@ -23,8 +23,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
         {
             Telemetry.Instance.Native.TrackPageView("Connect");
             InitializeComponent();
-
-            this.Width = Config.ConnectWindowWidth;
+            
             this.DataContext = new ConnectWindowModel();
         }
 
@@ -49,7 +48,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
                     Model.AddUserToHistory(Model.UserName);
                     Model.Save();
 
-                    DialogResult(this, client);
+                    OnDialogResult(client);
                 }
                 StatusNotification.Notify("Connected");
             }
@@ -64,7 +63,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
         private void ucCancelButton_Click(object sender, RoutedEventArgs e)
         {
             Telemetry.Instance.Native.TrackEvent("Connect.Cancel");
-            DialogResult(this, null);
+            OnDialogResult(null);
         }
 
         private void AdvanceOptionsButton_Click(object sender, RoutedEventArgs e)
@@ -84,9 +83,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
             Model.UserPassword = ((PasswordBox)sender).Password;
         }
 
-        private void ConnectWindow_OnClosing(object sender, CancelEventArgs e)
+        private void OnDialogResult(ISharePointProvider provider)
         {
-            Config.ConnectWindowWidth = this.Width;
+            this.Visibility = Visibility.Collapsed;
+            DialogResult?.Invoke(this, provider);
         }
     }
 }

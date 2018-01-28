@@ -181,6 +181,9 @@
     <Compile Include="Model\FieldType\DateTimeFieldTypeModel.cs" />
     <Compile Include="Model\FieldType\LookupFieldTypeModel.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="UserControls\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ClosableTabHeader.xaml.cs">
       <DependentUpon>ClosableTabHeader.xaml</DependentUpon>
     </Compile>
@@ -188,8 +191,8 @@
     <Compile Include="UserControls\ConnectWindow.xaml.cs">
       <DependentUpon>ConnectWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ConnectWindowPopup.xaml.cs">
-      <DependentUpon>ConnectWindowPopup.xaml</DependentUpon>
+    <Compile Include="UserControls\PopupWindow.cs">
+      <DependentUpon>PopupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\OrderByBuilderControl.xaml.cs">
       <DependentUpon>OrderByBuilderControl.xaml</DependentUpon>
@@ -224,6 +227,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControls\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\ClosableTabHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -232,7 +239,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\ConnectWindowPopup.xaml">
+    <Page Include="UserControls\PopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
