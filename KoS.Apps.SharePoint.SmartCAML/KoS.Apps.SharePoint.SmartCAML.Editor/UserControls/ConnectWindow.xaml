@@ -33,27 +33,19 @@
                                                          False="Visible"
                                                          True="Collapsed" />
             <bindingConverters:InvertBoolConverter x:Key="InvertBoolConverter" />
-            <!--<BooleanToVisibilityConverter x:Key="EnumConverter" />
-        <BooleanToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter" />-->
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <Border BorderBrush="CornflowerBlue" BorderThickness="1">
     <Grid IsEnabled="{Binding IsConnecting, Converter={StaticResource InvertBoolConverter}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <Grid Grid.Row="0" Margin="4,4,4,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="20"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock FontSize="14" FontWeight="Bold" Foreground="#FF3E71CB" Margin="6,0,0,0">Connect to SharePoint</TextBlock>
-            <Button Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Click="ucCancelButton_Click" FontSize="10">✖</Button>
-        </Grid>
+
+        <local:PopupHeader Grid.Row="0" Text="Connect to SharePoint" Closed="ucCancelButton_Click" />
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -145,5 +137,7 @@
                 </StackPanel>
             </Border>
         </Grid>
-    </Grid>
+        </Grid>
+
+    </Border>
 </UserControl>

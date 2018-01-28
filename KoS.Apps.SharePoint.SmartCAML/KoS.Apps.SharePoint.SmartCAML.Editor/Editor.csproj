@@ -191,6 +191,9 @@
     <Compile Include="UserControls\ConnectWindow.xaml.cs">
       <DependentUpon>ConnectWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PopupHeader.xaml.cs">
+      <DependentUpon>PopupHeader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PopupWindow.cs">
       <DependentUpon>PopupWindow.xaml</DependentUpon>
     </Compile>
@@ -236,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ConnectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PopupHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
