@@ -8,7 +8,7 @@ using KoS.Apps.SharePoint.SmartCAML.Editor.Model;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
-namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
+namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 {
     /// <summary>
     /// Interaction logic for ConnectWindow.xaml

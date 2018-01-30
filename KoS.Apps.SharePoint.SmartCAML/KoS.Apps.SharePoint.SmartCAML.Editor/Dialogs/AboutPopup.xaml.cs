@@ -9,7 +9,7 @@ using NLog;
 using NLog.Targets;
 using System.Windows.Controls;
 
-namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
+namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 {
     /// <summary>
     /// Interaction logic for AboutWindow.xaml

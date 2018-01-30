@@ -179,24 +179,24 @@
     <Compile Include="Model\FieldType\DateTimeFieldTypeModel.cs" />
     <Compile Include="Model\FieldType\LookupFieldTypeModel.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="UserControls\AboutWindow.xaml.cs">
-      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    <Compile Include="Dialogs\AboutPopup.xaml.cs">
+      <DependentUpon>AboutPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ClosableTabHeader.xaml.cs">
       <DependentUpon>ClosableTabHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\EnumExtension.cs" />
-    <Compile Include="UserControls\ConnectWindow.xaml.cs">
-      <DependentUpon>ConnectWindow.xaml</DependentUpon>
+    <Compile Include="Dialogs\ConnectPopup.xaml.cs">
+      <DependentUpon>ConnectPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\CustomizeColumnsWindow.xaml.cs">
-      <DependentUpon>CustomizeColumnsWindow.xaml</DependentUpon>
+    <Compile Include="Dialogs\CustomizeColumnsPopup.xaml.cs">
+      <DependentUpon>CustomizeColumnsPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\PopupHeader.xaml.cs">
       <DependentUpon>PopupHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\PopupWindow.cs">
-      <DependentUpon>PopupWindow.xaml</DependentUpon>
+      <DependentUpon>MainPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\OrderByBuilderControl.xaml.cs">
       <DependentUpon>OrderByBuilderControl.xaml</DependentUpon>
@@ -227,7 +227,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\AboutWindow.xaml">
+    <Page Include="Dialogs\AboutPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -235,11 +235,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\ConnectWindow.xaml">
+    <Page Include="Dialogs\ConnectPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\CustomizeColumnsWindow.xaml">
+    <Page Include="Dialogs\CustomizeColumnsPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -247,7 +247,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\PopupWindow.xaml">
+    <Page Include="UserControls\MainPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

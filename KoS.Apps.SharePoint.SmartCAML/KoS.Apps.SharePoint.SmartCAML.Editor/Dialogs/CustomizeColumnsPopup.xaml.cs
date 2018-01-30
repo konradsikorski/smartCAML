@@ -11,7 +11,7 @@ using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Annotations;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 
-namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
+namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 {
     public partial class CustomizeColumnsWindow : UserControl
     {

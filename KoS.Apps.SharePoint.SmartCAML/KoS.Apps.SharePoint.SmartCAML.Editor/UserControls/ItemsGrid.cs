@@ -8,6 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
 using KoS.Apps.SharePoint.SmartCAML.Editor.UserControls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using KoS.Apps.SharePoint.SmartCAML.Model;
