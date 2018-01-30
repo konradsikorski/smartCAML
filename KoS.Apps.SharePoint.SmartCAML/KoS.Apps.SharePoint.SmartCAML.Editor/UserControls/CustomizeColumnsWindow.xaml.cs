@@ -1,22 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Annotations;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 
-namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
+namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
 {
-    /// <summary>
-    /// Interaction logic for CustomizeColumnsWindow.xaml
-    /// </summary>
-    public partial class CustomizeColumnsWindow : Window
+    public partial class CustomizeColumnsWindow : UserControl
     {
         public ObservableCollection<ColumnVisibility> Columns { get; set; } = new ObservableCollection<ColumnVisibility>();
+        public event Action<object, bool> DialogResult;
 
         public CustomizeColumnsWindow()
         {
@@ -41,7 +41,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void VisibleViewSource_OnFilter(object sender, FilterEventArgs args)
         {
-            args.Accepted = ((ColumnVisibility) args.Item).IsVisible;
+            args.Accepted = ((ColumnVisibility)args.Item).IsVisible;
         }
 
         private void HiddenViewSource_OnFilter(object sender, FilterEventArgs args)
@@ -108,11 +108,22 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
         private void OkButton_OnClick(object sender, RoutedEventArgs e)
         {
             Telemetry.Instance.Native.TrackPageView("CustomizeColumns.OK");
-            DialogResult = true;
+            OnDialogResult(true);
+        }
+
+        private void OnDialogResult(bool save)
+        {
+            this.Visibility = Visibility.Collapsed;
+            DialogResult?.Invoke(this, save);
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnDialogResult(false);
         }
     }
 
-    public class ColumnVisibility :INotifyPropertyChanged
+    public class ColumnVisibility : INotifyPropertyChanged
     {
         public string Title { get; set; }
         public string InternalName { get; set; }

@@ -165,11 +165,9 @@
     <Compile Include="Core\Commands\DonateCommand.cs" />
     <Compile Include="Core\Interfaces\IDisplayField.cs" />
     <Compile Include="Core\Interfaces\IOrderListElement.cs" />
+    <Compile Include="Core\Interfaces\IPopup.cs" />
     <Compile Include="Core\OrderedList.cs" />
     <Compile Include="Core\OrderListElement.cs" />
-    <Compile Include="Dialogs\CustomizeColumnsWindow.xaml.cs">
-      <DependentUpon>CustomizeColumnsWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -190,6 +188,9 @@
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="UserControls\ConnectWindow.xaml.cs">
       <DependentUpon>ConnectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CustomizeColumnsWindow.xaml.cs">
+      <DependentUpon>CustomizeColumnsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\PopupHeader.xaml.cs">
       <DependentUpon>PopupHeader.xaml</DependentUpon>
@@ -214,10 +215,6 @@
     <Compile Include="Utils\StatusNotification.cs" />
     <Compile Include="Utils\Telemetry.cs" />
     <Compile Include="Utils\VersionUtil.cs" />
-    <Page Include="Dialogs\CustomizeColumnsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Dialogs\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -239,6 +236,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ConnectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CustomizeColumnsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,16 +1,17 @@
 ﻿using KoS.Apps.SharePoint.SmartCAML.Editor.Core.Interfaces;
-using KoS.Apps.SharePoint.SmartCAML.Model;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
 {
-    public partial class PopupWindow : UserControl
+    public partial class PopupWindow : UserControl, IPopup
     {
+        public static IPopup Instance { get; private set; }
+
         public PopupWindow()
         {
             InitializeComponent();
+            Instance = this;
         }
 
         public void Show(UIElement content)

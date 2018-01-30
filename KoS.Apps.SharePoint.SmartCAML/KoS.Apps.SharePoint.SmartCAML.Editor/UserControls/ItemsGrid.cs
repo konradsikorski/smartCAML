@@ -8,7 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters;
-using KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs;
+using KoS.Apps.SharePoint.SmartCAML.Editor.UserControls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
@@ -251,15 +251,23 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                 }).ToList()
                 );
 
-            if (dialog.ShowDialog() == true)
+            dialog.DialogResult += CustomizeColumnsDialog_DialogResult;
+
+            PopupWindow.Instance.Show(dialog);
+        }
+
+        private void CustomizeColumnsDialog_DialogResult(object sender, bool save)
+        {
+            var dialog = (CustomizeColumnsWindow)sender;
+            dialog.DialogResult -= CustomizeColumnsDialog_DialogResult;
+            if (!save) return;
+
+            foreach (var gridColumn in ucItems.Columns)
             {
-                foreach (var gridColumn in ucItems.Columns)
-                {
-                    gridColumn.Visibility =
-                        dialog.Columns.First(c => c.InternalName == ((ColumnHeader) gridColumn.Header).InternalName).IsVisible
-                            ? Visibility.Visible
-                            : Visibility.Collapsed;
-                }
+                gridColumn.Visibility =
+                    dialog.Columns.First(c => c.InternalName == ((ColumnHeader)gridColumn.Header).InternalName).IsVisible
+                        ? Visibility.Visible
+                        : Visibility.Collapsed;
             }
         }
     }
