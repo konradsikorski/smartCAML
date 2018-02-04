@@ -18,26 +18,10 @@
 
         <TabControl Grid.Row="0" SelectionChanged="TabControl_SelectionChanged">
             <TabItem x:Name="DesignerTab" Header="Designer">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel>
-                        <local:QueryBuilderControl x:Name="ucQueryBuilder"
-                                               Margin="4"
-                                               DisplayColumnsByTitle="{Binding ElementName=UserControl,
-                                                                               Path=TabConfig.DisplayColymnsByTitle}" />
-                        <usercontrols:OrderByBuilderControl x:Name="ucOrderByBuilder"
-                                               Margin="4"
-                                               DisplayColumnsByTitle="{Binding ElementName=UserControl,
-                                                                               Path=TabConfig.DisplayColymnsByTitle}" />
-                    </StackPanel>
-                </ScrollViewer>
+                <usercontrols:QueryDesignerControl x:Name="ucQueryDesigner" />
             </TabItem>
             <TabItem x:Name="XmlTab" Header="XML">
-                <TextBox x:Name="ucQuery"
-                         AcceptsReturn="True"
-                         HorizontalScrollBarVisibility="Auto"
-                         TextWrapping="Wrap"
-                         VerticalScrollBarVisibility="Auto"
-                         TextChanged="UcQuery_TextChanged"/>
+                <usercontrols:QueryXmlControl x:Name="ucQueryXml"/>
             </TabItem>
         </TabControl>
 

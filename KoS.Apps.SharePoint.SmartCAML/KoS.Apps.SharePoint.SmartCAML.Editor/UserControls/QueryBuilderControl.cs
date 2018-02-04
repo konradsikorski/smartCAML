@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using KoS.Apps.SharePoint.SmartCAML.Editor.Builder;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Core;
 using System.Collections.Generic;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;

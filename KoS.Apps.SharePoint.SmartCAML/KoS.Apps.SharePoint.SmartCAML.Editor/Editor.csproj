@@ -103,7 +103,9 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft Care Suite\Windows Device Recovery Tool\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -204,6 +206,12 @@
     <Compile Include="UserControls\OrderByFilterControl.xaml.cs">
       <DependentUpon>OrderByFilterControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\QueryDesignerControl.xaml.cs">
+      <DependentUpon>QueryDesignerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\QueryXmlControl.xaml.cs">
+      <DependentUpon>QueryXmlControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\QuickSettingsControl.xaml.cs">
       <DependentUpon>QuickSettingsControl.xaml</DependentUpon>
     </Compile>
@@ -271,11 +279,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\QueryDesignerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\QueryFilterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\QueryTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\QueryXmlControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
