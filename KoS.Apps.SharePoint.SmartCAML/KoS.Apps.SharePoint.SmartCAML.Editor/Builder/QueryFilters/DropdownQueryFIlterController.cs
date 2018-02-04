@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
@@ -40,6 +41,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
             return String.IsNullOrEmpty(_control.SelectedValue?.ToString()) 
                 ? _control.Text ?? String.Empty 
                 : _control.SelectedValue?.ToString();
+        }
+
+        public override void Refresh(IFilter filter)
+        {
+            var viewFilter = filter as Filter;
+            if (viewFilter == null) return;
+
+            _control.Text = viewFilter.FieldValue;
         }
     }
 }

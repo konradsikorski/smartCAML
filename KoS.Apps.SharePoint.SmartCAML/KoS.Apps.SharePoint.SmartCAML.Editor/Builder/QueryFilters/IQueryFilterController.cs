@@ -10,10 +10,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
     {
         Field Field { get; }
         FilterOperator? FilterOperator { get; }
+
+        event EventHandler ValueChanged;
+
         void Initialize(Panel parent, string oldValue);
         string GetValue();
         IFilter GetFilter(QueryOperator queryOperator);
-
-        event EventHandler ValueChanged;
+        void Refresh(IFilter filter);
     }
 }

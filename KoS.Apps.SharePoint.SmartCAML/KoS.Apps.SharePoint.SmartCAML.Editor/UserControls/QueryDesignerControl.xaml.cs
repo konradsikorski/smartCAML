@@ -29,7 +29,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
 
         public void Refresh(ViewBuilder view)
         {
-            ucQueryBuilder.Controller.Refresh(view);
+            ucQueryBuilder.Refresh(view);
             ucOrderByBuilder.Refresh(view);
         }
     }

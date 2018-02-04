@@ -83,6 +83,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
             return _model.Date ?? String.Empty;
         }
 
+        public override void Refresh(IFilter filter)
+        {
+            var viewFilter = filter as Filter;
+            if (viewFilter == null) return;
+
+            _model.Date = viewFilter.FieldValue;
+        }
+
         protected override void UpdateFilter(Filter filter)
         {
             base.UpdateFilter(filter);

@@ -63,6 +63,19 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
             return control?.Text;
         }
 
+        public override void Refresh(IFilter filter)
+        {
+            var viewFilter = filter as InFilter;
+            if (viewFilter == null) return;
+            if (viewFilter.FieldValues == null) return;
+
+            foreach (var values in viewFilter.FieldValues)
+            {
+                var control = CreateControl();
+                control.Text = values;
+            }
+        }
+
         public override IFilter GetFilter(QueryOperator queryOperator)
         {
             return new InFilter

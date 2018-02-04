@@ -82,6 +82,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
             return filter;
         }
 
+        public virtual void Refresh(IFilter filter)
+        {
+
+        }
+
         protected virtual void UpdateFilter(Filter filter)
         {
         }

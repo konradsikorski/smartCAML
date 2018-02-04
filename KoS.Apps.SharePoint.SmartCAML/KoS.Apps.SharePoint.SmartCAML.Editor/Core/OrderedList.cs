@@ -2,7 +2,9 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Controls;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Core
 {
@@ -14,12 +16,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Core
         public OrderedList(Panel container)
         {
             Container = container;
-        }
-
-        public void Refresh(ViewBuilder view)
-        {
-            //Container.Children.Clear();
-
         }
 
         public T Add()

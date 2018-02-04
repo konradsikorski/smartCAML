@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using KoS.Apps.SharePoint.SmartCAML.Editor.BindingConverters;
-using KoS.Apps.SharePoint.SmartCAML.Editor.Builder;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Extensions;
@@ -46,7 +45,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             Changed?.Invoke(this, EventArgs.Empty);
         }
 
-        public QueryOperator SelectedQueryOperator => ucAndOr.SelectedEnum<QueryOperator>().Value;
+        public QueryOperator SelectedQueryOperator => ucAndOr.SelectedEnum<QueryOperator>().GetValueOrDefault();
         public Field SelectedField => (Field)ucField.SelectedItem;
         public FilterOperator? SelectedFilterOperator => ucFilterOperator.SelectedEnum<FilterOperator>().GetValueOrDefault();
 
@@ -73,14 +72,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         [Bindable(true)]
         public bool DisplayColumnsByTitle
         {
-            get
-            {
-                return (bool)this.GetValue(DisplayColumnsByTitleProperty);
-            }
-            set
-            {
-                this.SetValue(DisplayColumnsByTitleProperty, value);
-            }
+            get => (bool)GetValue(DisplayColumnsByTitleProperty);
+            set => SetValue(DisplayColumnsByTitleProperty, value);
         }
 
         public FrameworkElement Control => this;
@@ -165,6 +158,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             return (SelectedField == null) 
                 ? null
                 : FilterController.GetFilter(SelectedQueryOperator);
+        }
+
+        public void Refresh(IFilter filter)
+        {
+            var list = (SList)DataContext;
+            ucField.SelectedItem = list.Fields.FirstOrDefault(f => f.InternalName == filter.FieldInternalName);
+            ucAndOr.SelectEnum(filter.QueryOperator);
+            if(filter.QueryFilter.HasValue) ucFilterOperator.SelectEnum(filter.QueryFilter.Value);
+            //FilterController = QueryFilterFactory.Create(SelectedField, SelectedFilterOperator);
+            //FilterController.Refresh(filter);
         }
     }
 }
