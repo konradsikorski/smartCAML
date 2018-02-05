@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "KoS.Apps.SharePoint.SmartCAML.Editor\Editor.csproj", "{D5D6983F-F66B-4308-8D13-FEEC439869F4}"
 EndProject
@@ -23,6 +23,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceProxy", "ServiceProxy\ServiceProxy.csproj", "{3BFF4C84-0922-4454-BF4E-7601ED29B720}"
 EndProject
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "SmartCAML-UWP", "UWPPackage\SmartCAML-UWP.wapproj", "{7BD9AE2D-72C6-4B5A-9082-40D722BCDB30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{6D3B197B-53DB-4F27-A893-0EE35271645D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -124,6 +126,18 @@ Global
 		{7BD9AE2D-72C6-4B5A-9082-40D722BCDB30}.Release|x86.ActiveCfg = Release|x86
 		{7BD9AE2D-72C6-4B5A-9082-40D722BCDB30}.Release|x86.Build.0 = Release|x86
 		{7BD9AE2D-72C6-4B5A-9082-40D722BCDB30}.Release|x86.Deploy.0 = Release|x86
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Debug|x64.Build.0 = Debug|Any CPU
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Debug|x86.Build.0 = Debug|Any CPU
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Release|x64.ActiveCfg = Release|Any CPU
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Release|x64.Build.0 = Release|Any CPU
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Release|x86.ActiveCfg = Release|Any CPU
+		{6D3B197B-53DB-4F27-A893-0EE35271645D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
