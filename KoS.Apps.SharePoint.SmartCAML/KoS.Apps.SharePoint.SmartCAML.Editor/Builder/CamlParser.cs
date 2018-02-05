@@ -11,10 +11,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
     {
         public List<IFilter> Parse(string xml)
         {
-            XDocument doc = XDocument.Parse(xml);
+            if (String.IsNullOrEmpty(xml)) return null;
+
+            var doc = XDocument.Parse(xml);
 
             var queryNode = doc.Element("Query");
             var whereNode = queryNode?.Element("Where") ?? doc.Element("Where");
+
+            if (whereNode == null) return null;
 
             var filters = Parse(whereNode.Elements());
             return filters;
@@ -44,7 +48,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
                 }
             }
 
-            return filters;
+            return filters.Where( f => f != null).ToList();
         }
 
         private IFilter ParseFilter(QueryOperator queryOperator, XElement element)
@@ -64,7 +68,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             {
                 filter.QueryFilter = queryFilter;
             }
-
 
             foreach (var attribute in element.Attributes())
             {
@@ -120,7 +123,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
 
             ParseFieldRef(fieldRefElement, filter);
 
-            filter.FieldValues = valuesElement.Elements("Value").Select(e => e.Value).ToList();
+            filter.FieldValues = valuesElement?.Elements("Value").Select(e => e.Value).ToList() ?? new List<string>();
 
             return filter;
         }
