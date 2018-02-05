@@ -40,7 +40,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.UnitTests
         [TestMethod]
         public void Parse()
         {
-            var filters = new CamlParser().Parse(xml);
+            var filters = CamlParser.Parse(xml);
+
+            Assert.IsNotNull(filters);
+            Assert.IsTrue(filters.Count == 4);
         }
     }
 }

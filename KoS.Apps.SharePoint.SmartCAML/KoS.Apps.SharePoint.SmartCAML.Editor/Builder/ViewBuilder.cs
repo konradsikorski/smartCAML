@@ -77,7 +77,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             var queryNode = doc.Element("Query");
 
             // read where
-            // ... todo
+            var whereNode = queryNode?.Element("Where") ?? doc.Element("Where");
+            var filters = CamlParser.Parse(whereNode);
+
+            if(filters != null)
+                viewBuilder.Filters.AddRange(filters);
 
             // read orderBy
             var orderNode = queryNode?.Element("OrderBy") ?? doc.Element("OrderBy");

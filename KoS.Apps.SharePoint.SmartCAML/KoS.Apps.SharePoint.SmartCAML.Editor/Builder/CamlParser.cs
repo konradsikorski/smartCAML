@@ -9,7 +9,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
 {
     public class CamlParser
     {
-        public List<IFilter> Parse(string xml)
+        public static List<IFilter> Parse(string xml)
         {
             if (String.IsNullOrEmpty(xml)) return null;
 
@@ -18,13 +18,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             var queryNode = doc.Element("Query");
             var whereNode = queryNode?.Element("Where") ?? doc.Element("Where");
 
+            return Parse(whereNode);
+        }
+
+        public static List<IFilter> Parse(XElement whereNode)
+        {
             if (whereNode == null) return null;
 
             var filters = Parse(whereNode.Elements());
             return filters;
         }
 
-        private List<IFilter> Parse(IEnumerable<XElement>elements, QueryOperator queryOperator = QueryOperator.And)
+        private static List<IFilter> Parse(IEnumerable<XElement>elements, QueryOperator queryOperator = QueryOperator.And)
         {
             var filters = new List<IFilter>();
             if (elements == null) return filters;
@@ -51,13 +56,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             return filters.Where( f => f != null).ToList();
         }
 
-        private IFilter ParseFilter(QueryOperator queryOperator, XElement element)
+        private static IFilter ParseFilter(QueryOperator queryOperator, XElement element)
         {
             if (element.Name.LocalName.ToLower() == "in") return ParseFilterIn(queryOperator, element);
             else return ParseFilterOther(queryOperator, element);
         }
 
-        private IFilter ParseFilterOther(QueryOperator queryOperator, XElement element)
+        private static IFilter ParseFilterOther(QueryOperator queryOperator, XElement element)
         {
             var filter = new Filter {
                 QueryOperator = queryOperator
@@ -84,7 +89,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             return filter;
         }
 
-        private void ParseValue(XElement valueElement, Filter filter)
+        private static void ParseValue(XElement valueElement, Filter filter)
         {
             if (valueElement == null) return;
 
@@ -97,7 +102,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             filter.FieldValue = valueElement.Value;
         }
 
-        private void ParseFieldRef(XElement fieldRefElement, IFilter filter)
+        private static void ParseFieldRef(XElement fieldRefElement, IFilter filter)
         {
             if (fieldRefElement == null) return;
 
@@ -108,7 +113,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             }
         }
 
-        private IFilter ParseFilterIn(QueryOperator queryOperator, XElement element)
+        private static IFilter ParseFilterIn(QueryOperator queryOperator, XElement element)
         {
             var filter = new InFilter { QueryOperator = queryOperator };
 
