@@ -11,7 +11,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
     {
         public static List<IFilter> Parse(string xml)
         {
-            if (String.IsNullOrEmpty(xml)) return null;
+            if (String.IsNullOrEmpty(xml)) return new List<IFilter>();
 
             var doc = XDocument.Parse(xml);
 
@@ -23,7 +23,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
 
         public static List<IFilter> Parse(XElement whereNode)
         {
-            if (whereNode == null) return null;
+            if (whereNode == null) return new List<IFilter>();
 
             var filters = Parse(whereNode.Elements());
             return filters;
