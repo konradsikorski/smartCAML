@@ -2,6 +2,7 @@
 using System.Xml.Linq;
 using System.Linq;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
+using KoS.Apps.SharePoint.SmartCAML.Model;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
 {
@@ -73,11 +74,16 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
                 return null;
             }
 
+            var queryNode = doc.Element("Query");
+
             // read where
-            // ... todo
+            var whereNode = queryNode?.Element("Where") ?? doc.Element("Where");
+            var filters = CamlParser.Parse(whereNode);
+
+            if(filters != null)
+                viewBuilder.Filters.AddRange(filters);
 
             // read orderBy
-            var queryNode = doc.Element("Query");
             var orderNode = queryNode?.Element("OrderBy") ?? doc.Element("OrderBy");
 
             if (orderNode != null)
