@@ -9,14 +9,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
     /// </summary>
     public partial class QueryDesignerControl : UserControl
     {
-        public event Action<object> Changed;
+        public bool Modified { get; set; }
 
         public QueryDesignerControl()
         {
             InitializeComponent();
 
-            ucQueryBuilder.Changed += (sender, args) => Changed?.Invoke(this);
-            ucOrderByBuilder.Changed += (sender, args) => Changed?.Invoke(this);
+            ucQueryBuilder.Changed += (sender, args) => Modified = true;
+            ucOrderByBuilder.Changed += (sender, args) => Modified = true;
         }
 
         public ViewBuilder BuildQuery()
@@ -31,6 +31,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
         {
             ucQueryBuilder.Refresh(view);
             ucOrderByBuilder.Refresh(view);
+            Modified = false;
         }
     }
 }

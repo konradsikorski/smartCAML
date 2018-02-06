@@ -26,12 +26,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             ucItems.List = list;
 
             ucQueryDesigner.DataContext = List;
-            ucQueryDesigner.Changed += Designer_Changed;
-        }
-
-        private void Designer_Changed(object sender)
-        {
-            ucQueryXml.Refresh( ucQueryDesigner.BuildQuery().ToXml().ToString() );
         }
 
         public ListQuery GetQuery()
@@ -51,6 +45,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // if switched to Designer and xml was modified then refresh designer
             if( DesignerTab.IsSelected && ucQueryXml.Modified)
             {
                 ucQueryXml.Modified = false;
@@ -60,6 +55,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                 {
                     ucQueryDesigner.Refresh(view);
                 }
+            }
+            // if switched to XML and designer was modified then refresh XML
+            else if (XmlTab.IsSelected && ucQueryDesigner.Modified)
+            {
+                ucQueryDesigner.Modified = false;
+                ucQueryXml.Refresh(ucQueryDesigner.BuildQuery().ToXml().ToString());
             }
         }
     }

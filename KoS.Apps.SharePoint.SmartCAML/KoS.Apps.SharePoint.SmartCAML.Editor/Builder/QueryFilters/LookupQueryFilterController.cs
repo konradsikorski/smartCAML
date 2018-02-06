@@ -13,7 +13,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
     class LookupQueryFilterController : DropdownQueryFilterController
     {
         private ComboBox _ucLookupAs;
-        private bool LookupAsId => _ucLookupAs.SelectedIndex == 0;
+        private bool LookupAsId {
+            get => _ucLookupAs.SelectedIndex == 0;
+            set => _ucLookupAs.SelectedIndex = value ? 0 : 1;
+        }
         private bool DataLoaded { get; set; }
 
         public LookupQueryFilterController(Field field, FilterOperator? filterOperator) : base(field, filterOperator)
@@ -89,6 +92,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
             base.UpdateFilter(filter);
 
             if(LookupAsId) filter.FieldRefAttributes.Add("LookupId", "TRUE");
+        }
+
+        public override void Refresh(IFilter filter)
+        {
+            base.Refresh(filter);
+            var value = filter.FieldRefAttributes.FirstOrDefault(a => a.Key.Equals("LookupId", StringComparison.OrdinalIgnoreCase)).Value;
+            if (!string.IsNullOrEmpty(value))
+            {
+                bool isLookupAsId;
+                if (bool.TryParse(value, out isLookupAsId))
+                    LookupAsId = isLookupAsId;
+                else
+                    LookupAsId = false;
+            }
+            else LookupAsId = false;
         }
     }
 }

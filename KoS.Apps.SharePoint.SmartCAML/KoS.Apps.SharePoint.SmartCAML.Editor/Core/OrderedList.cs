@@ -27,6 +27,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Core
             element.Down += MoveFilterDown;
 
             Container.Children.Add(element.Control);
+            Changed?.Invoke(this, EventArgs.Empty);
             return element;
         }
 

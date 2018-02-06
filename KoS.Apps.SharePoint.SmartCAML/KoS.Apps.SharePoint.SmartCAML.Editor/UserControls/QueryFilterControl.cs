@@ -22,6 +22,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
     public partial class QueryFilterControl : UserControl, IDisplayField, IOrderListElement
     {
         #region Fields
+        private IFilter _initFilter;
         private IQueryFilterController _filterController;
         private IQueryFilterController FilterController
         {
@@ -36,7 +37,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
                 _filterController.Initialize(ucContainer, oldValue);
                 _filterController.ValueChanged += FilterControllerOnValueChanged;
 
-                Changed?.Invoke(this, EventArgs.Empty);
+                // we have to check the IsLoaded because FilterController is set on Control initialization
+                // and we dont want to send Change event because nothing was changed but only initialized
+                if(IsLoaded) Changed?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -104,7 +107,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void QueryFilterControl_OnLoaded(object sender, RoutedEventArgs e)
         {
-            Changed?.Invoke(this, EventArgs.Empty);
+            if (_initFilter != null) FilterController?.Refresh(_initFilter);
+            
+            // loaded event must be deattached becouse it fires every time when selected tab in QueryTab user control is changed
+            this.Loaded -= QueryFilterControl_OnLoaded;
         }
 
         private void UpButton_OnClick(object sender, RoutedEventArgs e)
@@ -115,6 +121,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         private void DownButton_OnClick(object sender, RoutedEventArgs e)
         {
             Down?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void RemoveFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            RemoveClick?.Invoke(this, EventArgs.Empty);
         }
 
         private void OperatorsViewSource_Filter(object sender, FilterEventArgs args)
@@ -146,11 +157,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
             }
         }
 
-        private void RemoveFilterButton_Click(object sender, RoutedEventArgs e)
-        {
-            RemoveClick?.Invoke(this, EventArgs.Empty);
-        }
-
         #endregion
 
         public IFilter GetFilter()
@@ -162,12 +168,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         public void Refresh(IFilter filter)
         {
+            this._initFilter = filter;
             var list = (SList)DataContext;
             ucField.SelectedItem = list.Fields.FirstOrDefault(f => f.InternalName == filter.FieldInternalName);
             ucAndOr.SelectEnum(filter.QueryOperator);
             if(filter.QueryFilter.HasValue) ucFilterOperator.SelectEnum(filter.QueryFilter.Value);
-            //FilterController = QueryFilterFactory.Create(SelectedField, SelectedFilterOperator);
-            //FilterController.Refresh(filter);
         }
     }
 }
