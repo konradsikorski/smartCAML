@@ -8,6 +8,7 @@ using Xceed.Wpf.Toolkit;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Model.FieldType;
 using System.Windows.Data;
+using System.Linq;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 {
@@ -89,6 +90,32 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
             if (viewFilter == null) return;
 
             _model.Date = viewFilter.FieldValue;
+
+            var includeTime = ParseBool( viewFilter.ValueAttributes, "IncludeTimeValue", false);
+            _model.IncludeTime = includeTime;
+        }
+
+        private bool ParseBool(Dictionary<string, string> collection, string key, bool defaultValue)
+        {
+            var value = collection
+                .FirstOrDefault(a => 
+                    a.Key.Equals("IncludeTimeValue", StringComparison.OrdinalIgnoreCase))
+                .Value;
+
+            return ParseBool(value, defaultValue);
+        }
+
+        private bool ParseBool(string value, bool defaultValue)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                bool parsedValue;
+                if (bool.TryParse(value, out parsedValue))
+                    return parsedValue;
+                else
+                    return defaultValue;
+            }
+            else return defaultValue;
         }
 
         protected override void UpdateFilter(Filter filter)

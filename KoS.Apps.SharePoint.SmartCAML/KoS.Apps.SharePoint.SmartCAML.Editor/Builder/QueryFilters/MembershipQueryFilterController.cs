@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
@@ -39,6 +40,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
             base.UpdateFilter(filter);
 
             filter.FilterAttributes.Add("Type", _control.Text);
+        }
+
+        public override void Refresh(IFilter filter)
+        {
+            var viewFilter = filter as Filter;
+            if (viewFilter == null) return;
+
+            _control.Text = viewFilter.FilterAttributes.FirstOrDefault(a => a.Key == "Type").Value ?? string.Empty;
         }
     }
 }

@@ -97,6 +97,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
         public override void Refresh(IFilter filter)
         {
             base.Refresh(filter);
+
             var value = filter.FieldRefAttributes.FirstOrDefault(a => a.Key.Equals("LookupId", StringComparison.OrdinalIgnoreCase)).Value;
             if (!string.IsNullOrEmpty(value))
             {
