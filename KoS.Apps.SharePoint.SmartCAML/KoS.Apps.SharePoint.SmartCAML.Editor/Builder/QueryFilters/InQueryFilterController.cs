@@ -18,18 +18,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 
         protected override IEnumerable<Control> InitializeControls(string oldValue)
         {
-            var control = CreateControl();
-            control.Text = oldValue;
+            var control = CreateControl(oldValue);
 
             return new[] { control };
         }
 
-        private TextBox CreateControl()
+        private TextBox CreateControl(string text = "")
         {
             var control = new TextBox
             {
                 MinWidth = _controlWidth,
                 Margin = _controlMargin,
+                Text = text,
             };
 
             control.TextChanged += ControlOnTextChanged;
@@ -69,10 +69,23 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
             if (viewFilter == null) return;
             if (viewFilter.FieldValues == null) return;
 
-            foreach (var values in viewFilter.FieldValues)
+            RemoveAllValueControls();
+
+            foreach (var value in viewFilter.FieldValues)
             {
-                var control = CreateControl();
-                control.Text = values;
+                if (string.IsNullOrWhiteSpace(value)) continue;
+
+                AddToParent(CreateControl(value));
+            }
+
+            AddToParent(CreateControl());
+        }
+
+        private void RemoveAllValueControls()
+        {
+            while(Controls.Count > 0)
+            {
+                RemoveFromParent(Controls[0]);
             }
         }
 
