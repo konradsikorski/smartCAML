@@ -1,5 +1,6 @@
 ﻿using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
 {
     public class CamlParser
     {
+        private static Logger Log = LogManager.GetCurrentClassLogger();
+
         public static List<IFilter> Parse(string xml)
         {
             if (String.IsNullOrEmpty(xml)) return new List<IFilter>();
@@ -19,6 +22,19 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             var whereNode = queryNode?.Element("Where") ?? doc.Element("Where");
 
             return Parse(whereNode);
+        }
+
+        public static List<IFilter> TryParse(XElement whereNode)
+        {
+            try
+            {
+                return Parse(whereNode);
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex);
+                return null;
+            }
         }
 
         public static List<IFilter> Parse(XElement whereNode)

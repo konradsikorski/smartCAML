@@ -67,6 +67,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         public void Refresh(ViewBuilder view)
         {
+            if (view?.Filters == null) return;
+
             ucFilters.Children.Clear();
 
             foreach (var filter in view.Filters)

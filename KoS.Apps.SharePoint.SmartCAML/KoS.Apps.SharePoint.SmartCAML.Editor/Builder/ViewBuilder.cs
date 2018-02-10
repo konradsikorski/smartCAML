@@ -2,12 +2,15 @@
 using System.Xml.Linq;
 using System.Linq;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
-using KoS.Apps.SharePoint.SmartCAML.Model;
+using System;
+using NLog;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
 {
     public class ViewBuilder
     {
+        private static Logger Log = LogManager.GetCurrentClassLogger();
+
         public List<IFilter> Filters { get; private set; } = new List<IFilter>();
         public List<QueryOrderBy> OrderBy { get; private set; } = new List<QueryOrderBy>();
 
@@ -64,45 +67,71 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             var viewBuilder = new ViewBuilder();
             if (string.IsNullOrWhiteSpace(xml)) return viewBuilder;
 
-            XDocument doc;
-            try
-            {
-                doc = XDocument.Parse(xml);
-            }
-            catch(System.Xml.XmlException)
-            {
-                return null;
-            }
+            var doc = TryParseDocument(xml);
+            if (doc == null) return null;
 
             var queryNode = doc.Element("Query");
 
             // read where
             var whereNode = queryNode?.Element("Where") ?? doc.Element("Where");
-            var filters = CamlParser.Parse(whereNode);
+            var filters = CamlParser.TryParse(whereNode);
 
-            if(filters != null)
-                viewBuilder.Filters.AddRange(filters);
+            viewBuilder.Filters = filters;
 
             // read orderBy
-            var orderNode = queryNode?.Element("OrderBy") ?? doc.Element("OrderBy");
+            var orderByNode = queryNode?.Element("OrderBy") ?? doc.Element("OrderBy");
+            var orderBy = ParseOrderByNode(orderByNode);
 
-            if (orderNode != null)
-            {
-                foreach (var node in orderNode.Descendants("FieldRef"))
-                {
-                    bool isAscending;
-                    var ascending = node.Attribute("Ascending")?.Value;
-                    if (!bool.TryParse(ascending, out isAscending)) isAscending = true;
-
-                    viewBuilder.OrderBy.Add(new QueryOrderBy
-                    {
-                        FieldName = node.Attribute("Name")?.Value,
-                        Direction = isAscending ? Enums.OrderByDirection.Ascending : Enums.OrderByDirection.Descending
-                    });
-                }
-            }
+            viewBuilder.OrderBy = orderBy;
 
             return viewBuilder;
+        }
+
+        private static XDocument TryParseDocument(string xml)
+        {
+            try
+            {
+                return XDocument.Parse(xml);
+            }
+            catch (System.Xml.XmlException ex)
+            {
+                Log.Warn(ex);
+                return null;
+            }
+        }
+
+        private static List<QueryOrderBy> TryParseOrderByNode(XElement orderByNode)
+        {
+            try
+            {
+                return ParseOrderByNode(orderByNode);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return null;
+            }
+        }
+
+        private static List<QueryOrderBy> ParseOrderByNode(XElement orderByNode)
+        {
+            var orderBy = new List<QueryOrderBy>();
+            if (orderByNode == null) return orderBy;
+
+            foreach (var node in orderByNode.Descendants("FieldRef"))
+            {
+                bool isAscending;
+                var ascending = node.Attribute("Ascending")?.Value;
+                if (!bool.TryParse(ascending, out isAscending)) isAscending = true;
+
+                orderBy.Add(new QueryOrderBy
+                {
+                    FieldName = node.Attribute("Name")?.Value,
+                    Direction = isAscending ? Enums.OrderByDirection.Ascending : Enums.OrderByDirection.Descending
+                });
+            }
+
+            return orderBy;
         }
     }
 }

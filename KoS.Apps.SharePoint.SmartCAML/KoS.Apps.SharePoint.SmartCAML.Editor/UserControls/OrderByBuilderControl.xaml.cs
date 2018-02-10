@@ -70,6 +70,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
 
         internal void Refresh(ViewBuilder view)
         {
+            if (view?.OrderBy == null) return;
+
             ucFilters.Children.Clear();
 
             foreach (var orderBy in view.OrderBy)
