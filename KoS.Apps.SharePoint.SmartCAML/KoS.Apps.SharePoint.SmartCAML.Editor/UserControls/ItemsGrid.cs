@@ -50,11 +50,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         #endregion
 
-        public ItemsGrid()
-        {
-            InitializeComponent();
-        }
-
         public SList List
         {
             get { return _list; }
@@ -84,6 +79,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         }
 
         public bool HasChanges => ucItems.ItemsSource?.Cast<ListItem>().Any(item => item.IsDirty) ?? false;
+
+        public ItemsGrid()
+        {
+            InitializeComponent();
+        }
 
         internal void QueryResult(List<ListItem> items)
         {

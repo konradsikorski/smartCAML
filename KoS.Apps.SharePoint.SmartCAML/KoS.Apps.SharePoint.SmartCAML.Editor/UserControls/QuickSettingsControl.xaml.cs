@@ -19,7 +19,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
         private void UcDisplayBy_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Config.DisplayColumnsByTitle = ucDisplayBy.SelectedIndex == 1;
-            ((MainWindow) Application.Current.MainWindow).Test();
+            ((MainWindow) Application.Current.MainWindow).UpdateConfig();
         }
     }
 }

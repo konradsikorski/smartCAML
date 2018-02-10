@@ -5,12 +5,23 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
+using System.Collections.Generic;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 {
     public class QueryTabControl : TabControl
     {
         public QueryTab SelectedQueryTab => ToQueryTab(this.SelectedItem);
+
+        public IEnumerable<QueryTab> AllTabs
+        {
+            get {
+                foreach (var item in this.Items)
+                {
+                    yield return (QueryTab)((TabItem)item)?.Content;
+                }
+            }
+        }
          
         public async Task AddQuery(SList list)
         {

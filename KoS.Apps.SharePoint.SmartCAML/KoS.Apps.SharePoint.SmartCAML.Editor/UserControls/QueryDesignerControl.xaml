@@ -6,17 +6,22 @@
              xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.UserControls"
              xmlns:controls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             x:Name="UserControl"
+             d:DesignHeight="300" 
+             d:DesignWidth="300">
+    
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            <controls:QueryBuilderControl x:Name="ucQueryBuilder"
-                                       Margin="4"
-                                       DisplayColumnsByTitle="{Binding ElementName=UserControl,
-                                                                               Path=TabConfig.DisplayColymnsByTitle}" />
-            <local:OrderByBuilderControl x:Name="ucOrderByBuilder"
-                                                Margin="4"
-                                                DisplayColumnsByTitle="{Binding ElementName=UserControl,
-                                                                               Path=TabConfig.DisplayColymnsByTitle}" />
+            <controls:QueryBuilderControl 
+                x:Name="ucQueryBuilder"
+                Margin="4"
+                DisplayColumnsByTitle="{Binding ElementName=UserControl, Path=DisplayColumnsByTitle}" />
+            
+            <local:OrderByBuilderControl 
+                x:Name="ucOrderByBuilder"
+                Margin="4"
+                DisplayColumnsByTitle="{Binding ElementName=UserControl, Path=DisplayColumnsByTitle}" />
+            
         </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -19,7 +19,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
         public event EventHandler Changed;
         public OrderedList<QueryFilterControl> Controller { get; }
 
-        public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(nameof(DisplayColumnsByTitle), typeof(bool), typeof(QueryBuilderControl), null);
+        public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(
+            nameof(DisplayColumnsByTitle), 
+            typeof(bool), 
+            typeof(QueryBuilderControl),
+            null);
+
         [Bindable(true)]
         public bool DisplayColumnsByTitle
         {

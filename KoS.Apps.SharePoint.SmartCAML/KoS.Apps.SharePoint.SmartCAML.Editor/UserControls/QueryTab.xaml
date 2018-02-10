@@ -17,9 +17,13 @@
         </Grid.RowDefinitions>
 
         <TabControl Grid.Row="0" SelectionChanged="TabControl_SelectionChanged">
+            <!-- Designer -->
             <TabItem x:Name="DesignerTab" Header="Designer">
-                <usercontrols:QueryDesignerControl x:Name="ucQueryDesigner" />
+                <usercontrols:QueryDesignerControl x:Name="ucQueryDesigner" 
+                     DisplayColumnsByTitle="{Binding ElementName=UserControl, Path=TabConfig.DisplayColymnsByTitle}"/>
             </TabItem>
+            
+            <!-- XML View -->
             <TabItem x:Name="XmlTab" Header="XML">
                 <usercontrols:QueryXmlControl x:Name="ucQueryXml"/>
             </TabItem>
@@ -32,6 +36,7 @@
                       Cursor="SizeNS"
                       ResizeDirection="Rows" />
 
+        <!--Items grid-->
         <local:ItemsGrid x:Name="ucItems"
                          Grid.Row="2"
                          DisplayColumnsByTitle="{Binding ElementName=UserControl,

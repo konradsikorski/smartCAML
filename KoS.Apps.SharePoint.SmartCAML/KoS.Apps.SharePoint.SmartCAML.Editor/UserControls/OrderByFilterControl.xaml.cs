@@ -22,6 +22,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
         public Field SelectedField => (Field)ucField.SelectedItem;
 
         public BoolToStringConverter DisplayMemberConverter => (BoolToStringConverter)this.Resources["DisplayMemberConverter"];
+
         public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(nameof(DisplayColumnsByTitle), typeof(bool), typeof(OrderByFilterControl), new FrameworkPropertyMetadata(DisplayColumnsByTitlePropertyChanged));
         private static void DisplayColumnsByTitlePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -31,14 +32,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
 
             source.SortDescriptions.Clear();
             source.SortDescriptions.Add(new SortDescription(sortPropertyName, ListSortDirection.Ascending));
-        }
-
-        internal void Refresh(QueryOrderBy orderBy)
-        {
-            if (orderBy == null) return;
-
-            ucField.SelectedValue = orderBy.FieldName;
-            ucOrderDirection.SelectEnum(orderBy.Direction);
         }
 
         [Bindable(true)]
@@ -56,18 +49,18 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
 
         public CollectionViewSource FieldsViewSource => (CollectionViewSource)this.Resources["FieldsViewSource"];
 
-        public OrderByFilterControl()
-        {
-            InitializeComponent();
-            ucOrderDirection.BindToEnum<OrderByDirection>(0);
-        }
-
         public FrameworkElement Control => this;
 
         public event EventHandler RemoveClick;
         public event EventHandler Changed;
         public event EventHandler Up;
         public event EventHandler Down;
+
+        public OrderByFilterControl()
+        {
+            InitializeComponent();
+            ucOrderDirection.BindToEnum<OrderByDirection>(0);
+        }
 
         private void UpButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -97,6 +90,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
                     Direction = SelectedDirection,
                     FieldName = SelectedField?.InternalName
                 };
+        }
+
+        internal void Refresh(QueryOrderBy orderBy)
+        {
+            if (orderBy == null) return;
+
+            ucField.SelectedValue = orderBy.FieldName;
+            ucOrderDirection.SelectEnum(orderBy.Direction);
         }
     }
 }

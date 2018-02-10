@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder;
 
@@ -10,6 +12,29 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
     public partial class QueryDesignerControl : UserControl
     {
         public bool Modified { get; set; }
+
+
+        #region Dependency Property
+
+        public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(
+            nameof(DisplayColumnsByTitle), 
+            typeof(bool), 
+            typeof(QueryDesignerControl),
+            null);
+
+        [Bindable(true)]
+        public bool DisplayColumnsByTitle
+        {
+            get
+            {
+                return (bool)this.GetValue(DisplayColumnsByTitleProperty);
+            }
+            set
+            {
+                this.SetValue(DisplayColumnsByTitleProperty, value);
+            }
+        }
+        #endregion
 
         public QueryDesignerControl()
         {

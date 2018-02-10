@@ -20,7 +20,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
         public event EventHandler Changed;
         public OrderedList<OrderByFilterControl> Controller { get; }
 
-        public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(nameof(DisplayColumnsByTitle), typeof(bool), typeof(OrderByBuilderControl), null);
+        public static readonly DependencyProperty DisplayColumnsByTitleProperty = DependencyProperty.Register(
+            nameof(DisplayColumnsByTitle), 
+            typeof(bool), 
+            typeof(OrderByBuilderControl),
+            null);
+
         [Bindable(true)]
         public bool DisplayColumnsByTitle
         {
