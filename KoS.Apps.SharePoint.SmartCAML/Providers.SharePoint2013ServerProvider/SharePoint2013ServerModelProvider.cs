@@ -73,7 +73,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider
             return await Connect(url);
         }
 
-        public async Task<List<ListItem>> ExecuteQuery(ListQuery query)
+        public async Task<List<ListItem>> ExecuteQuery(ListQuery query, int pageSize)
         {
             using (var site = CreateSite(query.List.Web.Url))
             {

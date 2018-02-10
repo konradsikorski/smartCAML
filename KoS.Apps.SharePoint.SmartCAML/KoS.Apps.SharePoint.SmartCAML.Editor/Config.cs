@@ -112,6 +112,24 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             set { Settings.Default.LastVersion = value; }
         }
 
+        public static int? PageSize
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Settings.Default.PageSize)) return null;
+
+                int pageSize;
+                return int.TryParse(Settings.Default.PageSize, out pageSize)
+                    ? (int?)pageSize
+                    : null;
+            }
+            set
+            {
+                if(value == null || value > 1)
+                    Settings.Default.PageSize = value?.ToString();
+            }
+        }
+
         public static string ServiceAddress =>
 #if DEBUG
             "http://localhost:7870/api/";

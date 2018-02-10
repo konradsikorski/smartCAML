@@ -10,7 +10,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Model
         Task<Web> Connect(string url);
         Task<Web> Connect(string url, string userName, string password);
 
-        Task<List<ListItem>> ExecuteQuery(ListQuery query);
+        Task<List<ListItem>> ExecuteQuery(ListQuery query, int? pageSize);
         Task FillListFields(SList list);
         Task SaveItem(ListItem item);
         Task FillContentTypes(SList list, bool fillAlsoWeb = true);

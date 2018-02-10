@@ -4,16 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.UserControls"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="200"
              Padding="10"
              Background="{StaticResource DialogBackground}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Foreground="#FF006AB2" >Display columns by:</TextBlock>
-        <ComboBox Grid.Row="1" x:Name="ucDisplayBy" SelectionChanged="UcDisplayBy_OnSelectionChanged"/>
-    </Grid>
+    <StackPanel>
+        <TextBlock Foreground="#FF006AB2" >Display columns by:</TextBlock>
+        <ComboBox x:Name="ucDisplayBy" SelectionChanged="UcDisplayBy_OnSelectionChanged"/>
+        <TextBlock Foreground="#FF006AB2" >Page size:</TextBlock>
+        <xctk:IntegerUpDown x:Name="ucPageSize" Minimum="1" Watermark="No limits" ValueChanged="ucPageSize_ValueChanged"/>
+    </StackPanel>
 </UserControl>

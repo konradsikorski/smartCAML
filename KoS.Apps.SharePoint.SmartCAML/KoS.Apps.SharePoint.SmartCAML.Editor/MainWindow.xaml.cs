@@ -101,7 +101,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
                 var list = ucQueries.SelectedQueryTab.List;
                 StatusNotification.NotifyWithProgress("Quering list: " + list.Title);
 
-                var items = await ucWebs.GetClient(list.Web).ExecuteQuery(query);
+                var items = await ucWebs.GetClient(list.Web).ExecuteQuery(query, Config.PageSize);
                 ucQueries.SelectedQueryTab.QueryResult(items);
 
                 StatusNotification.Notify("Retrived items: " + items.Count);

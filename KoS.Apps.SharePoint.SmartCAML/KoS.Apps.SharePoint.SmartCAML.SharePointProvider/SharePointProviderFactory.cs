@@ -1,7 +1,6 @@
 ﻿using System;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 using KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider;
-using KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ServerProvider;
 
 namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
 {

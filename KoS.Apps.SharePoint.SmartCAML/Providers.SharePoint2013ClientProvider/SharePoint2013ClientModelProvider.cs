@@ -143,7 +143,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
         #region Get Items
 
-        public async Task<List<Model.ListItem>> ExecuteQuery(Model.ListQuery query)
+        public async Task<List<Model.ListItem>> ExecuteQuery(Model.ListQuery query, int? pageSize)
         {
             using (var context = CreateContext(query.List.Web.Url))
             {
@@ -151,29 +151,42 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                     ? query.Query
                     : $"<Query>{query.Query}</Query>";
 
-                   var serverList = context.Web.Lists.GetById(query.List.Id);
-                var listQuery = new CamlQuery{ ViewXml = $"<View Scope='RecursiveAll'>{queryString}</View>" };
+                var serverList = context.Web.Lists.GetById(query.List.Id);
+                ListItemCollection pageItems = null;
+                List<Model.ListItem> items = new List<Model.ListItem>();
 
-                var items = serverList.GetItems(listQuery);
-                context.Load(items
-                    //,i => i.Include(item => item.Id)
-                    );
+                do
+                {
+                    var rowLimit = pageSize.HasValue ? $"<RowLimit>{pageSize}</RowLimit>" : string.Empty;
+                    var listQuery = new CamlQuery {
+                        ViewXml = $"<View Scope='RecursiveAll'>{queryString}{rowLimit}</View>",
+                        ListItemCollectionPosition = pageItems?.ListItemCollectionPosition
+                    };
 
-                await Task.Factory.StartNew(() => context.ExecuteQuery());
+                    pageItems = serverList.GetItems(listQuery);
+                    context.Load(pageItems);
 
-                return items.Cast<ListItem>()
-                        .Select(i => new Model.ListItem(query.List)
-                        {
-                            Id = i.Id,
-                            Columns =
-                                query.List
-                                .Fields
-                                .ToDictionary(
-                                    f => f.InternalName,
-                                    f => ElementSelector(f, i)
-                                    )
-                        })
-                        .ToList();
+                    await Task.Factory.StartNew(() => context.ExecuteQuery());
+
+                    items.AddRange(
+                        pageItems
+                            .Cast<ListItem>()
+                            .Select(i => new Model.ListItem(query.List)
+                            {
+                                Id = i.Id,
+                                Columns =
+                                    query.List
+                                    .Fields
+                                    .ToDictionary(
+                                        f => f.InternalName,
+                                        f => ElementSelector(f, i)
+                                        )
+                            })
+                        );
+                }
+                while (pageItems?.ListItemCollectionPosition != null);
+
+                return items;
             }
         }
 

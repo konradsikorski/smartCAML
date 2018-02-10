@@ -75,7 +75,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
             return await Connect(url);
         }
 
-        public async Task<List<ListItem>> ExecuteQuery(ListQuery query)
+        public async Task<List<ListItem>> ExecuteQuery(ListQuery query, int? pageSize)
         {
             return await Task.Factory.StartNew(() =>
             {
