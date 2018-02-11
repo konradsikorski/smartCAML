@@ -147,7 +147,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                 var fields = new List<Field>
                 {
                     new Field { Group = "1", Title = "Text",            Type=FieldType.Text,            InternalName = Internals.Text       },
-                    new Field { Group = "1", Title = "User",            Type=FieldType.User,            InternalName = Internals.User       },
+                    new FieldLookup { Group = "1", Title = "User",      Type=FieldType.User,            InternalName = Internals.User       },
                     new FieldDateTime { Group = "1", Title = "Date",    Type=FieldType.DateTime,        InternalName = Internals.Date       , DateOnly = true},
                     new FieldDateTime { Group = "1", Title = "DateTime",Type=FieldType.DateTime,        InternalName = Internals.DateTime   , DateOnly = false},
                     new FieldLookup { Group = "2", Title = "Lookup",    Type=FieldType.Lookup,          InternalName = Internals.Lookup     },
