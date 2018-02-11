@@ -1,8 +1,15 @@
 ## Changelog
 
-### v. 1.10
+### v. 2.0
+##### New
++ Query designer can be build from xml view
++ Page size for caml query
++ UserID as a value for User fields
+
 ##### Update
 + about window as popup
++ columns settings window as a popup
+
 ##### Fix
 + placeholder for 'site url' dropdown is now working when it is empty on start
 
@@ -12,7 +19,7 @@
 + Now SmartCAML is also available in Windows Store!
 ##### Update
 + Connect window is now as popup not a dialog
-+ Redesign connect window
++ Redesigned connect window
 + .NET 4.6.1 is now required
 
 ### v. 1.8.6
