@@ -16,7 +16,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Core.Commands
 
         public void Execute(object parameter)
         {
-            Telemetry.Instance.Native.TrackEvent("Command.Donate");
+            Telemetry.Instance.Native?.TrackEvent("Command.Donate");
 
             try
             {

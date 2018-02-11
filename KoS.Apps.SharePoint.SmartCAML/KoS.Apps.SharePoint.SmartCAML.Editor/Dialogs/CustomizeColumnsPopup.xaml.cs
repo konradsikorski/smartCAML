@@ -20,13 +20,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         public CustomizeColumnsWindow()
         {
-            Telemetry.Instance.Native.TrackPageView("CustomizeColumns");
+            Telemetry.Instance.Native?.TrackPageView("CustomizeColumns");
             InitializeComponent();
         }
 
         public CustomizeColumnsWindow(List<ColumnVisibility> columns)
         {
-            Telemetry.Instance.Native.TrackPageView("CustomizeColumns");
+            Telemetry.Instance.Native?.TrackPageView("CustomizeColumns");
             InitializeComponent();
 
             ucHiddenColumns.DisplayMemberPath = ucVisibleColumns.DisplayMemberPath = "InternalName";
@@ -56,7 +56,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void HideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("CustomizeColumns.HideColumn");
+            Telemetry.Instance.Native?.TrackPageView("CustomizeColumns.HideColumn");
             foreach (ColumnVisibility item in ucVisibleColumns.SelectedItems)
             {
                 item.IsVisible = false;
@@ -70,7 +70,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void HideAllColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("CustomizeColumns.HideAllColumn");
+            Telemetry.Instance.Native?.TrackPageView("CustomizeColumns.HideAllColumn");
             foreach (ColumnVisibility item in ucVisibleColumns.Items)
             {
                 item.IsVisible = false;
@@ -84,7 +84,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void UnhideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("CustomizeColumns.UnhideColumn");
+            Telemetry.Instance.Native?.TrackPageView("CustomizeColumns.UnhideColumn");
             foreach (ColumnVisibility item in ucHiddenColumns.SelectedItems)
             {
                 item.IsVisible = true;
@@ -98,7 +98,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void UnhideAllColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("CustomizeColumns.UnhideAllColumn");
+            Telemetry.Instance.Native?.TrackPageView("CustomizeColumns.UnhideAllColumn");
             foreach (ColumnVisibility item in ucHiddenColumns.Items)
             {
                 item.IsVisible = true;
@@ -107,7 +107,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void OkButton_OnClick(object sender, RoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("CustomizeColumns.OK");
+            Telemetry.Instance.Native?.TrackPageView("CustomizeColumns.OK");
             OnDialogResult(true);
         }
 

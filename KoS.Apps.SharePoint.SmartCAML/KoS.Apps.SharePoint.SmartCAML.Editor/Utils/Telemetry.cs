@@ -19,6 +19,9 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 
         private Telemetry()
         {
+#if Debug
+            return;
+#endif
             Native = new TelemetryClient {InstrumentationKey = "5e6fcdc2-686f-4a2b-bb9a-8cee304ea210" };
 
             // Set session data:
@@ -40,7 +43,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
             {
                 while (!cancelationToken.IsCancellationRequested)
                 {
-                    Native.TrackMetric("ActiveUser", 1);
+                    Native?.TrackMetric("ActiveUser", 1);
                     Thread.Sleep(60000);
                 }
             }, _activeUserTaskCancelation.Token);

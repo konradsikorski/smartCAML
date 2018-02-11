@@ -21,7 +21,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         public AboutWindow()
         {
-            Telemetry.Instance.Native.TrackPageView("About");
+            Telemetry.Instance.Native?.TrackPageView("About");
             InitializeComponent();
             ucVersion.Text = VersionUtil.GetVersion();
         }
@@ -29,7 +29,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void GitHubButton_Click(object sender, RoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("About.GitHub");
+            Telemetry.Instance.Native?.TrackEvent("About.GitHub");
             Process.Start("https://github.com/konradsikorski/smartCAML");
         }
 
@@ -60,7 +60,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
                 if (updateInfo.UpdateAvailable)
                 {
-                    Telemetry.Instance.Native.TrackEvent("About.UpdateAvailable", new Dictionary<string, string>
+                    Telemetry.Instance.Native?.TrackEvent("About.UpdateAvailable", new Dictionary<string, string>
                     {
                         {"currentVersion", VersionUtil.GetVersion() },
                         {"newVersion", updateInfo.AvailableVersion.ToString(4) }
@@ -81,7 +81,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void UcUpdateButton_OnClick(object sender, RoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackEvent("About.Update");
+            Telemetry.Instance.Native?.TrackEvent("About.Update");
             UpdateStatusMessage("Updating...", false);
 
             ClickOnceHelper.DoUpdateAsync(

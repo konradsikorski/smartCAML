@@ -156,7 +156,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void HideAllHiddenColumnsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.HideAllHiddenColumns");
+            Telemetry.Instance.Native?.TrackPageView("Main.ItemsGrid.HideAllHiddenColumns");
 
             foreach (var column in ucItems.Columns)
             {
@@ -171,7 +171,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void HideAllReadonlyColumnsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.HideAllHiddenColumns");
+            Telemetry.Instance.Native?.TrackPageView("Main.ItemsGrid.HideAllHiddenColumns");
 
             foreach (var column in ucItems.Columns)
             {
@@ -187,7 +187,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void UnpinColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.UnpinColumn");
+            Telemetry.Instance.Native?.TrackPageView("Main.ItemsGrid.UnpinColumn");
             var columnHeader = (DataGridColumnHeader)e.OriginalSource;
             columnHeader.Column.DisplayIndex = --ucItems.FrozenColumnCount;
         }
@@ -200,7 +200,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void PinColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.PinColumn");
+            Telemetry.Instance.Native?.TrackPageView("Main.ItemsGrid.PinColumn");
             var columnHeader = (DataGridColumnHeader)e.OriginalSource;
             columnHeader.Column.DisplayIndex = ucItems.FrozenColumnCount++;
         }
@@ -212,7 +212,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void HideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.HideColumn");
+            Telemetry.Instance.Native?.TrackPageView("Main.ItemsGrid.HideColumn");
             var column = (DataGridColumnHeader)e.OriginalSource;
             column.Column.Visibility = Visibility.Collapsed;
         }
@@ -233,7 +233,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void UnHideColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.UnHideColumn");
+            Telemetry.Instance.Native?.TrackPageView("Main.ItemsGrid.UnHideColumn");
             foreach (var column in ucItems.Columns)
             {
                 column.Visibility = Visibility.Visible;
@@ -242,7 +242,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void CustomizeColumnCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("Main.ItemsGrid.CustomizeColumn");
+            Telemetry.Instance.Native?.TrackPageView("Main.ItemsGrid.CustomizeColumn");
             var dialog = new CustomizeColumnsWindow(
                 ucItems.Columns.Select(c => new ColumnVisibility
                 {

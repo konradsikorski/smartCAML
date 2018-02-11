@@ -40,7 +40,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Controls
 
         private void UcCloseButton_OnClick(object sender, RoutedEventArgs e)
         {
-            Telemetry.Instance.Native.TrackPageView("Main.Tabs.Close");
+            Telemetry.Instance.Native?.TrackPageView("Main.Tabs.Close");
             var tabItem = (TabItem) this.Parent;
             ((TabControl)tabItem.Parent).Items.Remove(tabItem);
         }

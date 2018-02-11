@@ -11,7 +11,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 
         public static string HandleConnection(Exception ex)
         {
-            Telemetry.Instance.Native.TrackException(ex);
+            Telemetry.Instance.Native?.TrackException(ex);
             Log.Error(ex);
             StatusNotification.Notify("Connection failed");
 
@@ -57,7 +57,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 
         public static void Handle(Exception ex, string message = null)
         {
-            Telemetry.Instance.Native.TrackException(ex);
+            Telemetry.Instance.Native?.TrackException(ex);
             Log.Error(ex);
             MessageBox.Show($"{message}\n\n{ex.Message}", "SmartCAML", MessageBoxButton.OK, MessageBoxImage.Error);
         }
