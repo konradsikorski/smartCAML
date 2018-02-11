@@ -112,6 +112,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
             set { Settings.Default.LastVersion = value; }
         }
 
+        public static bool InstallationCompleted
+        {
+            get { return Settings.Default.InstallationCompleted; }
+            set { Settings.Default.InstallationCompleted = value; }
+        }
+
         public static int? PageSize
         {
             get

@@ -35,10 +35,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         {
             var currentVersion = VersionUtil.GetVersion();
             Log.Info($"Application Started | currentVersion:{currentVersion} | lastVersion:{Config.LastVersion}");
-            if (currentVersion == Config.LastVersion) return;
-            Settings.Default.Upgrade();
-            
-            var serviceTask  = string.IsNullOrEmpty(Config.LastVersion)
+
+            if (currentVersion != Config.LastVersion)
+            {
+                Settings.Default.Upgrade();
+                Config.LastVersion = currentVersion;
+                Config.InstallationCompleted = false;
+                Config.Save();
+            }
+
+            if (!Config.InstallationCompleted) CompleteInstallation(currentVersion);
+        }
+
+        private void CompleteInstallation(string currentVersion)
+        {
+            var serviceTask = string.IsNullOrEmpty(Config.LastVersion)
                 ? (Func<Task>)(async () => await new ServiceClient(Config.ServiceAddress).InstallationCompleted(currentVersion))
                 : (Func<Task>)(async () => await new ServiceClient(Config.ServiceAddress).UpdateCompleted(currentVersion));
 
@@ -48,7 +59,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
                 {
                     Log.Info($"Calling service: {Config.ServiceAddress}");
                     await serviceTask();
-                    Config.LastVersion = currentVersion;
+                    Config.InstallationCompleted = true;
                     Config.Save();
                 }
                 catch (Exception ex)
@@ -61,7 +72,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor
         private void OnExit(object sender, ExitEventArgs exitEventArgs)
         {
             _run.Stop();
-            Telemetry.Instance.Native.TrackMetric("RunDuration", _run.Elapsed.TotalMinutes);
+            Telemetry.Instance.Native?.TrackMetric("RunDuration", _run.Elapsed.TotalMinutes);
             Telemetry.Instance.Close();
 
             Config.TotalRunTime = Config.TotalRunTime.Add(_run.Elapsed);

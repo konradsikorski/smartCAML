@@ -200,5 +200,17 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Properties {
                 this["PageSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool InstallationCompleted {
+            get {
+                return ((bool)(this["InstallationCompleted"]));
+            }
+            set {
+                this["InstallationCompleted"] = value;
+            }
+        }
     }
 }
