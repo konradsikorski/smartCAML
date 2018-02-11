@@ -166,6 +166,7 @@
     <Compile Include="Controls\ClosableTabItem.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Core\Commands\DonateCommand.cs" />
+    <Compile Include="Core\Consts.cs" />
     <Compile Include="Core\Interfaces\IDisplayField.cs" />
     <Compile Include="Core\Interfaces\IOrderListElement.cs" />
     <Compile Include="Core\Interfaces\IPopup.cs" />

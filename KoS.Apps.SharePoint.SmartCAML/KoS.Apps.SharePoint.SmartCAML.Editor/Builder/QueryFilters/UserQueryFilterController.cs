@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Core;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 
@@ -17,7 +19,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 
             _control.DisplayMemberPath = "Value";
             _control.SelectedValuePath = "Key";
-            _control.ItemsSource = new[] { new KeyValuePair<string, string>("<UserID />", "@Me") };
+            _control.ItemsSource = new[] { new KeyValuePair<string, string>(Consts.UserId, Consts.UserId) };
 
             return controls;
         }

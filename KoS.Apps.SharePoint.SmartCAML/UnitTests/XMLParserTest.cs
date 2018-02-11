@@ -99,6 +99,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.UnitTests
             Assert.IsTrue(filters.Count == 1);
             var filter = (Filter)filters[0];
 
+            Assert.IsFalse(filter.FieldValueIsUserId);
             Assert.AreEqual(filter.FieldInternalName, "BooleanInternal");
             Assert.AreEqual(filter.QueryFilter, Editor.Enums.FilterOperator.Eq);
             Assert.AreEqual(filter.QueryOperator, Editor.Enums.QueryOperator.And);
@@ -110,6 +111,27 @@ namespace KoS.Apps.SharePoint.SmartCAML.UnitTests
             Assert.AreEqual(filter.FieldRefAttributes["c2"], "c2v");
             Assert.AreEqual(filter.FilterAttributes["b1"], "b1v");
             Assert.AreEqual(filter.FilterAttributes["b2"], "b2v");
+        }
+
+        [TestMethod]
+        public void Parse_UserId()
+        {
+            var xml = @"
+                <Where>
+                <Eq>
+                    <FieldRef Name=""BooleanInternal""/>
+                    <Value Type=""Boolean""><UserID /></Value>
+                </Eq>
+                </Where>";
+
+            var filters = CamlParser.Parse(xml);
+
+            Assert.IsNotNull(filters);
+            Assert.IsTrue(filters.Count == 1);
+            var filter = (Filter)filters[0];
+
+            Assert.IsTrue(filter.FieldValue == string.Empty);
+            Assert.IsTrue(filter.FieldValueIsUserId);
         }
     }
 }

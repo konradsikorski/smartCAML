@@ -116,6 +116,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder
             }
 
             filter.FieldValue = valueElement.Value;
+            filter.FieldValueIsUserId = valueElement.Element("UserID") != null;
         }
 
         private static void ParseFieldRef(XElement fieldRefElement, IFilter filter)

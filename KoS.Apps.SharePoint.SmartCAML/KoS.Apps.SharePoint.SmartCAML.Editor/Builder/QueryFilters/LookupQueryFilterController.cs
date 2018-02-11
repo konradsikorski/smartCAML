@@ -7,6 +7,7 @@ using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using System.Threading.Tasks;
+using KoS.Apps.SharePoint.SmartCAML.Editor.Core;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 {
@@ -92,6 +93,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
             base.UpdateFilter(filter);
 
             if(LookupAsId) filter.FieldRefAttributes.Add("LookupId", "TRUE");
+            if (GetValue() == Consts.UserId) filter.FieldValueIsUserId = true;
         }
 
         public override void Refresh(IFilter filter)
@@ -108,6 +110,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
                     LookupAsId = false;
             }
             else LookupAsId = false;
+
+            if (((Filter)filter).FieldValueIsUserId) _control.Text = Consts.UserId;
         }
     }
 }
