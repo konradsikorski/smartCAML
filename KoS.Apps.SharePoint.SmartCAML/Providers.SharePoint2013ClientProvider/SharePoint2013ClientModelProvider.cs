@@ -109,6 +109,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
         public async Task<List<KeyValuePair<string, string>>> GetLookupItems(Model.FieldLookup lookup)
         {
+            if (lookup.LookupWebId == Guid.Empty || string.IsNullOrEmpty(lookup.LookupList) || 
+                string.IsNullOrEmpty(lookup.LookupField))
+                return null;
+
             using (var context = CreateContext(lookup.List.Web.Url))
             {
                 var lookupField = string.IsNullOrEmpty(lookup.LookupField) ? "Title" : lookup.LookupField;
