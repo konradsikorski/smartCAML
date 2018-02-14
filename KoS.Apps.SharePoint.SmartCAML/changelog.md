@@ -1,5 +1,9 @@
 ## Changelog
 
+### v. 2.1
+##### Fix
++ loading lookup dropdown values in designer cause an exception
+
 ### v. 2.0
 ##### New
 + Query designer can be build from xml view

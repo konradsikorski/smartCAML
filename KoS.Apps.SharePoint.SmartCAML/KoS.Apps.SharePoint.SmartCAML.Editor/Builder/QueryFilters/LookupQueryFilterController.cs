@@ -63,9 +63,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
                 {
                     StatusNotification.NotifyWithProgress("Loading list items");
                     var items =  await GetListItems();
+
                     _control.DisplayMemberPath = "Value";
                     _control.SelectedValuePath = "Key";
-                    _control.ItemsSource = _control.ItemsSource.Cast<KeyValuePair<string, string>>().Concat(items);
+                    _control.ItemsSource = _control.ItemsSource != null
+                        ? _control.ItemsSource.Cast<KeyValuePair<string, string>>().Concat(items)
+                        : items;
                     StatusNotification.Notify("List items loaded");
                 }
                 catch(Exception ex)

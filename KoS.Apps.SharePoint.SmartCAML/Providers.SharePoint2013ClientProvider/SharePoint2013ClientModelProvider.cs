@@ -137,6 +137,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                         i[lookupField] != null ? i[lookupField].ToString() : string.Empty
                         )
                     )
+                    .OrderBy( i => i.Value)
                     .ToList();
             }
         }
