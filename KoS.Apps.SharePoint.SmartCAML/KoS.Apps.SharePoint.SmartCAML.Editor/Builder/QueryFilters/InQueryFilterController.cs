@@ -18,9 +18,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 
         protected override IEnumerable<Control> InitializeControls(string oldValue)
         {
-            var control = CreateControl(oldValue);
+            var controls = new List<Control> { CreateControl(oldValue) };
 
-            return new[] { control };
+            if(!string.IsNullOrEmpty(oldValue)) controls.Add(CreateControl());
+
+            return controls;
         }
 
         private TextBox CreateControl(string text = "")
