@@ -3,6 +3,7 @@
 ### v. 2.1
 ##### Fix
 + loading lookup dropdown values in designer cause an exception
++ In operator in designer was wrongly initialized with value
 
 ### v. 2.0
 ##### New
