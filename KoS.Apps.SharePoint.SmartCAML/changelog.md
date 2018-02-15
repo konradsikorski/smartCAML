@@ -1,6 +1,6 @@
 ## Changelog
 
-### v. 2.1
+### v. 2.2
 ##### Update
 + load lookup values in paging
 ##### Fix

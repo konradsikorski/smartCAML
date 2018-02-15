@@ -191,7 +191,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
         public string PageSize {
             get {
                 return ((string)(this["PageSize"]));

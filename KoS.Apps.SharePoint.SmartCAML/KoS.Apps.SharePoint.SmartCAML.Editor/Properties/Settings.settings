@@ -45,7 +45,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PageSize" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1000</Value>
+      <Value Profile="(Default)">2000</Value>
     </Setting>
     <Setting Name="InstallationCompleted" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
