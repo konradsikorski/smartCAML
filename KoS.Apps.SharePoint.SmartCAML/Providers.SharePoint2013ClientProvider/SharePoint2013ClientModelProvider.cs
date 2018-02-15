@@ -109,8 +109,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
         public async Task<List<KeyValuePair<string, string>>> GetLookupItems(Model.FieldLookup lookup)
         {
-            if (lookup.LookupWebId == Guid.Empty || string.IsNullOrEmpty(lookup.LookupList) || 
-                string.IsNullOrEmpty(lookup.LookupField))
+            if (lookup.LookupWebId == Guid.Empty || string.IsNullOrEmpty(lookup.LookupList))
                 return null;
 
             using (var context = CreateContext(lookup.List.Web.Url))
@@ -119,28 +118,47 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
                 var caml = $@"
                     <Query>
                         <Where />
-                        <OrderBy>
-                            <FieldRef Name=""{lookup.LookupField}"" Ascending=""True"" />
-                        </OrderBy>
                     </Query>";
+
+                ListItemCollection pageItems = null;
+                var pageSize = 2000;
+                var items = new List<KeyValuePair<string, string>>();
 
                 var web = context.Site.OpenWebById(lookup.LookupWebId);
                 var list = web.Lists.GetById(Guid.Parse(lookup.LookupList));
-                var items = list.GetItems(CamlQuery.CreateAllItemsQuery());
 
-                context.Load(items, elements => elements.Include(
-                    i => i.Id,
-                    i => i[lookupField]
-                    ));
+                do
+                {
+                    var rowLimit = $"<RowLimit>{pageSize}</RowLimit>";
+                    var listQuery = new CamlQuery
+                    {
+                        ViewXml = $"<View Scope='RecursiveAll'>{caml}{rowLimit}</View>",
+                        ListItemCollectionPosition = pageItems?.ListItemCollectionPosition
+                    };
 
-                await Task.Factory.StartNew(() => context.ExecuteQuery());
+                    pageItems = list.GetItems(listQuery);
+                    context.Load(pageItems, 
+                        elements => elements.Include(
+                            i => i.Id,
+                            i => i[lookupField]
+                        ),
+                        elements => elements.ListItemCollectionPosition);
 
-                return items.Cast<ListItem>()
-                    .Select( i => new KeyValuePair<string, string>(
-                        i.Id.ToString(), 
-                        i[lookupField] != null ? i[lookupField].ToString() : string.Empty
-                        )
-                    )
+                    await Task.Factory.StartNew(() => context.ExecuteQuery());
+
+                    items.AddRange(
+                        pageItems
+                            .Cast<ListItem>()
+                            .Select(i => new KeyValuePair<string, string>(
+                               i.Id.ToString(),
+                               i[lookupField] != null ? i[lookupField].ToString() : string.Empty
+                               )
+                            )
+                        );
+                }
+                while (pageItems?.ListItemCollectionPosition != null);
+
+                return items
                     .OrderBy( i => i.Value)
                     .ToList();
             }
@@ -158,7 +176,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
                 var serverList = context.Web.Lists.GetById(query.List.Id);
                 ListItemCollection pageItems = null;
-                List<Model.ListItem> items = new List<Model.ListItem>();
+                var items = new List<Model.ListItem>();
 
                 do
                 {

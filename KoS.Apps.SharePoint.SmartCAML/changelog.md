@@ -1,6 +1,8 @@
 ## Changelog
 
 ### v. 2.1
+##### Update
++ load lookup values in paging
 ##### Fix
 + loading lookup dropdown values in designer cause an exception
 + In operator in designer was wrongly initialized with value
