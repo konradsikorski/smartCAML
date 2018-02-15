@@ -11,7 +11,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 
         public static string HandleConnection(Exception ex)
         {
-            Telemetry.Instance.Native?.TrackException(ex);
             Log.Error(ex);
             StatusNotification.Notify("Connection failed");
 
@@ -39,6 +38,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
             else if (ex.Response is HttpWebResponse)
             {
                 var response = (HttpWebResponse)ex.Response;
+                Log.Info("Response status code: " + response.StatusCode);
 
                 switch (response.StatusCode)
                 {
