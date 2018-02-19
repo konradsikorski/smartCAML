@@ -2,7 +2,7 @@
 Best SharePoint CAML query designer app.
 * Quickly build and test CAML queries
 * Update SharePoint list items directly from query results
-* Support for SharePoint 2010+ on premiss and Office 365
+* Support for SharePoint 2010+ on premiss and SharePoint Online
 
 ## Install
 You can install the latest version from **[here](https://sikorski-workshop.azurewebsites.net/Application/Details/smartcaml)**.
@@ -15,8 +15,6 @@ The app is also available on Windows Store:
 The list of changes in each version is available **[here](https://github.com/konradsikorski/smartCAML/releases)**.
 
 ## Features
-#### Connect
-![image](https://sikorski.blob.core.windows.net/workshop-portal/smartcaml/screenshot/f2acfb43-cdd6-43cc-b191-2530ae7ff586.png)
 
 #### Main Window
 * Tree view for all opened SharePoint webs
