@@ -1,5 +1,9 @@
 ## Changelog
 
+### v. 2.3
+##### Fix
++ 'is empty'/'not empty' operator should not generate 'value' xml element
+
 ### v. 2.2
 ##### Update
 + load lookup values in paging
