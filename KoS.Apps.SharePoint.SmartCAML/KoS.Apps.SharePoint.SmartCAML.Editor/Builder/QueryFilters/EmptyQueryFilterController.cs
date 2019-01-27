@@ -19,7 +19,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 
         public override string GetValue()
         {
-            return string.Empty;
+            return null;
         }
     }
 }
