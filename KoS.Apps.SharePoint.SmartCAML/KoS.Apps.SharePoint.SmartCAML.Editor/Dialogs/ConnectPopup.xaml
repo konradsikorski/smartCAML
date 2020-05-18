@@ -30,6 +30,7 @@
                                                          False="Visible"
                                                          True="Collapsed" />
             <bindingConverters:InvertBoolConverter x:Key="InvertBoolConverter" />
+            <bindingConverters:EnumToVisibilityConverter x:Key="ProviderTypeConverter" />
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
@@ -80,9 +81,9 @@
                         SelectedValue="{Binding Path=ProviderType}"
                         />
 
-                <TextBlock Margin="0,8,0,0" Style="{DynamicResource Label}">Account:</TextBlock>
+                <TextBlock Margin="0,8,0,0" Style="{DynamicResource Label}" Visibility="{Binding ProviderType, Converter={StaticResource ProviderTypeConverter}}">Account:</TextBlock>
 
-                <Grid Margin="0,4,0,0">
+                <Grid Margin="0,4,0,0" Visibility="{Binding ProviderType, Converter={StaticResource ProviderTypeConverter}}">
                     <ComboBox 
                             x:Name="ucLogin"
                             IsEditable="True"
@@ -103,7 +104,7 @@
                     </TextBlock>
                 </Grid>
 
-                <Grid Margin="0,4,0,0">
+                <Grid Margin="0,4,0,0" Visibility="{Binding ProviderType, Converter={StaticResource ProviderTypeConverter}}">
                     <PasswordBox 
                         x:Name="ucPassword"
                         ap:PasswordBoxAssistant.BindPassword="true"

@@ -13,6 +13,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.SharePointProvider
                 case SharePointProviderType.Fake: return new FakeProvider();
                 case SharePointProviderType.SharePoint2013ClientModel: return new SharePoint2013ClientModelProvider();
                 case SharePointProviderType.SharePointOnline: return new SharePoint2013ClientModelProvider(true);
+                case SharePointProviderType.SharePointOnlineWithMFA: return new SharePoint2013ClientModelProvider(true) { UseMFA = true };
                 default:
                     throw new NotSupportedException();
             }

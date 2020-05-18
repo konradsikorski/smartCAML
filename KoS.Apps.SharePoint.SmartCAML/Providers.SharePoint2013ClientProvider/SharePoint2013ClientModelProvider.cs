@@ -24,6 +24,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
         public Model.Web Web { get; private set; }
         public bool IsSharePointOnline { get; private set; }
+        public bool UseMFA { get; set; }
 
         public SharePoint2013ClientModelProvider(bool isOnline = false)
         {
@@ -458,6 +459,13 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
 
         private ClientContext CreateContext(string url)
         {
+            if (UseMFA)
+            {
+                // This calls a pop up window with the login page
+                var authManager = new OfficeDevPnP.Core.AuthenticationManager();
+                return authManager.GetWebLoginClientContext(url);
+            }
+                
             var context = new ClientContext(url);
 
             if (!String.IsNullOrEmpty(_userName))
