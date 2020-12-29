@@ -463,7 +463,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             if (!String.IsNullOrEmpty(_userName))
             {
                 context.Credentials = IsSharePointOnline
-                    ? (ICredentials)new SharePointOnlineCredentials(_userName, ConvertPassword(_password))
+                    ? (ICredentials)new Microsoft.SharePoint.Client. SharePointOnlineCredentials(_userName, ConvertPassword(_password))
                     : new NetworkCredential(_userName, _password);
             }
             else
