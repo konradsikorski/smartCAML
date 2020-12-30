@@ -16,6 +16,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
             ucDisplayBy.SelectedIndex = Config.DisplayColumnsByTitle ? 1 : 0;
 
             //ucPageSize.Value = Config.PageSize;
+            ucPageSize.Text = Config.PageSize?.ToString();
         }
 
         private void UcDisplayBy_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -27,6 +28,12 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
         private void ucPageSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             //Config.PageSize = ucPageSize.Value;
+        }
+
+        private void ucPageSize_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (int.TryParse(ucPageSize.Text, out int value))
+                Config.PageSize = value;
         }
     }
 }

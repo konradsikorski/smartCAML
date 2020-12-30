@@ -12,7 +12,7 @@
         <TextBlock Foreground="#FF006AB2" >Display columns by:</TextBlock>
         <ComboBox x:Name="ucDisplayBy" SelectionChanged="UcDisplayBy_OnSelectionChanged"/>
         <TextBlock Foreground="#FF006AB2" >Page size:</TextBlock>
-        <TextBox x:Name="ucPageSize" />
+        <TextBox x:Name="ucPageSize" TextChanged="ucPageSize_TextChanged"/>
         <!--<TextBox x:Name="ucPageSize" Minimum="1" Watermark="No limits" ValueChanged="ucPageSize_ValueChanged"/>-->
     </StackPanel>
 </UserControl>
