@@ -6,7 +6,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:userControls="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.UserControls"
         xmlns:utils="clr-namespace:KoS.Apps.SharePoint.SmartCAML.Editor.Utils"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="MainWindow"
         Width="700"
         Height="500"
@@ -14,7 +13,7 @@
         MinHeight="200"
         Closing="MainWindow_OnClosing"
         Loaded="MainWindow_OnLoaded"
-        mc:Ignorable="d" Icon="Resources/smartCaml.ico">
+        mc:Ignorable="d" Icon="/Resources/smartCaml.ico">
 
     <Window.CommandBindings>
         <CommandBinding x:Name="ConnectCommand"
@@ -87,7 +86,7 @@
                     </Menu>
                 </ToolBar>
                 <ToolBar>
-                    <xctk:DropDownButton Background="Transparent"
+                    <!--<xctk:DropDownButton Background="Transparent"
                                          BorderBrush="Transparent"
                                          BorderThickness="0"
                                          ToolTip="Settings">
@@ -95,7 +94,7 @@
                             <userControls:QuickSettingsControl />
                         </xctk:DropDownButton.DropDownContent>
                         <Image Source="/SmartCAML;component/Resources/Images/gear.png" />
-                    </xctk:DropDownButton>
+                    </xctk:DropDownButton>-->
                     <Button Command="ApplicationCommands.Help" ToolTip="About">
                         <Image Source="/SmartCAML;component/Resources/Images/help.png" />
                     </Button>

@@ -8,6 +8,7 @@ using System.Windows.Media;
 using NLog;
 using NLog.Targets;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 {
@@ -29,7 +30,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 
         private void GitHubButton_Click(object sender, RoutedEventArgs e)
         {
-            Telemetry.Instance.Native?.TrackEvent("About.GitHub");
+            Telemetry.Instance.TrackEvent("About.GitHub");
             Process.Start("https://github.com/konradsikorski/smartCAML");
         }
 
@@ -54,13 +55,19 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
                 return;
             }
 
+            await CheckForUpdate();
+        }
+
+        private async Task CheckForUpdate()
+        {
+#if OLD_ClickOnce
             try
             {
                 var updateInfo = await ClickOnceHelper.CheckNewVersion();
 
                 if (updateInfo.UpdateAvailable)
                 {
-                    Telemetry.Instance.Native?.TrackEvent("About.UpdateAvailable", new Dictionary<string, string>
+                    Telemetry.Instance.TrackEvent("About.UpdateAvailable", new Dictionary<string, string>
                     {
                         {"currentVersion", VersionUtil.GetVersion() },
                         {"newVersion", updateInfo.AvailableVersion.ToString(4) }
@@ -77,13 +84,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
             {
                 UpdateStatusError("Could not check updates, try again later.", ex);
             }
+#endif
         }
 
         private void UcUpdateButton_OnClick(object sender, RoutedEventArgs e)
         {
-            Telemetry.Instance.Native?.TrackEvent("About.Update");
+            Telemetry.Instance.TrackEvent("About.Update");
             UpdateStatusMessage("Updating...", false);
-
+#if OLD_ClickOnce
             ClickOnceHelper.DoUpdateAsync(
                 (o, args) =>
                 {
@@ -106,6 +114,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
                     ucUpdateMessage.Text = $"Updating {args.ProgressPercentage}%...";
                 }
             );
+#endif
         }
 
         private void UpdateStatusSuccess(string message, bool? installButtonVisible = null)

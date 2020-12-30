@@ -460,18 +460,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
         {
             var context = new ClientContext(url);
 
-            if (!String.IsNullOrEmpty(_userName))
-            {
-                context.Credentials = IsSharePointOnline
-                    ? (ICredentials)new Microsoft.SharePoint.Client. SharePointOnlineCredentials(_userName, ConvertPassword(_password))
-                    : new NetworkCredential(_userName, _password);
-            }
-            else
-            {
-                // Ensure use of Windows Authentication
-                //Add the header that tells SharePoint to use Windows authentication.
-                context.ExecutingWebRequest += (sender, args) => args.WebRequestExecutor.RequestHeaders.Add("X-FORMS_BASED_AUTH_ACCEPTED", "f");
-            }
+            var authManager = new PnP.Framework.AuthenticationManager();
+            return authManager.GetContext(url);
+
+            //if (!String.IsNullOrEmpty(_userName))
+            //{
+            //    context.Credentials = IsSharePointOnline
+            //        ? (ICredentials)new Microsoft.SharePoint.Client. SharePointOnlineCredentials(_userName, ConvertPassword(_password))
+            //        : new NetworkCredential(_userName, _password);
+            //}
+            //else
+            //{
+            //    // Ensure use of Windows Authentication
+            //    //Add the header that tells SharePoint to use Windows authentication.
+            //    context.ExecutingWebRequest += (sender, args) => args.WebRequestExecutor.RequestHeaders.Add("X-FORMS_BASED_AUTH_ACCEPTED", "f");
+            //}
 
             return context;
         }

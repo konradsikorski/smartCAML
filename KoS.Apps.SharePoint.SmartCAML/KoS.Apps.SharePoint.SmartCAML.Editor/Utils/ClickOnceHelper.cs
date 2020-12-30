@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+#if OLD_ClickOnce
 using System.Deployment.Application;
+#endif
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -9,8 +11,10 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 {
     static class ClickOnceHelper
     {
+#if OLD_ClickOnce
         public static async Task<UpdateCheckInfo> CheckNewVersion()
         {
+            
             if (ApplicationDeployment.IsNetworkDeployed)
             {
                 var ad = ApplicationDeployment.CurrentDeployment;
@@ -19,7 +23,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
             }
 
             throw new Exception();
-        }
+       }
 
         public static ApplicationDeployment DoUpdateAsync(AsyncCompletedEventHandler onComplete = null, DeploymentProgressChangedEventHandler onProgress = null)
         {
@@ -35,5 +39,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
             System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
             Application.Current.Shutdown();
         }
+#endif
     }
 }

@@ -15,7 +15,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
             ucDisplayBy.ItemsSource = new[] {"Internal Name", "Title"};
             ucDisplayBy.SelectedIndex = Config.DisplayColumnsByTitle ? 1 : 0;
 
-            ucPageSize.Value = Config.PageSize;
+            //ucPageSize.Value = Config.PageSize;
         }
 
         private void UcDisplayBy_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -26,7 +26,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.UserControls
 
         private void ucPageSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            Config.PageSize = ucPageSize.Value;
+            //Config.PageSize = ucPageSize.Value;
         }
     }
 }

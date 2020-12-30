@@ -11,6 +11,24 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\addConnection.png" />
+	  <None Remove="Resources\Images\designerTab.png" />
+	  <None Remove="Resources\Images\donate.png" />
+	  <None Remove="Resources\Images\donateButton.png" />
+	  <None Remove="Resources\Images\gear.png" />
+	  <None Remove="Resources\Images\help.png" />
+	  <None Remove="Resources\Images\list.png" />
+	  <None Remove="Resources\Images\list2.png" />
+	  <None Remove="Resources\Images\newQuery.png" />
+	  <None Remove="Resources\Images\runQuery.png" />
+	  <None Remove="Resources\Images\saveItems.png" />
+	  <None Remove="Resources\Images\web.png" />
+	  <None Remove="Resources\Images\xmlTab.png" />
+	  <None Remove="Resources\Images\xmlTab3.png" />
+	  <None Remove="Resources\smartCaml.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\KoS.Apps.SharePoint.SmartCAML.Model\Model.csproj" />
 		<ProjectReference Include="..\KoS.Apps.SharePoint.SmartCAML.SharePointProvider\SharePointProvider.csproj" />
 		<ProjectReference Include="..\ServiceProxy\ServiceProxy.csproj" />
@@ -21,6 +39,22 @@
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
 		</None>
+		<PackageReference Include="NLog" Version="4.7.6" />
+		<Resource Include="Resources\Images\addConnection.png" />
+		<Resource Include="Resources\Images\designerTab.png" />
+		<Resource Include="Resources\Images\donate.png" />
+		<Resource Include="Resources\Images\donateButton.png" />
+		<Resource Include="Resources\Images\gear.png" />
+		<Resource Include="Resources\Images\help.png" />
+		<Resource Include="Resources\Images\list.png" />
+		<Resource Include="Resources\Images\list2.png" />
+		<Resource Include="Resources\Images\newQuery.png" />
+		<Resource Include="Resources\Images\runQuery.png" />
+		<Resource Include="Resources\Images\saveItems.png" />
+		<Resource Include="Resources\Images\web.png" />
+		<Resource Include="Resources\Images\xmlTab.png" />
+		<Resource Include="Resources\Images\xmlTab3.png" />
+		<Resource Include="Resources\smartCaml.ico" />
 		<Compile Update="Properties\Settings.Designer.cs">
 			<AutoGen>True</AutoGen>
 			<DependentUpon>Settings.settings</DependentUpon>

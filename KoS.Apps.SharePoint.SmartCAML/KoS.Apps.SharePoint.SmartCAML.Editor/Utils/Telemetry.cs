@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+#if OLD_ApplicationInsigts
 using Microsoft.ApplicationInsights;
+#endif
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 {
@@ -9,8 +11,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
     {
         private Task _activeUserTask;
         private CancellationTokenSource _activeUserTaskCancelation;
+#if OLD_ApplicationInsigts
         public TelemetryClient Native { get; private set; }
-
+#else
+        public dynamic Native = null;
+#endif
         private static Telemetry _instance;
         public static Telemetry Instance
         {
@@ -19,6 +24,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 
         private Telemetry()
         {
+#if OLD_ApplicationInsigts
 #if Debug
             return;
 #endif
@@ -33,6 +39,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
             Native.Context.Device.Language = Thread.CurrentThread.CurrentUICulture.Name;
             Native.Context.Device.ScreenResolution = $"{System.Windows.SystemParameters.PrimaryScreenWidth}x{System.Windows.SystemParameters.PrimaryScreenHeight}";
             Native.Context.Component.Version = VersionUtil.GetVersion();
+#endif
         }
 
         public void Start()
@@ -59,11 +66,21 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 
             if (Native != null)
             {
-                Native.Flush(); // only for desktop apps
+                Native?.Flush(); // only for desktop apps
 
                 // Allow time for flushing:
                 Thread.Sleep(1000);
             }
+        }
+
+        public void TrackEvent(string eventName, System.Collections.Generic.Dictionary<string, string> dictionary = null)
+        {
+            Telemetry.Instance.Native?.TrackEvent("Main.CloseQueryTab", dictionary);
+        }
+
+        public void TrackPageView(string pageName)
+        {
+            Telemetry.Instance.Native?.TrackPageView("Main");
         }
     }
 }

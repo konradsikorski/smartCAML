@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Enums;
 using KoS.Apps.SharePoint.SmartCAML.Model;
-using Xceed.Wpf.Toolkit;
+//using Xceed.Wpf.Toolkit;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Builder.Filters;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Model.FieldType;
 using System.Windows.Data;
@@ -54,19 +54,19 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
 
         private Control BuildDateTimeControl(string oldValue)
         {
-            var control = new DateTimePicker
+            var control = new TextBox
             {
                 MinWidth = _controlWidth,
                 Margin = _controlMargin,
 
-                Format = DateTimeFormat.Custom,
-                FormatString = "yyyy-MM-ddTHH:mm:ssZ",
-                TimeFormat = DateTimeFormat.ShortTime,
-                Watermark = "value",
+                //Format = DateTimeFormat.Custom,
+                //FormatString = "yyyy-MM-ddTHH:mm:ssZ",
+                //TimeFormat = DateTimeFormat.ShortTime,
+                //Watermark = "value",
                 Text = oldValue
             };
 
-            control.ValueChanged += (o, args) => OnValueChanged();
+            //control.ValueChanged += (o, args) => OnValueChanged();
             control.LostFocus += (o, args) => OnValueChanged();
 
             var modelBinding = new Binding(nameof(_model.Date))
@@ -74,7 +74,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Builder.QueryFilters
                 Source = _model,
                 Mode = BindingMode.TwoWay
             };
-            control.SetBinding(DateTimePicker.TextProperty, modelBinding);
+            //control.SetBinding(DateTimePicker.TextProperty, modelBinding);
 
             return control;
         }
