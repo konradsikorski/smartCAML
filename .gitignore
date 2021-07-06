@@ -169,7 +169,7 @@ ClientBin/
 *~
 *.dbmdl
 *.dbproj.schemaview
-*.pfx
+#*.pfx
 *.publishsettings
 node_modules/
 orleans.codegen.cs
@@ -217,3 +217,6 @@ _pkginfo.txt
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+#SmartCAML
+UWP*.pfx
