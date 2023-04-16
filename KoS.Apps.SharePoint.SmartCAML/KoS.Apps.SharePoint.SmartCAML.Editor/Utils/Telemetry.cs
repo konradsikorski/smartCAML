@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.ApplicationInsights;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 {
@@ -9,7 +9,7 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
     {
         private Task _activeUserTask;
         private CancellationTokenSource _activeUserTaskCancelation;
-        public TelemetryClient Native { get; private set; }
+        public INative Native { get; private set; }
 
         private static Telemetry _instance;
         public static Telemetry Instance
@@ -22,17 +22,6 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
 #if Debug
             return;
 #endif
-            Native = new TelemetryClient {InstrumentationKey = "5e6fcdc2-686f-4a2b-bb9a-8cee304ea210" };
-
-            // Set session data:
-            Native.Context.User.Id = Config.UserId;
-            Native.Context.User.UserAgent = "SmartCAML/" + VersionUtil.GetVersion();
-            Native.Context.User.AccountId = Config.UserId;
-            Native.Context.Session.Id = Guid.NewGuid().ToString();
-            Native.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-            Native.Context.Device.Language = Thread.CurrentThread.CurrentUICulture.Name;
-            Native.Context.Device.ScreenResolution = $"{System.Windows.SystemParameters.PrimaryScreenWidth}x{System.Windows.SystemParameters.PrimaryScreenHeight}";
-            Native.Context.Component.Version = VersionUtil.GetVersion();
         }
 
         public void Start()
@@ -65,5 +54,14 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Utils
                 Thread.Sleep(1000);
             }
         }
+    }
+
+    public interface INative
+    {
+        void TrackEvent(string name, Dictionary<string, string> arguments = null);
+        void TrackPageView(string name);
+        void TrackMetric(string name, double value);
+        void TrackException(Exception exception);
+        void Flush();
     }
 }
