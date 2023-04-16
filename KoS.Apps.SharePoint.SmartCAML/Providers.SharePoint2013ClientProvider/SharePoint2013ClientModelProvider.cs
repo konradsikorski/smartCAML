@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Security;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using KoS.Apps.SharePoint.SmartCAML.Model;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
@@ -461,6 +466,8 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
         {
             if (UseMFA)
             {
+                var str = CookieReader.GetCookie(url).Replace("; ", ",").Replace(";", ",");
+                //GetWebLoginClientContext(url);
                 // This calls a pop up window with the login page
                 var authManager = new OfficeDevPnP.Core.AuthenticationManager();
                 return authManager.GetWebLoginClientContext(url);
@@ -484,6 +491,80 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
             return context;
         }
 
+        public ClientContext GetWebLoginClientContext(string siteUrl, System.Drawing.Icon icon = null, bool scriptErrorsSuppressed = true)
+        {
+            var authCookiesContainer = new CookieContainer();
+            var siteUri = new Uri(siteUrl);
+
+            var thread = new Thread(() =>
+            {
+                var form = new System.Windows.Forms.Form();
+                if (icon != null)
+                {
+                    form.Icon = icon;
+                }
+                var browser = new System.Windows.Forms.WebBrowser
+                {
+                    ScriptErrorsSuppressed = scriptErrorsSuppressed,
+                    Dock = DockStyle.Fill
+                };
+
+                form.SuspendLayout();
+                form.Width = 900;
+                form.Height = 500;
+                form.Text = $"Log in to {siteUrl}";
+                form.Controls.Add(browser);
+                form.ResumeLayout(false);
+
+                browser.Navigate(siteUri);
+
+                browser.Navigated += (sender, args) =>
+                {
+                    if (siteUri.Host.Equals(args.Url.Host))
+                    {
+                        var cookieString = CookieReader.GetCookie(siteUrl).Replace("; ", ",").Replace(";", ",");
+
+                        // Get FedAuth and rtFa cookies issued by ADFS when accessing claims aware applications.
+                        // - or get the EdgeAccessCookie issued by the Web Application Proxy (WAP) when accessing non-claims aware applications (Kerberos).
+                        IEnumerable<string> authCookies = null;
+                        if (Regex.IsMatch(cookieString, "FedAuth", RegexOptions.IgnoreCase))
+                        {
+                            authCookies = cookieString.Split(',').Where(c => c.StartsWith("FedAuth", StringComparison.InvariantCultureIgnoreCase) || c.StartsWith("rtFa", StringComparison.InvariantCultureIgnoreCase));
+                        }
+                        else if (Regex.IsMatch(cookieString, "EdgeAccessCookie", RegexOptions.IgnoreCase))
+                        {
+                            authCookies = cookieString.Split(',').Where(c => c.StartsWith("EdgeAccessCookie", StringComparison.InvariantCultureIgnoreCase));
+                        }
+                        if (authCookies != null)
+                        {
+                            authCookiesContainer.SetCookies(siteUri, string.Join(",", authCookies));
+                            form.Close();
+                        }
+                    }
+                };
+
+                form.Focus();
+                form.ShowDialog();
+                browser.Dispose();
+            });
+
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
+
+            if (authCookiesContainer.Count > 0)
+            {
+                var ctx = new ClientContext(siteUrl);
+#if !ONPREMISES || SP2016 || SP2019
+                ctx.DisableReturnValueCache = true;
+#endif
+                ctx.ExecutingWebRequest += (sender, e) => e.WebRequestExecutor.WebRequest.CookieContainer = authCookiesContainer;
+                return ctx;
+            }
+
+            return null;
+        }
+
         private SecureString ConvertPassword(string password)
         {
             var securePassword = new SecureString();
@@ -496,5 +577,86 @@ namespace KoS.Apps.SharePoint.SmartCAML.Providers.SharePoint2013ClientProvider
         }
 
         #endregion
+    }
+
+    internal static class CookieReader
+    {
+        /// <summary>
+        /// Enables the retrieval of cookies that are marked as "HTTPOnly". 
+        /// Do not use this flag if you expose a scriptable interface, 
+        /// because this has security implications. It is imperative that 
+        /// you use this flag only if you can guarantee that you will never 
+        /// expose the cookie to third-party code by way of an 
+        /// extensibility mechanism you provide. 
+        /// Version:  Requires Internet Explorer 8.0 or later.
+        /// </summary>
+        private const int INTERNET_COOKIE_HTTPONLY = 0x00002000;
+
+        /// <summary>
+        /// Returns cookie contents as a string
+        /// </summary>
+        /// <param name="url">Url to get cookie</param>
+        /// <returns>Returns Cookie contents as a string</returns>
+        public static string GetCookie(string url)
+        {
+
+            int size = 512;
+            StringBuilder sb = new StringBuilder(size);
+            if (!NativeMethods.InternetGetCookieEx(url, null, sb, ref size, INTERNET_COOKIE_HTTPONLY, IntPtr.Zero))
+            {
+                if (size < 0)
+                {
+                    return null;
+                }
+                sb = new StringBuilder(size);
+                if (!NativeMethods.InternetGetCookieEx(url, null, sb, ref size, INTERNET_COOKIE_HTTPONLY, IntPtr.Zero))
+                {
+                    return null;
+                }
+            }
+            return sb.ToString();
+        }
+
+        //public static string SetCookie(string url)
+        //{
+
+        //    int size = 512;
+        //    StringBuilder sb = new StringBuilder(size);
+        //    if (!NativeMethods.InternetSetCookieExA(url, null, sb, ref size, INTERNET_COOKIE_HTTPONLY, IntPtr.Zero))
+        //    {
+        //        if (size < 0)
+        //        {
+        //            return null;
+        //        }
+        //        sb = new StringBuilder(size);
+        //        if (!NativeMethods.InternetGetCookieEx(url, null, sb, ref size, INTERNET_COOKIE_HTTPONLY, IntPtr.Zero))
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    return sb.ToString();
+        //}
+
+
+        private static class NativeMethods
+        {
+
+            [DllImport("wininet.dll", EntryPoint = "InternetGetCookieEx", CharSet = CharSet.Unicode, SetLastError = true)]
+            public static extern bool InternetGetCookieEx(
+                string url,
+                string cookieName,
+                StringBuilder cookieData,
+                ref int size,
+                int flags,
+                IntPtr pReserved);
+
+            [DllImport("wininet.dll", EntryPoint = "InternetSetCookieExA", CharSet = CharSet.Unicode, SetLastError = true)]
+            public static extern void InternetSetCookieExA(
+                string url,
+                string cookieName,
+                string cookieData,
+                int flags,
+                IntPtr pReserved);
+        }
     }
 }

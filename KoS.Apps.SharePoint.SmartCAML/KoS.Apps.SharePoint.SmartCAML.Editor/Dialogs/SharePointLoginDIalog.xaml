@@ -1,0 +1,15 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="clr-namespace:Windows.UI.Xaml.Controls;assembly=Windows.Foundation.UniversalApiContract"
+        xmlns:Controls="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView" x:Class="KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs.SharePointLoginDIalog"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Title="SharePointLoginDIalog" Height="450" Width="800">
+
+
+    <Grid x:Name="ucGrid">
+        <Controls:WebView x:Name="ucWeb" Loaded="ucWeb_Loaded" NavigationCompleted="ucWeb_NavigationCompleted"/>
+    </Grid>
+</Window>

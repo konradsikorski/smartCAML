@@ -7,13 +7,14 @@ using System.Windows.Controls;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Model;
 using KoS.Apps.SharePoint.SmartCAML.Editor.Utils;
 using KoS.Apps.SharePoint.SmartCAML.Model;
+using System.Windows.Forms;
 
 namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
 {
     /// <summary>
     /// Interaction logic for ConnectWindow.xaml
     /// </summary>
-    public partial class ConnectWindow : UserControl
+    public partial class ConnectWindow : System.Windows.Controls.UserControl
     {
         public ISharePointProvider Client { get; private set; }
         public ConnectWindowModel Model => (ConnectWindowModel)this.DataContext;
@@ -40,6 +41,11 @@ namespace KoS.Apps.SharePoint.SmartCAML.Editor.Dialogs
             {
                 Model.IsConnecting = true;
                 StatusNotification.NotifyWithProgress("Connecting...");
+
+
+
+                var dialog = new SharePointLoginDIalog(Model.SharePointWebUrl);
+                dialog.ShowDialog();
 
                 if (await client.Connect(Model.SharePointWebUrl, Model.UserName, Model.UserPassword) != null)
                 {
